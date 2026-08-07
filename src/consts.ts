@@ -11,8 +11,8 @@ export const SITE = {
    * liga o site à pessoa nos olhos do buscador.
    */
   name: 'Felipe Faria',
-  /** O que aparece na aba do navegador. Decisão dele: tudo minúsculo. */
-  tab: 'fariagallery',
+  /** Domínio sem protocolo. Abre o título da home, tudo minúsculo. */
+  domain: 'fariagallery.com',
   url: 'https://fariagallery.com',
 } as const;
 

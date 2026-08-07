@@ -12,7 +12,10 @@ interface Props {
 
 const { titulo, descricao, semIndexar = false } = Astro.props;
 
-const tituloDaAba = titulo ? `${titulo} | ${SITE.tab}` : SITE.tab;
+/** Todo título termina no nome, que é o que faz ele aparecer na busca. */
+const tituloDaAba = titulo
+  ? `${titulo} | ${SITE.name}`
+  : `${SITE.domain} | ${SITE.name}`;
 
 const canonica = new URL(Astro.url.pathname, SITE.url).href;
 
