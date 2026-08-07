@@ -12,11 +12,7 @@ interface Props {
 
 const { titulo, descricao, semIndexar = false } = Astro.props;
 
-/**
- * O domínio não carrega o nome, então quem carrega é o título de toda
- * página, e nunca a marca. "Faria Gallery" é como se fala, não como se indexa.
- */
-const tituloDaAba = titulo ? `${titulo} | ${SITE.name}` : SITE.name;
+const tituloDaAba = titulo ? `${titulo} | ${SITE.tab}` : SITE.tab;
 
 const canonica = new URL(Astro.url.pathname, SITE.url).href;
 

@@ -4,10 +4,15 @@
  */
 
 export const SITE = {
-  /** Marca falada. Nao vai no <title>: quem vai no title e o NOME. */
+  /** Marca falada, usada no topo da página. */
   brand: 'Faria Gallery',
-  /** O nome precisa aparecer em tudo, porque o dominio nao tem ele. */
+  /**
+   * O nome real. Vai no H1, no Schema.org e no og:site_name, porque é o que
+   * liga o site à pessoa nos olhos do buscador.
+   */
   name: 'Felipe Faria',
+  /** O que aparece na aba do navegador. Decisão dele: tudo minúsculo. */
+  tab: 'fariagallery',
   url: 'https://fariagallery.com',
 } as const;
 
