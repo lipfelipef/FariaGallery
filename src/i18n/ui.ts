@@ -32,8 +32,6 @@ export const UI = {
     'acervo': (total: number, publicas: number) =>
       `${total} obras na coleção. ${publicas} com código público.`,
 
-    'sala.obras': 'Obras',
-    'sala.canal': 'Canal',
     'sala.contato': 'Contato',
 
     'campo.meio': 'Meio',
@@ -122,8 +120,6 @@ export const UI = {
     'acervo': (total: number, publicas: number) =>
       `${total} works in the collection. ${publicas} with public source code.`,
 
-    'sala.obras': 'Works',
-    'sala.canal': 'Channel',
     'sala.contato': 'Contact',
 
     'campo.meio': 'Medium',
@@ -212,8 +208,6 @@ export const UI = {
     'acervo': (total: number, publicas: number) =>
       `${total} obras en la colección. ${publicas} con código público.`,
 
-    'sala.obras': 'Obras',
-    'sala.canal': 'Canal',
     'sala.contato': 'Contacto',
 
     'campo.meio': 'Medio',
