@@ -26,6 +26,12 @@ export const CONTACT_EMAIL = 'contato@fariagallery.com';
  */
 export const EMAIL_ATIVO = false;
 
+/**
+ * Currículo em PDF. O link só aparece no site se este arquivo existir de
+ * verdade em `public/`. Basta largar o PDF nesse caminho e ele aparece.
+ */
+export const CURRICULO = '/curriculo-felipe-faria.pdf';
+
 /** Vira o sameAs do Schema.org tipo Person. Ordem importa pouco, presenca importa. */
 export const SOCIAL = {
   github: 'https://github.com/lipfelipef',

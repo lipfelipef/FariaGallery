@@ -1,16 +1,20 @@
 ---
-import { SITE } from '../consts';
+import { SITE, type Locale } from '../consts';
+import { traduzir } from '../i18n/ui';
 
+interface Props {
+  lang: Locale;
+}
+
+const { lang } = Astro.props;
+const t = traduzir(lang);
 const ano = new Date().getFullYear();
 ---
 
 <footer class="rodape wall hang">
-  <p class="field">Colofão</p>
+  <p class="field">{t('campo.colofao')}</p>
   <div>
-    <p class="colofao">
-      Feito em Astro. Composto em Archivo e EB Garamond. Sem cookie, sem
-      rastreio e sem formulário.
-    </p>
+    <p class="colofao">{t('colofao')}</p>
     <p class="assinatura">{SITE.name}, {ano}</p>
   </div>
 </footer>

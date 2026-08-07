@@ -1,5 +1,6 @@
 import { getCollection, type CollectionEntry } from 'astro:content';
 import { DEFAULT_LOCALE, type Locale } from '../consts';
+import { LOCALE_DATA } from '../i18n/utils';
 
 export type Post = CollectionEntry<'blog'>;
 
@@ -11,17 +12,18 @@ export async function postsPublicados(idioma: Locale = DEFAULT_LOCALE): Promise<
     .sort((a, b) => b.data.data.getTime() - a.data.data.getTime());
 }
 
-/** O menu só mostra Blog quando existe post de verdade para ler. */
 export async function temBlog(idioma: Locale = DEFAULT_LOCALE): Promise<boolean> {
   return (await postsPublicados(idioma)).length > 0;
 }
 
-const FORMATO = new Intl.DateTimeFormat('pt-BR', {
-  day: '2-digit',
-  month: 'long',
-  year: 'numeric',
-  timeZone: 'UTC',
-});
+/** Data por extenso no idioma da página. Fuso em UTC para o dia não escorregar. */
+export function dataPorExtenso(d: Date, lang: Locale): string {
+  return new Intl.DateTimeFormat(LOCALE_DATA[lang], {
+    day: '2-digit',
+    month: 'long',
+    year: 'numeric',
+    timeZone: 'UTC',
+  }).format(d);
+}
 
-export const dataPorExtenso = (d: Date) => FORMATO.format(d);
 export const dataISO = (d: Date) => d.toISOString().slice(0, 10);

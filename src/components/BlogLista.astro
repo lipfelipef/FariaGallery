@@ -1,0 +1,164 @@
+---
+import Base from '../layouts/Base.astro';
+import Topo from './Topo.astro';
+import Rodape from './Rodape.astro';
+import type { Locale } from '../consts';
+import { traduzir } from '../i18n/ui';
+import { rota } from '../i18n/utils';
+import { postsPublicados, dataPorExtenso, dataISO } from '../lib/blog';
+
+interface Props {
+  lang: Locale;
+}
+
+const { lang } = Astro.props;
+const t = traduzir(lang);
+
+const posts = await postsPublicados(lang);
+const vazio = posts.length === 0;
+---
+
+<Base
+  lang={lang}
+  titulo={t('blog.titulo')}
+  descricao={vazio ? t('meta.blogVazio') : t('meta.blog')}
+  semIndexar={vazio}
+>
+  <Topo lang={lang} />
+
+  <main id="conteudo">
+    <section class="abertura wall hang">
+      <div class="abertura-corpo">
+        <h1 class="titulo-sala">{t('blog.titulo')}</h1>
+        <p class="chamada">{t('blog.chamada')}</p>
+      </div>
+    </section>
+
+    <section class="wall">
+      {
+        vazio ? (
+          <div class="vazio hang">
+            <p class="field">{t('campo.estado')}</p>
+            <div>
+              <p class="vazio-titulo">{t('blog.vazio.titulo')}</p>
+              <p class="vazio-texto">{t('blog.vazio.texto')}</p>
+            </div>
+          </div>
+        ) : (
+          <ol class="lista">
+            {posts.map((post) => (
+              <li class="hang item">
+                <time class="item-data" datetime={dataISO(post.data.data)}>
+                  {dataPorExtenso(post.data.data, lang)}
+                </time>
+                <div>
+                  <h2 class="work-title">
+                    <a class="item-link" href={rota(lang, `/blog/${post.id}`)}>
+                      {post.data.titulo}
+                    </a>
+                  </h2>
+                  <p class="item-resumo">{post.data.resumo}</p>
+                </div>
+              </li>
+            ))}
+          </ol>
+        )
+      }
+    </section>
+  </main>
+
+  <Rodape lang={lang} />
+</Base>
+
+<style>
+  .abertura {
+    padding-block: clamp(3rem, 10vh, 6rem) clamp(2rem, 6vh, 3.5rem);
+  }
+
+  .abertura-corpo {
+    grid-column: 2 / -1;
+  }
+
+  @media (max-width: 47.99rem) {
+    .abertura-corpo {
+      grid-column: 1 / -1;
+    }
+  }
+
+  .titulo-sala {
+    font-size: clamp(2rem, 1.2rem + 3vw, 3rem);
+    font-weight: 500;
+    letter-spacing: -0.03em;
+  }
+
+  .chamada {
+    margin-top: 1rem;
+    max-width: 42ch;
+    font-size: 1.0625rem;
+    line-height: 1.6;
+    color: var(--color-ink-soft);
+  }
+
+  .lista {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    border-top: 1px solid var(--color-rule);
+  }
+
+  .item {
+    padding-block: clamp(2rem, 4vw, 3rem);
+    border-bottom: 1px solid var(--color-rule);
+  }
+
+  .item-data {
+    font-size: 0.8125rem;
+    color: var(--color-ink-soft);
+    font-variant-numeric: tabular-nums;
+  }
+
+  @media (min-width: 48rem) {
+    .item-data {
+      padding-top: 0.6rem;
+    }
+  }
+
+  .item-link {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .item-link:hover {
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 0.12em;
+  }
+
+  .item-resumo {
+    margin-top: 0.75rem;
+    max-width: 46ch;
+    font-size: 1rem;
+    line-height: 1.6;
+  }
+
+  .vazio {
+    padding-block: clamp(3rem, 8vh, 5rem);
+    border-top: 1px solid var(--color-rule);
+    row-gap: 0.5rem;
+  }
+
+  .vazio-titulo {
+    font-family: var(--font-work);
+    font-style: italic;
+    font-size: clamp(1.5rem, 1.1rem + 1.6vw, 2rem);
+    line-height: 1.1;
+  }
+
+  .vazio-texto {
+    margin-top: 0.75rem;
+    max-width: 42ch;
+    font-size: 1rem;
+    line-height: 1.6;
+    color: var(--color-ink-soft);
+  }
+</style>

@@ -1,0 +1,198 @@
+---
+import { existsSync } from 'node:fs';
+import { fileURLToPath } from 'node:url';
+import Base from '../layouts/Base.astro';
+import Topo from './Topo.astro';
+import Rodape from './Rodape.astro';
+import Etiqueta from './Etiqueta.astro';
+import { OBRAS, CANAL } from '../data/obras';
+import { SITE, SOCIAL, CONTACT_EMAIL, EMAIL_ATIVO, CURRICULO, type Locale } from '../consts';
+import { traduzir } from '../i18n/ui';
+
+interface Props {
+  lang: Locale;
+}
+
+const { lang } = Astro.props;
+const t = traduzir(lang);
+
+/**
+ * Obra sem ficha preenchida não vai pra parede. Some do site inteiro
+ * enquanto estiver marcada como `pendente`, e volta quando o campo sai.
+ */
+const emCartaz = OBRAS.filter((o) => !o.pendente);
+const comCodigo = emCartaz.filter((o) => o.estado === 'publico').length;
+
+/** O link do currículo só aparece se o arquivo existir mesmo em public/. */
+const temCurriculo = existsSync(
+  fileURLToPath(new URL(`../../public${CURRICULO}`, import.meta.url))
+);
+
+const canais = [
+  ...(EMAIL_ATIVO
+    ? [{ campo: 'E-mail', texto: CONTACT_EMAIL, href: `mailto:${CONTACT_EMAIL}`, externo: false }]
+    : []),
+  { campo: 'LinkedIn', texto: 'Felipe Faria', href: SOCIAL.linkedin, externo: true },
+  { campo: 'GitHub', texto: 'lipfelipef', href: SOCIAL.github, externo: true },
+  { campo: t('contato.canal'), texto: 'Até Zerar', href: SOCIAL.youtube, externo: true },
+];
+---
+
+<Base lang={lang} descricao={t('meta.home')}>
+  <Topo lang={lang} naHome />
+
+  <main id="conteudo">
+    <!-- Parede de entrada: no museu é o texto que abre a exposição. -->
+    <section class="entrada wall hang">
+      <div class="entrada-corpo entrance">
+        <h1 class="nome">{SITE.name}</h1>
+        <p class="linha-artista">{t('artista')}</p>
+
+        <div class="texto-parede">
+          <p>{t('parede.1')}</p>
+          <p>{t('parede.2')}</p>
+        </div>
+
+        <p class="acervo">{t('acervo')(emCartaz.length, comCodigo)}</p>
+      </div>
+    </section>
+
+    <section id="obras" class="sala wall">
+      <h2 class="sala-titulo">{t('sala.obras')}</h2>
+      <div class="sala-corpo">
+        {emCartaz.map((obra) => <Etiqueta obra={obra} lang={lang} />)}
+      </div>
+    </section>
+
+    {
+      !CANAL.pendente && (
+        <section id="canal" class="sala wall">
+          <h2 class="sala-titulo">{t('sala.canal')}</h2>
+          <div class="sala-corpo">
+            <Etiqueta obra={CANAL} lang={lang} />
+          </div>
+        </section>
+      )
+    }
+
+    <section id="contato" class="sala wall">
+      <h2 class="sala-titulo">{t('sala.contato')}</h2>
+      <div class="sala-corpo">
+        <dl class="canais hang">
+          {
+            canais.map(({ campo, texto, href, externo }) => (
+              <>
+                <dt class="field">{campo}</dt>
+                <dd class="value">
+                  <a
+                    class="quiet-link"
+                    href={href}
+                    rel={externo ? 'me noopener noreferrer' : undefined}
+                    target={externo ? '_blank' : undefined}
+                  >
+                    {texto}
+                  </a>
+                </dd>
+              </>
+            ))
+          }
+        </dl>
+
+        {
+          temCurriculo && (
+            <p class="curriculo hang">
+              <span />
+              <a class="quiet-link" href={CURRICULO} download>
+                {t('link.curriculo')} <span aria-hidden="true">&#8595;</span>
+              </a>
+            </p>
+          )
+        }
+      </div>
+    </section>
+  </main>
+
+  <Rodape lang={lang} />
+</Base>
+
+<style>
+  .entrada {
+    padding-block: clamp(4rem, 14vh, 9rem) clamp(4rem, 10vh, 7rem);
+  }
+
+  .entrada-corpo {
+    grid-column: 2 / -1;
+  }
+
+  @media (max-width: 47.99rem) {
+    .entrada-corpo {
+      grid-column: 1 / -1;
+    }
+  }
+
+  .nome {
+    font-size: clamp(2.75rem, 1.4rem + 5.4vw, 4.5rem);
+    font-weight: 500;
+    letter-spacing: -0.035em;
+    line-height: 0.98;
+  }
+
+  .linha-artista {
+    margin-top: 1rem;
+    font-size: 0.9375rem;
+    color: var(--color-ink-soft);
+    max-width: 34ch;
+  }
+
+  .texto-parede {
+    margin-top: 2.5rem;
+    display: grid;
+    gap: 1rem;
+    max-width: 46ch;
+    font-size: 1.0625rem;
+    line-height: 1.65;
+  }
+
+  .acervo {
+    margin-top: 2.5rem;
+    font-size: 0.8125rem;
+    letter-spacing: 0.02em;
+    color: var(--color-ink-soft);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .sala {
+    padding-block: clamp(2rem, 5vh, 3.5rem) clamp(3rem, 8vh, 5rem);
+  }
+
+  /* O nome da sala é uma plaquinha, não um letreiro. Mesma tipografia
+     dos campos da etiqueta, porque cumpre a mesma função. */
+  .sala-titulo {
+    font-size: 0.6875rem;
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--color-ink-soft);
+    padding-bottom: 1.25rem;
+  }
+
+  .sala-corpo {
+    border-top: 1px solid var(--color-rule);
+  }
+
+  .canais {
+    padding-block: clamp(2rem, 4vw, 3rem) 0;
+    row-gap: 0.75rem;
+  }
+
+  @media (max-width: 47.99rem) {
+    .canais {
+      row-gap: 0.125rem;
+    }
+  }
+
+  .curriculo {
+    padding-block: 1.75rem clamp(2rem, 4vw, 3rem);
+    font-size: 0.875rem;
+  }
+</style>

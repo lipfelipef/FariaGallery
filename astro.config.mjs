@@ -40,7 +40,10 @@ export default defineConfig({
 
   integrations: [
     sitemap({
-      filter: (pagina) => !(blogVazio && new URL(pagina).pathname.replace(/\/$/, '') === '/blog'),
+      // Vale para /blog, /en/blog e /es/blog: a coleção é uma só, então
+      // se está vazia, está vazia nos três idiomas.
+      filter: (pagina) =>
+        !(blogVazio && /^\/(en\/|es\/)?blog$/.test(new URL(pagina).pathname.replace(/\/$/, ''))),
       i18n: {
         defaultLocale: 'pt',
         locales: {

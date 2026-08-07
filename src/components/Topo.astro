@@ -1,33 +1,57 @@
 ---
-import { SITE } from '../consts';
-import { CANAL } from '../data/obras';
+import { SITE, LOCALES, type Locale } from '../consts';
+import { traduzir, UI } from '../i18n/ui';
+import { rota, caminhoSemIdioma } from '../i18n/utils';
 
 interface Props {
+  lang: Locale;
   /** Na home os links de seção são âncora. Fora dela precisam voltar pra raiz. */
   naHome?: boolean;
 }
 
-const { naHome = false } = Astro.props;
-const raiz = naHome ? '' : '/';
+const { lang, naHome = false } = Astro.props;
+const t = traduzir(lang);
+
+const inicio = naHome ? '' : rota(lang, '/');
+const aqui = caminhoSemIdioma(Astro.url);
 ---
 
 <header class="topo wall">
-  <a class="marca" href="/">{SITE.domain}</a>
-  <nav aria-label="Navegação principal">
-    <ul class="menu">
-      <li><a class="quiet-link" href={`${raiz}#obras`}>Obras</a></li>
-      {!CANAL.pendente && <li><a class="quiet-link" href={`${raiz}#canal`}>Canal</a></li>}
-      <li><a class="quiet-link" href="/blog">Blog</a></li>
-      <li><a class="quiet-link" href={`${raiz}#contato`}>Contato</a></li>
-    </ul>
-  </nav>
+  <a class="marca" href={rota(lang, '/')}>{SITE.domain}</a>
 
-  <button id="troca-tema" class="tema" type="button" aria-pressed="false">
-    <span class="tema-rotulo">Sala escura</span>
-  </button>
+  <nav class="direita" aria-label={t('nav.obras')}>
+    <ul class="menu">
+      <li><a class="quiet-link" href={`${inicio}#obras`}>{t('nav.obras')}</a></li>
+      <li><a class="quiet-link" href={rota(lang, '/blog')}>{t('nav.blog')}</a></li>
+      <li><a class="quiet-link" href={`${inicio}#contato`}>{t('nav.contato')}</a></li>
+    </ul>
+
+    <ul class="idiomas" aria-label={t('idioma.escolher')}>
+      {
+        LOCALES.map((outro) => (
+          <li>
+            <a
+              class:list={['idioma', outro === lang && 'idioma-atual']}
+              href={rota(outro, aqui)}
+              hreflang={outro}
+              lang={outro}
+              aria-current={outro === lang ? 'true' : undefined}
+              title={UI[outro]['idioma.nome']}
+            >
+              {UI[outro]['idioma.curto']}
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+
+    <button id="troca-tema" class="tema" type="button" aria-pressed="false">
+      <span class="tema-rotulo">{t('tema.escuro')}</span>
+    </button>
+  </nav>
 </header>
 
-<script is:inline>
+<script is:inline define:vars={{ rotuloEscuro: t('tema.escuro'), rotuloClaro: t('tema.clara'), ariaEscuro: t('tema.paraEscuro'), ariaClaro: t('tema.paraClara') }}>
   (function () {
     var botao = document.getElementById('troca-tema');
     if (!botao) return;
@@ -36,12 +60,9 @@ const raiz = naHome ? '' : '/';
 
     function pintar() {
       var escuro = raiz.getAttribute('data-tema') === 'escuro';
-      rotulo.textContent = escuro ? 'Sala clara' : 'Sala escura';
+      rotulo.textContent = escuro ? rotuloClaro : rotuloEscuro;
       botao.setAttribute('aria-pressed', String(escuro));
-      botao.setAttribute(
-        'aria-label',
-        escuro ? 'Mudar para a sala clara' : 'Mudar para a sala escura'
-      );
+      botao.setAttribute('aria-label', escuro ? ariaClaro : ariaEscuro);
       var meta = document.querySelector('meta[name="theme-color"]:not([media])');
       if (meta) meta.setAttribute('content', escuro ? '#141416' : '#fbfbf9');
     }
@@ -70,19 +91,11 @@ const raiz = naHome ? '' : '/';
     padding-block: 1.75rem;
   }
 
-  /* Na tela estreita a marca fica sozinha em cima e o resto embaixo,
-     em vez de espremer tudo numa linha so. */
-  @media (max-width: 34rem) {
-    .marca {
-      flex-basis: 100%;
-    }
-  }
-
-  .menu {
-    font-size: 0.6875rem;
-    font-weight: 600;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
+  .direita {
+    display: flex;
+    align-items: baseline;
+    flex-wrap: wrap;
+    gap: 0.75rem 1.75rem;
   }
 
   /* Minúsculo, sem caixa alta. O espaçamento largo que funciona em
@@ -95,26 +108,67 @@ const raiz = naHome ? '' : '/';
     text-decoration: none;
   }
 
-  .menu {
+  @media (max-width: 34rem) {
+    .marca {
+      flex-basis: 100%;
+    }
+  }
+
+  .menu,
+  .idiomas,
+  .tema {
+    font-size: 0.6875rem;
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+  }
+
+  .menu,
+  .idiomas {
     display: flex;
-    gap: 1.5rem;
     list-style: none;
     margin: 0;
     padding: 0;
     color: var(--color-ink-soft);
   }
 
-  /* Mesma tipografia do menu: e um rotulo de sala, nao um enfeite. */
+  .menu {
+    gap: 1.5rem;
+  }
+
+  /* Os três idiomas ficam sempre visíveis, separados por barra fina.
+     Menu suspenso esconderia a informação de que o site existe em 3. */
+  .idiomas {
+    gap: 0;
+  }
+
+  .idiomas li + li::before {
+    content: '/';
+    margin-inline: 0.5rem;
+    color: var(--color-rule);
+  }
+
+  .idioma {
+    color: var(--color-ink-soft);
+    text-decoration: none;
+    transition: color 200ms ease;
+  }
+
+  .idioma:hover {
+    color: var(--color-ink);
+  }
+
+  .idioma-atual {
+    color: var(--color-ink);
+  }
+
+  /* Mesma tipografia do menu: é rótulo de sala, não enfeite. */
   .tema {
     background: none;
     border: 0;
     padding: 0;
     cursor: pointer;
-    font: inherit;
-    font-size: 0.6875rem;
-    font-weight: 600;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
+    font-family: inherit;
     color: var(--color-ink-soft);
     text-decoration: underline;
     text-decoration-color: transparent;
@@ -126,5 +180,4 @@ const raiz = naHome ? '' : '/';
     color: var(--color-ink);
     text-decoration-color: var(--color-rule);
   }
-
 </style>

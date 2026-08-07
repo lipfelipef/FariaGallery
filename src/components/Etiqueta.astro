@@ -1,23 +1,32 @@
 ---
-import { ESTADO_TEXTO, type Obra } from '../data/obras';
+import type { Locale } from '../consts';
+import type { Obra } from '../data/obras';
+import { traduzir } from '../i18n/ui';
 
 interface Props {
   obra: Obra;
+  lang: Locale;
 }
 
-const { obra } = Astro.props;
+const { obra, lang } = Astro.props;
+const t = traduzir(lang);
+
 /** Ponto cheio quer dizer que dá para ir ver agora. Vazado, não há o que visitar. */
 const aoVivo = obra.estado !== 'encerrado';
 
-/** Campo ainda não preenchido aparece apagado, não como texto normal. */
-const naoPreenchido = (valor: string) => obra.pendente && valor === 'a definir';
+const naoPreenchido = (valor: string) =>
+  obra.pendente && /^(a definir|to be defined)$/i.test(valor);
 
 const ficha = [
-  { campo: 'Meio', valor: obra.meio },
-  { campo: 'Papel', valor: obra.papel },
-  { campo: 'Crédito', valor: obra.credito },
-  { campo: 'Estado', valor: ESTADO_TEXTO[obra.estado] },
+  { campo: t('campo.meio'), valor: obra.meio },
+  { campo: t('campo.papel'), valor: obra.papel[lang] },
+  { campo: t('campo.credito'), valor: obra.credito[lang] },
+  { campo: t('campo.estado'), valor: t(`estado.${obra.estado}` as 'estado.publico') },
 ];
+
+const textoDoLink = obra.link
+  ? t(`link.${obra.link.tipo}` as 'link.codigo')
+  : '';
 ---
 
 <article class="obra hang">
@@ -28,7 +37,7 @@ const ficha = [
 
   <div class="obra-cabeca">
     <h3 class="work-title">{obra.titulo}</h3>
-    <p class="obra-resumo">{obra.resumo}</p>
+    <p class="obra-resumo">{obra.resumo[lang]}</p>
   </div>
 
   <dl class="obra-ficha">
@@ -45,14 +54,9 @@ const ficha = [
   {
     obra.link && (
       <p class="obra-acao">
-        <a
-          class="quiet-link"
-          href={obra.link.href}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          {obra.link.texto} <span aria-hidden="true">&#8594;</span>
-          <span class="sr-only">(abre em nova aba)</span>
+        <a class="quiet-link" href={obra.link.href} target="_blank" rel="noopener noreferrer">
+          {textoDoLink} <span aria-hidden="true">&#8594;</span>
+          <span class="sr-only">{t('link.novaAba')}</span>
         </a>
       </p>
     )

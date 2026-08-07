@@ -1,0 +1,140 @@
+---
+import { render } from 'astro:content';
+import Base from '../layouts/Base.astro';
+import Topo from './Topo.astro';
+import Rodape from './Rodape.astro';
+import type { Locale } from '../consts';
+import { traduzir } from '../i18n/ui';
+import { rota } from '../i18n/utils';
+import { dataPorExtenso, dataISO, type Post } from '../lib/blog';
+
+interface Props {
+  post: Post;
+  lang: Locale;
+}
+
+const { post, lang } = Astro.props;
+const t = traduzir(lang);
+const { Content } = await render(post);
+---
+
+<Base lang={lang} titulo={post.data.titulo} descricao={post.data.resumo}>
+  <Topo lang={lang} />
+
+  <main id="conteudo">
+    <article class="wall">
+      <header class="cabeca hang">
+        <div class="cabeca-corpo">
+          <h1 class="work-title titulo">{post.data.titulo}</h1>
+          <p class="resumo">{post.data.resumo}</p>
+        </div>
+
+        <dl class="ficha">
+          <dt class="field">{t('campo.publicado')}</dt>
+          <dd class="value">
+            <time datetime={dataISO(post.data.data)}>
+              {dataPorExtenso(post.data.data, lang)}
+            </time>
+          </dd>
+
+          {
+            post.data.atualizado && (
+              <>
+                <dt class="field">{t('campo.atualizado')}</dt>
+                <dd class="value">
+                  <time datetime={dataISO(post.data.atualizado)}>
+                    {dataPorExtenso(post.data.atualizado, lang)}
+                  </time>
+                </dd>
+              </>
+            )
+          }
+
+          {
+            post.data.assuntos.length > 0 && (
+              <>
+                <dt class="field">{t('campo.assunto')}</dt>
+                <dd class="value">{post.data.assuntos.join(', ')}</dd>
+              </>
+            )
+          }
+        </dl>
+      </header>
+
+      <div class="hang">
+        <div class="prosa">
+          <Content />
+        </div>
+      </div>
+
+      <p class="volta hang">
+        <span></span>
+        <a class="quiet-link" href={rota(lang, '/blog')}>{t('blog.voltar')}</a>
+      </p>
+    </article>
+  </main>
+
+  <Rodape lang={lang} />
+</Base>
+
+<style>
+  .cabeca {
+    padding-block: clamp(3rem, 10vh, 5.5rem) clamp(2rem, 5vh, 3rem);
+    row-gap: 0.5rem;
+    border-bottom: 1px solid var(--color-rule);
+  }
+
+  .cabeca-corpo {
+    grid-column: 2 / -1;
+    margin-bottom: 1.5rem;
+  }
+
+  @media (max-width: 47.99rem) {
+    .cabeca-corpo {
+      grid-column: 1 / -1;
+    }
+  }
+
+  .titulo {
+    font-size: clamp(2.125rem, 1.3rem + 3.4vw, 3.25rem);
+  }
+
+  .resumo {
+    margin-top: 1rem;
+    max-width: 46ch;
+    font-size: 1.0625rem;
+    line-height: 1.6;
+    color: var(--color-ink-soft);
+  }
+
+  .ficha {
+    grid-column: 1 / -1;
+    display: grid;
+    grid-template-columns: var(--hang) minmax(0, 1fr);
+    column-gap: var(--gutter);
+    row-gap: 0.5rem;
+  }
+
+  @media (max-width: 47.99rem) {
+    .ficha {
+      grid-template-columns: minmax(0, 1fr);
+      row-gap: 0.125rem;
+    }
+  }
+
+  .prosa {
+    grid-column: 2 / -1;
+    padding-block: clamp(2.5rem, 6vh, 4rem);
+  }
+
+  @media (max-width: 47.99rem) {
+    .prosa {
+      grid-column: 1 / -1;
+    }
+  }
+
+  .volta {
+    padding-bottom: clamp(2rem, 6vh, 4rem);
+    font-size: 0.875rem;
+  }
+</style>
