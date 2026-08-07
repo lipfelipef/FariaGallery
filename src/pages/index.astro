@@ -4,7 +4,16 @@ import Topo from '../components/Topo.astro';
 import Rodape from '../components/Rodape.astro';
 import Etiqueta from '../components/Etiqueta.astro';
 import { OBRAS, CANAL } from '../data/obras';
-import { SITE } from '../consts';
+import { SITE, SOCIAL, CONTACT_EMAIL, EMAIL_ATIVO } from '../consts';
+
+const canais = [
+  ...(EMAIL_ATIVO
+    ? [{ campo: 'E-mail', texto: CONTACT_EMAIL, href: `mailto:${CONTACT_EMAIL}` }]
+    : []),
+  { campo: 'LinkedIn', texto: 'Felipe Faria', href: SOCIAL.linkedin },
+  { campo: 'GitHub', texto: 'lipfelipef', href: SOCIAL.github },
+  { campo: 'Canal', texto: 'Até Zerar', href: SOCIAL.youtube },
+];
 
 /**
  * Obra sem ficha preenchida não vai pra parede. Some do site inteiro
@@ -66,6 +75,31 @@ const descricao =
         </section>
       )
     }
+
+    <section id="contato" class="sala wall">
+      <h2 class="sala-titulo">Contato</h2>
+      <div class="sala-corpo">
+        <dl class="canais hang">
+          {
+            canais.map(({ campo, texto, href }) => (
+              <>
+                <dt class="field">{campo}</dt>
+                <dd class="value">
+                  <a
+                    class="quiet-link"
+                    href={href}
+                    rel={href.startsWith('mailto:') ? undefined : 'me noopener noreferrer'}
+                    target={href.startsWith('mailto:') ? undefined : '_blank'}
+                  >
+                    {texto}
+                  </a>
+                </dd>
+              </>
+            ))
+          }
+        </dl>
+      </div>
+    </section>
   </main>
 
   <Rodape />
@@ -134,5 +168,16 @@ const descricao =
 
   .sala-corpo {
     border-top: 1px solid var(--color-rule);
+  }
+
+  .canais {
+    padding-block: clamp(2rem, 4vw, 3rem);
+    row-gap: 0.75rem;
+  }
+
+  @media (max-width: 47.99rem) {
+    .canais {
+      row-gap: 0.125rem;
+    }
   }
 </style>

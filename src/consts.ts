@@ -16,11 +16,15 @@ export const SITE = {
   url: 'https://fariagallery.com',
 } as const;
 
-/**
- * Ainda nao existe: depende de ligar o Email Routing na Cloudflare.
- * Enquanto nao existir, nao publicar link de contato.
- */
 export const CONTACT_EMAIL = 'contato@fariagallery.com';
+
+/**
+ * O endereco acima so funciona depois de ligar o Email Routing na Cloudflare.
+ * Enquanto isso for `false`, o site nao mostra o e-mail: link de contato que
+ * cai no vazio e pior do que nao ter contato nenhum.
+ * Ligou o Email Routing? Troca para `true` e o e-mail aparece no site.
+ */
+export const EMAIL_ATIVO = false;
 
 /** Vira o sameAs do Schema.org tipo Person. Ordem importa pouco, presenca importa. */
 export const SOCIAL = {
