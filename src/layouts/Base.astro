@@ -62,8 +62,27 @@ const pessoa = {
     <meta property="og:url" content={canonica} />
     <meta name="twitter:card" content="summary_large_image" />
 
-    <meta name="theme-color" content="#fbfbf9" />
+    <meta name="theme-color" content="#fbfbf9" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#141416" media="(prefers-color-scheme: dark)" />
     <meta name="generator" content={Astro.generator} />
+
+    <!--
+      Roda antes da pagina pintar. Sem isso a sala clara pisca por um
+      instante antes de virar escura, que e o defeito mais comum de
+      site com tema. Guarda a escolha em localStorage, que e preferencia
+      de quem visita, nao rastreio: nao sai do navegador da pessoa.
+    -->
+    <script is:inline>
+      (function () {
+        try {
+          var salvo = localStorage.getItem('tema');
+          var escuro =
+            salvo === 'escuro' ||
+            (!salvo && matchMedia('(prefers-color-scheme: dark)').matches);
+          if (escuro) document.documentElement.setAttribute('data-tema', 'escuro');
+        } catch (e) {}
+      })();
+    </script>
 
     <script type="application/ld+json" is:inline set:html={JSON.stringify(pessoa)} />
   </head>

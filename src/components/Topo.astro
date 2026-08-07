@@ -21,15 +21,61 @@ const raiz = naHome ? '' : '/';
       <li><a class="quiet-link" href={`${raiz}#contato`}>Contato</a></li>
     </ul>
   </nav>
+
+  <button id="troca-tema" class="tema" type="button" aria-pressed="false">
+    <span class="tema-rotulo">Sala escura</span>
+  </button>
 </header>
+
+<script is:inline>
+  (function () {
+    var botao = document.getElementById('troca-tema');
+    if (!botao) return;
+    var rotulo = botao.querySelector('.tema-rotulo');
+    var raiz = document.documentElement;
+
+    function pintar() {
+      var escuro = raiz.getAttribute('data-tema') === 'escuro';
+      rotulo.textContent = escuro ? 'Sala clara' : 'Sala escura';
+      botao.setAttribute('aria-pressed', String(escuro));
+      botao.setAttribute(
+        'aria-label',
+        escuro ? 'Mudar para a sala clara' : 'Mudar para a sala escura'
+      );
+      var meta = document.querySelector('meta[name="theme-color"]:not([media])');
+      if (meta) meta.setAttribute('content', escuro ? '#141416' : '#fbfbf9');
+    }
+
+    botao.addEventListener('click', function () {
+      var escuro = raiz.getAttribute('data-tema') === 'escuro';
+      if (escuro) raiz.removeAttribute('data-tema');
+      else raiz.setAttribute('data-tema', 'escuro');
+      try {
+        localStorage.setItem('tema', escuro ? 'claro' : 'escuro');
+      } catch (e) {}
+      pintar();
+    });
+
+    pintar();
+  })();
+</script>
 
 <style>
   .topo {
     display: flex;
     align-items: baseline;
     justify-content: space-between;
-    gap: 1.5rem;
+    flex-wrap: wrap;
+    gap: 0.75rem 1.5rem;
     padding-block: 1.75rem;
+  }
+
+  /* Na tela estreita a marca fica sozinha em cima e o resto embaixo,
+     em vez de espremer tudo numa linha so. */
+  @media (max-width: 34rem) {
+    .marca {
+      flex-basis: 100%;
+    }
   }
 
   .menu {
@@ -57,4 +103,28 @@ const raiz = naHome ? '' : '/';
     padding: 0;
     color: var(--color-ink-soft);
   }
+
+  /* Mesma tipografia do menu: e um rotulo de sala, nao um enfeite. */
+  .tema {
+    background: none;
+    border: 0;
+    padding: 0;
+    cursor: pointer;
+    font: inherit;
+    font-size: 0.6875rem;
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--color-ink-soft);
+    text-decoration: underline;
+    text-decoration-color: transparent;
+    text-underline-offset: 0.3em;
+    transition: color 200ms ease, text-decoration-color 200ms ease;
+  }
+
+  .tema:hover {
+    color: var(--color-ink);
+    text-decoration-color: var(--color-rule);
+  }
+
 </style>

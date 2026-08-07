@@ -23,12 +23,36 @@
   --color-wall: #fbfbf9;
   --color-paper: #ffffff;
   --color-ink: #17171b;
-  --color-ink-soft: #73736f;
+  /* Escurecido de #73736f: aquele dava 4.60 de contraste, e o minimo
+     do WCAG AA e 4.5. Passava raspando, e essa cor carrega toda a
+     legenda do site. */
+  --color-ink-soft: #6b6b67;
   --color-rule: #e5e5e1;
   --color-dot: #c8102e;
 
   --font-wall: 'Archivo Variable', ui-sans-serif, system-ui, sans-serif;
   --font-work: 'EB Garamond Variable', Georgia, 'Times New Roman', serif;
+}
+
+/* ---------------------------------------------------------------
+   Sala escura
+
+   Museu de verdade tem sala escura: obra sensivel a luz, video,
+   projecao. Nao e a sala clara invertida. A parede e um preto quente,
+   nunca #000, porque preto puro em tela cansa a vista e achata o texto.
+   O vermelho abre um pouco, senao some no escuro.
+   --------------------------------------------------------------- */
+
+@layer theme {
+  :root[data-tema='escuro'] {
+    --color-wall: #141416;
+    --color-paper: #1b1b1e;
+    --color-ink: #eceae4;
+    --color-ink-soft: #8f8d87;
+    --color-rule: #2e2e32;
+    --color-dot: #ef4056;
+    color-scheme: dark;
+  }
 }
 
 :root {
@@ -37,9 +61,17 @@
   --hang: 8.5rem;
   --gutter: 2rem;
 
-  /* A parede e branca por decisao de projeto, entao a pagina assume
-     tema claro em vez de deixar o navegador tentar escurecer sozinho. */
+  /* O tema e escolha explicita, guardada no navegador de quem visita.
+     Sem isso, o navegador tenta escurecer por conta e estraga o contraste. */
   color-scheme: light;
+
+  /* Fundo de codigo no post. Precisa de token proprio porque muda de
+     lado junto com o tema. */
+  --color-code: #f2f2ef;
+}
+
+:root[data-tema='escuro'] {
+  --color-code: #232327;
 }
 
 @media (max-width: 47.99rem) {
@@ -232,13 +264,13 @@ body {
 
   .prosa code {
     font-size: 0.9em;
-    background-color: #f2f2ef;
+    background-color: var(--color-code);
     padding: 0.1em 0.35em;
     border-radius: 2px;
   }
 
   .prosa pre {
-    background-color: #f7f7f5;
+    background-color: var(--color-code);
     border: 1px solid var(--color-rule);
     padding: 1rem 1.15rem;
     overflow-x: auto;
