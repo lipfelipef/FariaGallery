@@ -3,16 +3,14 @@ import { SITE, LOCALES, type Locale } from '../consts';
 import { traduzir, UI } from '../i18n/ui';
 import { rota, caminhoSemIdioma } from '../i18n/utils';
 
+
 interface Props {
   lang: Locale;
-  /** Na home os links de seção são âncora. Fora dela precisam voltar pra raiz. */
-  naHome?: boolean;
 }
 
-const { lang, naHome = false } = Astro.props;
+const { lang } = Astro.props;
 const t = traduzir(lang);
 
-const inicio = naHome ? '' : rota(lang, '/');
 const aqui = caminhoSemIdioma(Astro.url);
 ---
 
@@ -23,7 +21,7 @@ const aqui = caminhoSemIdioma(Astro.url);
     <ul class="menu">
       <li><a class="quiet-link" href={rota(lang, '/obras')}>{t('nav.colecao')}</a></li>
       <li><a class="quiet-link" href={rota(lang, '/blog')}>{t('nav.blog')}</a></li>
-      <li><a class="quiet-link" href={`${inicio}#contato`}>{t('nav.contato')}</a></li>
+      <li><a class="quiet-link" href={rota(lang, '/contato')}>{t('nav.contato')}</a></li>
     </ul>
 
     <ul class="idiomas" aria-label={t('idioma.escolher')}>

@@ -28,6 +28,7 @@ const aoVivo = obra.estado !== 'encerrado';
  */
 const ficha = [
   { campo: t('campo.meio'), valor: obra.meio },
+  ...(obra.dimensoes ? [{ campo: t('campo.dimensoes'), valor: obra.dimensoes[lang] }] : []),
   { campo: t('campo.papel'), valor: obra.papel[lang] },
   ...(estudo.data.duracao ? [{ campo: t('campo.duracao'), valor: estudo.data.duracao }] : []),
   ...(estudo.data.equipe ? [{ campo: t('campo.equipe'), valor: estudo.data.equipe }] : []),

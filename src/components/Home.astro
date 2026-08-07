@@ -1,12 +1,10 @@
 ---
-import { existsSync } from 'node:fs';
-import { join } from 'node:path';
 import Base from '../layouts/Base.astro';
 import Topo from './Topo.astro';
 import Rodape from './Rodape.astro';
 import Etiqueta from './Etiqueta.astro';
-import { OBRAS, CANAL } from '../data/obras';
-import { SITE, SOCIAL, CONTACT_EMAIL, EMAIL_ATIVO, CURRICULO, type Locale } from '../consts';
+import { OBRAS } from '../data/obras';
+import { SITE, type Locale } from '../consts';
 import { traduzir } from '../i18n/ui';
 import { rota } from '../i18n/utils';
 import { obrasComEstudo } from '../lib/estudos';
@@ -35,27 +33,10 @@ const comCodigo = acervo.filter((o) => o.estado === 'publico').length;
  */
 const emCartaz = acervo.filter((o) => o.destaque);
 
-/**
- * O botão do currículo só aparece se o PDF existir mesmo em public/.
- *
- * Usa `process.cwd()` e não `import.meta.url`: no build o componente vira
- * um pedaço empacotado e a URL do módulo deixa de apontar para o arquivo
- * original, então o teste dava sempre falso.
- */
-const temCurriculo = existsSync(join(process.cwd(), 'public', CURRICULO));
-
-const canais = [
-  ...(EMAIL_ATIVO
-    ? [{ campo: 'E-mail', texto: CONTACT_EMAIL, href: `mailto:${CONTACT_EMAIL}`, externo: false }]
-    : []),
-  { campo: 'LinkedIn', texto: 'Felipe Faria', href: SOCIAL.linkedin, externo: true },
-  { campo: 'GitHub', texto: 'lipfelipef', href: SOCIAL.github, externo: true },
-  { campo: t('contato.canal'), texto: 'Até Zerar', href: SOCIAL.youtube, externo: true },
-];
 ---
 
 <Base lang={lang} descricao={t('meta.home')}>
-  <Topo lang={lang} naHome />
+  <Topo lang={lang} />
 
   <main id="conteudo">
     <!-- Parede de entrada: no museu é o texto que abre a exposição. -->
@@ -91,55 +72,6 @@ const canais = [
       </div>
     </section>
 
-    {
-      !CANAL.pendente && (
-        <section id="canal" class="sala wall">
-          <h2 class="sala-titulo">{t('sala.canal')}</h2>
-          <div class="sala-corpo">
-            <Etiqueta obra={CANAL} lang={lang} />
-          </div>
-        </section>
-      )
-    }
-
-    <section id="contato" class="sala wall">
-      <h2 class="sala-titulo">{t('sala.contato')}</h2>
-      <div class="sala-corpo">
-        <dl class="canais hang">
-          {
-            canais.map(({ campo, texto, href, externo }) => (
-              <>
-                <dt class="field">{campo}</dt>
-                <dd class="value">
-                  <a
-                    class="quiet-link"
-                    href={href}
-                    rel={externo ? 'me noopener noreferrer' : undefined}
-                    target={externo ? '_blank' : undefined}
-                  >
-                    {texto}
-                  </a>
-                </dd>
-              </>
-            ))
-          }
-        </dl>
-
-        {
-          temCurriculo && (
-            <div class="curriculo hang">
-              <span />
-              <a class="botao" href={CURRICULO} download>
-                <span>{t('link.curriculo')}</span>
-                <span class="botao-seta" aria-hidden="true">
-                  &#8595;
-                </span>
-              </a>
-            </div>
-          )
-        }
-      </div>
-    </section>
   </main>
 
   <Rodape lang={lang} />

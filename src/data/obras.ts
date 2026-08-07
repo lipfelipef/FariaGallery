@@ -21,7 +21,16 @@ export interface Obra {
   /** Vira a URL do estudo de caso: /obras/blucker */
   slug: string;
   titulo: string;
+  /** Como o ano aparece escrito. Pode ser faixa: "2020 até hoje". */
   ano: string;
+  /**
+   * Só para ordenar o catálogo. Sem isso, usa o número que abre o `ano`.
+   * Obra ainda ativa usa o ano corrente, senão ela afunda no fim da lista
+   * por ter começado há muito tempo.
+   */
+  anoOrdem?: number;
+  /** Obra ainda em andamento. Empata com o ano corrente e fica acima dele. */
+  ativa?: boolean;
   /** A stack, tipografada como linha de meio: separada por vírgula. */
   meio: string;
   estado: Estado;
@@ -38,29 +47,20 @@ export interface Obra {
   resumo: PorIdioma;
   papel: PorIdioma;
   credito: PorIdioma;
+  /**
+   * A medida da obra. Etiqueta de museu tem dimensão em centímetros; em
+   * software e vídeo, a medida é alcance, volume e tempo de estrada.
+   */
+  dimensoes?: PorIdioma;
 }
 
 /**
- * O canal fica separado porque não é software: é outro meio, e ganha sala
- * própria. Segue a mesma ficha para a parede não ter duas gramáticas.
+ * Chave de ordenação do catálogo. O meio ponto extra faz obra em andamento
+ * ficar acima das que terminaram no mesmo ano, sem precisar inventar um ano
+ * que não existe.
  */
-export const CANAL: Obra = {
-  slug: 'ate-zerar',
-  titulo: 'Até Zerar',
-  ano: 'a definir',
-  meio: 'Vídeo',
-  estado: 'noar',
-  link: { href: 'https://www.youtube.com/@atezerar', tipo: 'canal' },
-  pendente: true,
-  tags: ['Vídeo'],
-  resumo: {
-    pt: 'A definir: sobre o que é o canal e com que frequência sai vídeo.',
-    en: 'To be defined: what the channel is about and how often videos come out.',
-    es: 'A definir: de qué trata el canal y con qué frecuencia sale video.',
-  },
-  papel: { pt: 'a definir', en: 'to be defined', es: 'a definir' },
-  credito: { pt: 'a definir', en: 'to be defined', es: 'a definir' },
-};
+export const ordemDoAno = (o: Obra) =>
+  (o.anoOrdem ?? (Number.parseInt(o.ano, 10) || 0)) + (o.ativa ? 0.5 : 0);
 
 export const OBRAS: Obra[] = [
   {
@@ -107,6 +107,40 @@ export const OBRAS: Obra[] = [
       pt: 'Estudo de caso honesto: o que travou, o que custou e o que ficou de aprendizado de engenharia, produto e negócio.',
       en: 'An honest case study: what got stuck, what it cost, and what it taught about engineering, product, and business.',
       es: 'Estudio de caso honesto: qué se trabó, qué costó y qué dejó de aprendizaje de ingeniería, producto y negocio.',
+    },
+  },
+  {
+    // Não é software, e continua sendo obra: o meio é vídeo em vez de código.
+    // Em número, é a obra de maior alcance da coleção.
+    slug: 'ate-zerar',
+    titulo: 'Até Zerar',
+    ano: '2020 até hoje',
+    anoOrdem: 2026,
+    ativa: true,
+    meio: 'Vídeo, 4K60fps',
+    estado: 'noar',
+    link: { href: 'https://www.youtube.com/@atezerar', tipo: 'canal' },
+    tags: ['Vídeo', 'Games'],
+    destaque: true,
+    resumo: {
+      pt: 'Jogo inteiro, do início ao fim, sem comentário e em 4K60fps. A ideia é assistir como se fosse filme.',
+      en: 'Whole games, start to finish, with no commentary, in 4K60fps. Made to be watched like a film.',
+      es: 'El juego entero, de principio a fin, sin comentarios y en 4K60fps. Pensado para verse como una película.',
+    },
+    papel: {
+      pt: 'Sozinho: gravação, edição e publicação',
+      en: 'Solo: recording, editing, and publishing',
+      es: 'En solitario: grabación, edición y publicación',
+    },
+    credito: {
+      pt: 'Projeto pessoal, no ar desde janeiro de 2020. Do PlayStation 1 ao PlayStation 5 Pro, mais Xbox, Nintendo e PC, organizado em coleções por franquia e por ano.',
+      en: 'Personal project, running since January 2020. From PlayStation 1 to PlayStation 5 Pro, plus Xbox, Nintendo, and PC, organised into playlists by franchise and by year.',
+      es: 'Proyecto personal, al aire desde enero de 2020. Del PlayStation 1 al PlayStation 5 Pro, más Xbox, Nintendo y PC, organizado en listas por franquicia y por año.',
+    },
+    dimensoes: {
+      pt: '165 vídeos, 5,7 milhões de visualizações, 26,3 mil inscritos',
+      en: '165 videos, 5.7 million views, 26.3 thousand subscribers',
+      es: '165 videos, 5,7 millones de visualizaciones, 26,3 mil suscriptores',
     },
   },
   {

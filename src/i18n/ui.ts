@@ -46,6 +46,7 @@ export const UI = {
     'campo.colofao': 'Colofão',
     'campo.duracao': 'Duração',
     'campo.equipe': 'Equipe',
+    'campo.dimensoes': 'Dimensões',
 
     'obras.voltar': 'Voltar para as obras',
     'link.estudo': 'Ler o estudo de caso',
@@ -72,7 +73,10 @@ export const UI = {
     'link.novaAba': '(abre em nova aba)',
     'link.curriculo': 'Baixar o currículo em PDF',
 
-    'contato.canal': 'Canal',
+    'contato.titulo': 'Contato',
+    'contato.email': 'E-mail',
+    'contato.chamada':
+      'Para vaga, estágio, projeto ou só trocar ideia. Respondo no LinkedIn, e o código está no GitHub.',
 
     'blog.titulo': 'Blog',
     'blog.chamada':
@@ -132,6 +136,7 @@ export const UI = {
     'campo.colofao': 'Colophon',
     'campo.duracao': 'Duration',
     'campo.equipe': 'Team',
+    'campo.dimensoes': 'Dimensions',
 
     'obras.voltar': 'Back to the works',
     'link.estudo': 'Read the case study',
@@ -158,7 +163,10 @@ export const UI = {
     'link.novaAba': '(opens in a new tab)',
     'link.curriculo': 'Download the résumé as PDF',
 
-    'contato.canal': 'Channel',
+    'contato.titulo': 'Contact',
+    'contato.email': 'Email',
+    'contato.chamada':
+      'For a role, an internship, a project, or just to talk. I answer on LinkedIn, and the code lives on GitHub.',
 
     'blog.titulo': 'Blog',
     'blog.chamada':
@@ -218,6 +226,7 @@ export const UI = {
     'campo.colofao': 'Colofón',
     'campo.duracao': 'Duración',
     'campo.equipe': 'Equipo',
+    'campo.dimensoes': 'Dimensiones',
 
     'obras.voltar': 'Volver a las obras',
     'link.estudo': 'Leer el estudio de caso',
@@ -244,7 +253,10 @@ export const UI = {
     'link.novaAba': '(se abre en una pestaña nueva)',
     'link.curriculo': 'Descargar el currículum en PDF',
 
-    'contato.canal': 'Canal',
+    'contato.titulo': 'Contacto',
+    'contato.email': 'Correo',
+    'contato.chamada':
+      'Para una vacante, una pasantía, un proyecto o solo conversar. Respondo en LinkedIn, y el código está en GitHub.',
 
     'blog.titulo': 'Blog',
     'blog.chamada':

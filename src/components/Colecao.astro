@@ -2,7 +2,7 @@
 import Base from '../layouts/Base.astro';
 import Topo from './Topo.astro';
 import Rodape from './Rodape.astro';
-import { OBRAS } from '../data/obras';
+import { OBRAS, ordemDoAno } from '../data/obras';
 import type { Locale } from '../consts';
 import { traduzir } from '../i18n/ui';
 import { rota } from '../i18n/utils';
@@ -23,7 +23,10 @@ const acervo = OBRAS.filter((o) => !o.pendente);
  * O ano na margem vira a espinha cronológica: dá para ler a trajetória
  * descendo a página, sem abrir nada.
  */
-const anos = [...new Set(acervo.map((o) => o.ano))].sort((a, b) => b.localeCompare(a));
+const anos = [...new Set(acervo.map((o) => o.ano))].sort(
+  (a, b) =>
+    ordemDoAno(acervo.find((o) => o.ano === b)!) - ordemDoAno(acervo.find((o) => o.ano === a)!)
+);
 const porAno = anos.map((ano) => ({ ano, obras: acervo.filter((o) => o.ano === ano) }));
 
 /** Etiquetas com contagem, da mais usada para a menos. Só aparece quem tem 1+. */

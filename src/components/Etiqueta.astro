@@ -23,6 +23,7 @@ const naoPreenchido = (valor: string) =>
 
 const ficha = [
   { campo: t('campo.meio'), valor: obra.meio },
+  ...(obra.dimensoes ? [{ campo: t('campo.dimensoes'), valor: obra.dimensoes[lang] }] : []),
   { campo: t('campo.papel'), valor: obra.papel[lang] },
   { campo: t('campo.credito'), valor: obra.credito[lang] },
   { campo: t('campo.estado'), valor: t(`estado.${obra.estado}` as 'estado.publico') },
