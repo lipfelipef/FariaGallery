@@ -1,0 +1,84 @@
+---
+import '../styles/global.css';
+import { SITE, SOCIAL } from '../consts';
+
+interface Props {
+  /** Vai antes do nome. Deixe vazio na home, onde o título é só o nome. */
+  titulo?: string;
+  descricao: string;
+}
+
+const { titulo, descricao } = Astro.props;
+
+/**
+ * O domínio não carrega o nome, então quem carrega é o título de toda
+ * página, e nunca a marca. "Faria Gallery" é como se fala, não como se indexa.
+ */
+const tituloDaAba = titulo ? `${titulo} | ${SITE.name}` : SITE.name;
+
+const canonica = new URL(Astro.url.pathname, SITE.url).href;
+
+const pessoa = {
+  '@context': 'https://schema.org',
+  '@type': 'Person',
+  name: SITE.name,
+  url: SITE.url,
+  jobTitle: 'Desenvolvedor',
+  nationality: 'Brasileiro',
+  alumniOf: {
+    '@type': 'CollegeOrUniversity',
+    name: 'Senac São Paulo',
+  },
+  knowsAbout: ['Desenvolvimento web', 'Angular', 'Node.js', 'Java', 'Python'],
+  sameAs: [SOCIAL.github, SOCIAL.linkedin, SOCIAL.youtube],
+};
+---
+
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{tituloDaAba}</title>
+    <meta name="description" content={descricao} />
+    <link rel="canonical" href={canonica} />
+    <link rel="alternate" hreflang="pt-BR" href={canonica} />
+    <link rel="alternate" hreflang="x-default" href={canonica} />
+    <link rel="sitemap" href="/sitemap-index.xml" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content={SITE.name} />
+    <meta property="og:locale" content="pt_BR" />
+    <meta property="og:title" content={tituloDaAba} />
+    <meta property="og:description" content={descricao} />
+    <meta property="og:url" content={canonica} />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <meta name="theme-color" content="#fbfbf9" />
+    <meta name="generator" content={Astro.generator} />
+
+    <script type="application/ld+json" is:inline set:html={JSON.stringify(pessoa)} />
+  </head>
+
+  <body>
+    <a class="pular" href="#conteudo">Pular para o conteúdo</a>
+    <slot />
+  </body>
+</html>
+
+<style>
+  .pular {
+    position: absolute;
+    left: -9999px;
+    top: 0;
+    z-index: 10;
+    background: var(--color-ink);
+    color: var(--color-wall);
+    padding: 0.75rem 1.25rem;
+    font-size: 0.875rem;
+  }
+
+  .pular:focus {
+    left: 0;
+  }
+</style>

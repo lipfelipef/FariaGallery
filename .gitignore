@@ -1,0 +1,44 @@
+# dependencias
+node_modules/
+
+# build
+dist/
+.astro/
+.output/
+out-tsc/
+tmp/
+
+# ambiente, credenciais e chaves: nada disso entra no repositorio
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.crt
+*.pfx
+*.p12
+*.jks
+*.keystore
+id_rsa*
+id_ed25519*
+.npmrc
+.netrc
+secrets.json
+credentials.json
+serviceAccount*.json
+.dev.vars
+.wrangler/
+
+# editor e sistema
+.vscode/*
+!.vscode/extensions.json
+.idea/
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# logs
+*.log
+npm-debug.log*
+yarn-error.log*
+pnpm-debug.log*

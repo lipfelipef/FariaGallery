@@ -1,0 +1,153 @@
+---
+import { ESTADO_TEXTO, type Obra } from '../data/obras';
+
+interface Props {
+  obra: Obra;
+}
+
+const { obra } = Astro.props;
+/** Ponto cheio quer dizer que dá para ir ver agora. Vazado, não há o que visitar. */
+const aoVivo = obra.estado !== 'encerrado';
+
+/** Campo ainda não preenchido aparece apagado, não como texto normal. */
+const naoPreenchido = (valor: string) => obra.pendente && valor === 'a definir';
+
+const ficha = [
+  { campo: 'Meio', valor: obra.meio },
+  { campo: 'Papel', valor: obra.papel },
+  { campo: 'Crédito', valor: obra.credito },
+  { campo: 'Estado', valor: ESTADO_TEXTO[obra.estado] },
+];
+---
+
+<article class="obra hang">
+  <div class="obra-margem">
+    <span class:list={['dot', aoVivo ? 'dot-on' : 'dot-off']} aria-hidden="true"></span>
+    <span class="obra-ano">{obra.ano}</span>
+  </div>
+
+  <div class="obra-cabeca">
+    <h3 class="work-title">{obra.titulo}</h3>
+    <p class="obra-resumo">{obra.resumo}</p>
+  </div>
+
+  <dl class="obra-ficha">
+    {
+      ficha.map(({ campo, valor }) => (
+        <>
+          <dt class="field">{campo}</dt>
+          <dd class:list={['value', naoPreenchido(valor) && 'value-pendente']}>{valor}</dd>
+        </>
+      ))
+    }
+  </dl>
+
+  {
+    obra.link && (
+      <p class="obra-acao">
+        <a
+          class="quiet-link"
+          href={obra.link.href}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          {obra.link.texto} <span aria-hidden="true">&#8594;</span>
+          <span class="sr-only">(abre em nova aba)</span>
+        </a>
+      </p>
+    )
+  }
+</article>
+
+<style>
+  .obra {
+    row-gap: 0.5rem;
+    padding-block: clamp(2.5rem, 5vw, 4rem);
+    border-top: 1px solid var(--color-rule);
+  }
+
+  .obra:first-child {
+    border-top: 0;
+  }
+
+  /* Margem: o ponto e o ano. O ano em coluna cria a espinha
+     cronológica que dá pra ler de relance descendo a página. */
+  .obra-margem {
+    display: flex;
+    align-items: baseline;
+    gap: 0.5rem;
+    font-size: 0.8125rem;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+    color: var(--color-ink-soft);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .obra-margem .dot {
+    transform: translateY(-0.15em);
+  }
+
+  @media (min-width: 48rem) {
+    .obra-margem {
+      padding-top: 0.85rem;
+    }
+  }
+
+  .obra-cabeca {
+    margin-bottom: 1.5rem;
+  }
+
+  .obra-resumo {
+    margin-top: 0.75rem;
+    font-size: 1.0625rem;
+    line-height: 1.55;
+    max-width: 42ch;
+    color: var(--color-ink);
+  }
+
+  /* A ficha repete a mesma grade da obra, então o eixo vertical
+     da página inteira continua sendo um só. */
+  .obra-ficha {
+    grid-column: 1 / -1;
+    display: grid;
+    grid-template-columns: var(--hang) minmax(0, 1fr);
+    column-gap: var(--gutter);
+    row-gap: 0.5rem;
+  }
+
+  @media (max-width: 47.99rem) {
+    .obra-ficha {
+      grid-template-columns: minmax(0, 1fr);
+      row-gap: 0.125rem;
+    }
+  }
+
+  .value-pendente {
+    color: var(--color-ink-soft);
+    font-style: italic;
+  }
+
+  .obra-acao {
+    grid-column: 1 / -1;
+    margin-top: 1.5rem;
+    font-size: 0.875rem;
+  }
+
+  @media (min-width: 48rem) {
+    .obra-acao {
+      grid-column: 2 / -1;
+    }
+  }
+
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+    border: 0;
+  }
+</style>

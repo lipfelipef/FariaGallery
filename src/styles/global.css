@@ -1,0 +1,214 @@
+/* Só o eixo de peso. O eixo de largura custava 54 KB a mais para
+   alargar um título em 4%, e isso não se paga. */
+@import '@fontsource-variable/archivo/wght.css';
+@import '@fontsource-variable/eb-garamond/wght-italic.css';
+@import 'tailwindcss';
+
+/* ---------------------------------------------------------------
+   Sistema da Faria Gallery
+
+   Conceito: parede de galeria. A obra vem primeiro, a legenda e
+   pequena e precisa. Como projeto de software nao tem imagem que
+   valha a parede, a etiqueta E a obra.
+
+   Duas vozes tipograficas, cada uma com um papel unico:
+     Archivo        a voz da instituicao (nome, navegacao, campos)
+     EB Garamond    so titulo de obra, e so em italico, porque e
+                    assim que museu compoe titulo de obra
+
+   Uma cor so na pagina inteira: o ponto vermelho de galeria.
+   --------------------------------------------------------------- */
+
+@theme {
+  --color-wall: #fbfbf9;
+  --color-paper: #ffffff;
+  --color-ink: #17171b;
+  --color-ink-soft: #73736f;
+  --color-rule: #e5e5e1;
+  --color-dot: #c8102e;
+
+  --font-wall: 'Archivo Variable', ui-sans-serif, system-ui, sans-serif;
+  --font-work: 'EB Garamond Variable', Georgia, 'Times New Roman', serif;
+}
+
+:root {
+  /* A linha de pendura: eixo vertical unico que atravessa a pagina
+     inteira. Campo da etiqueta fica na margem, valor fica depois. */
+  --hang: 8.5rem;
+  --gutter: 2rem;
+
+  /* A parede e branca por decisao de projeto, entao a pagina assume
+     tema claro em vez de deixar o navegador tentar escurecer sozinho. */
+  color-scheme: light;
+}
+
+@media (max-width: 47.99rem) {
+  :root {
+    --hang: 0rem;
+    --gutter: 0rem;
+  }
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+body {
+  background-color: var(--color-wall);
+  color: var(--color-ink);
+  font-family: var(--font-wall);
+  font-optical-sizing: auto;
+  font-synthesis-weight: none;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+::selection {
+  background-color: var(--color-ink);
+  color: var(--color-wall);
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-ink);
+  outline-offset: 3px;
+}
+
+@layer components {
+  /* Container da parede ------------------------------------------- */
+
+  .wall {
+    margin-inline: auto;
+    width: 100%;
+    max-width: 68rem;
+    padding-inline: 1.5rem;
+  }
+
+  @media (min-width: 48rem) {
+    .wall {
+      padding-inline: 3rem;
+    }
+  }
+
+  /* A grade da etiqueta ------------------------------------------- */
+
+  .hang {
+    display: grid;
+    grid-template-columns: var(--hang) minmax(0, 1fr);
+    column-gap: var(--gutter);
+  }
+
+  @media (max-width: 47.99rem) {
+    .hang {
+      grid-template-columns: minmax(0, 1fr);
+    }
+  }
+
+  /* Nome de campo da etiqueta: ANO, MEIO, PAPEL, CREDITO, ESTADO.
+     Caixa alta miuda e muito espacada, do jeito que museu imprime. */
+  .field {
+    font-size: 0.6875rem;
+    font-weight: 600;
+    line-height: 1.5;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--color-ink-soft);
+    font-variant-numeric: tabular-nums;
+  }
+
+  @media (min-width: 48rem) {
+    .field {
+      padding-top: 0.34rem;
+    }
+  }
+
+  @media (max-width: 47.99rem) {
+    .field {
+      margin-top: 1rem;
+    }
+  }
+
+  .value {
+    font-size: 0.9375rem;
+    line-height: 1.6;
+    max-width: 46ch;
+    color: var(--color-ink);
+  }
+
+  /* Titulo de obra: a unica coisa em serifa, e sempre em italico. */
+  .work-title {
+    font-family: var(--font-work);
+    font-style: italic;
+    font-weight: 400;
+    font-size: clamp(1.875rem, 1.2rem + 2.6vw, 3rem);
+    line-height: 1.05;
+    letter-spacing: -0.005em;
+  }
+
+  /* O ponto vermelho. Cheio quer dizer que da pra ir ver agora.
+     Vazado quer dizer que nao ha o que visitar. O texto do campo
+     ESTADO carrega o significado, o ponto so repete pro olho. */
+  .dot {
+    display: inline-block;
+    width: 0.4375rem;
+    height: 0.4375rem;
+    border-radius: 9999px;
+  }
+
+  .dot-on {
+    background-color: var(--color-dot);
+  }
+
+  .dot-off {
+    border: 1px solid var(--color-rule);
+  }
+
+  /* Link de texto: sublinhado fino que engrossa no hover. */
+  .quiet-link {
+    text-decoration: underline;
+    text-decoration-color: var(--color-rule);
+    text-decoration-thickness: 1px;
+    text-underline-offset: 0.25em;
+    transition:
+      text-decoration-color 200ms ease,
+      color 200ms ease;
+  }
+
+  .quiet-link:hover {
+    text-decoration-color: var(--color-ink);
+  }
+}
+
+/* Um unico momento coreografado: a parede de entrada sobe ao abrir.
+   O resto da pagina fica parado, porque sala de exposicao e parada. */
+@media (prefers-reduced-motion: no-preference) {
+  .entrance > * {
+    animation: rise 800ms cubic-bezier(0.16, 0.84, 0.28, 1) backwards;
+  }
+
+  .entrance > *:nth-child(1) {
+    animation-delay: 40ms;
+  }
+  .entrance > *:nth-child(2) {
+    animation-delay: 140ms;
+  }
+  .entrance > *:nth-child(3) {
+    animation-delay: 240ms;
+  }
+  .entrance > *:nth-child(4) {
+    animation-delay: 340ms;
+  }
+}
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(0.75rem);
+  }
+}
