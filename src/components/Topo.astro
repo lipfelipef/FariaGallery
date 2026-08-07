@@ -1,7 +1,6 @@
 ---
 import { SITE } from '../consts';
 import { CANAL } from '../data/obras';
-import { temBlog } from '../lib/blog';
 
 interface Props {
   /** Na home os links de seção são âncora. Fora dela precisam voltar pra raiz. */
@@ -10,7 +9,6 @@ interface Props {
 
 const { naHome = false } = Astro.props;
 const raiz = naHome ? '' : '/';
-const mostrarBlog = await temBlog();
 ---
 
 <header class="topo wall">
@@ -19,7 +17,7 @@ const mostrarBlog = await temBlog();
     <ul class="menu">
       <li><a class="quiet-link" href={`${raiz}#obras`}>Obras</a></li>
       {!CANAL.pendente && <li><a class="quiet-link" href={`${raiz}#canal`}>Canal</a></li>}
-      {mostrarBlog && <li><a class="quiet-link" href="/blog">Blog</a></li>}
+      <li><a class="quiet-link" href="/blog">Blog</a></li>
     </ul>
   </nav>
 </header>
