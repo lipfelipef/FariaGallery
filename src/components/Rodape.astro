@@ -1,0 +1,62 @@
+---
+import { SOCIAL } from '../consts';
+---
+
+<footer class="rodape wall hang">
+  <p class="field">Onde me achar</p>
+  <div>
+    <ul class="rodape-links">
+      <li>
+        <a class="quiet-link" href={SOCIAL.github} rel="me noopener noreferrer" target="_blank">
+          Felipe Faria no GitHub
+        </a>
+      </li>
+      <li>
+        <a class="quiet-link" href={SOCIAL.linkedin} rel="me noopener noreferrer" target="_blank">
+          Felipe Faria no LinkedIn
+        </a>
+      </li>
+      <li>
+        <a class="quiet-link" href={SOCIAL.youtube} rel="me noopener noreferrer" target="_blank">
+          Até Zerar no YouTube
+        </a>
+      </li>
+    </ul>
+
+    <p class="colofao">
+      Feito em Astro. Composto em Archivo e EB Garamond. Sem cookie, sem
+      rastreio e sem formulário.
+    </p>
+  </div>
+</footer>
+
+<style>
+  .rodape {
+    padding-block: clamp(3rem, 8vh, 5rem) clamp(4rem, 10vh, 6rem);
+    border-top: 1px solid var(--color-rule);
+  }
+
+  .rodape-links {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 0.625rem;
+    font-size: 0.9375rem;
+  }
+
+  .colofao {
+    margin-top: 2rem;
+    font-size: 0.8125rem;
+    line-height: 1.6;
+    color: var(--color-ink-soft);
+    max-width: 40ch;
+  }
+
+  @media (max-width: 47.99rem) {
+    .rodape .field {
+      margin-top: 0;
+      margin-bottom: 1rem;
+    }
+  }
+</style>

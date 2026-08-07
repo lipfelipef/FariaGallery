@@ -1,0 +1,57 @@
+---
+import { SITE } from '../consts';
+import { CANAL } from '../data/obras';
+import { temBlog } from '../lib/blog';
+
+interface Props {
+  /** Na home os links de seção são âncora. Fora dela precisam voltar pra raiz. */
+  naHome?: boolean;
+}
+
+const { naHome = false } = Astro.props;
+const raiz = naHome ? '' : '/';
+const mostrarBlog = await temBlog();
+---
+
+<header class="topo wall">
+  <a class="marca" href="/">{SITE.brand}</a>
+  <nav aria-label="Navegação principal">
+    <ul class="menu">
+      <li><a class="quiet-link" href={`${raiz}#obras`}>Obras</a></li>
+      {!CANAL.pendente && <li><a class="quiet-link" href={`${raiz}#canal`}>Canal</a></li>}
+      {mostrarBlog && <li><a class="quiet-link" href="/blog">Blog</a></li>}
+    </ul>
+  </nav>
+</header>
+
+<style>
+  .topo {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 1.5rem;
+    padding-block: 1.75rem;
+  }
+
+  .marca,
+  .menu {
+    font-size: 0.6875rem;
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+  }
+
+  .marca {
+    color: var(--color-ink);
+    text-decoration: none;
+  }
+
+  .menu {
+    display: flex;
+    gap: 1.5rem;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    color: var(--color-ink-soft);
+  }
+</style>

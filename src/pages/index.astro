@@ -1,8 +1,10 @@
 ---
 import Base from '../layouts/Base.astro';
+import Topo from '../components/Topo.astro';
+import Rodape from '../components/Rodape.astro';
 import Etiqueta from '../components/Etiqueta.astro';
-import { OBRAS, type Obra } from '../data/obras';
-import { SITE, SOCIAL } from '../consts';
+import { OBRAS, CANAL } from '../data/obras';
+import { SITE } from '../consts';
 
 /**
  * Obra sem ficha preenchida não vai pra parede. Some do site inteiro
@@ -11,32 +13,12 @@ import { SITE, SOCIAL } from '../consts';
 const emCartaz = OBRAS.filter((o) => !o.pendente);
 const comCodigo = emCartaz.filter((o) => o.estado === 'publico').length;
 
-const canal: Obra = {
-  titulo: 'Até Zerar',
-  ano: 'a definir',
-  resumo: 'A definir: sobre o que é o canal e com que frequência sai vídeo.',
-  meio: 'Vídeo',
-  papel: 'a definir',
-  credito: 'a definir',
-  estado: 'noar',
-  link: { href: SOCIAL.youtube, texto: 'Ver o canal' },
-  pendente: true,
-};
-
 const descricao =
   'Felipe Faria, desenvolvedor e estudante de Análise e Desenvolvimento de Sistemas no Senac São Paulo. Coleção de projetos com a ficha inteira: do que são feitos, qual foi meu papel e em que estado estão.';
 ---
 
 <Base descricao={descricao}>
-  <header class="topo wall">
-    <a class="marca" href="/">{SITE.brand}</a>
-    <nav aria-label="Seções desta página">
-      <ul class="menu">
-        <li><a class="quiet-link" href="#obras">Obras</a></li>
-        {!canal.pendente && <li><a class="quiet-link" href="#canal">Canal</a></li>}
-      </ul>
-    </nav>
-  </header>
+  <Topo naHome />
 
   <main id="conteudo">
     <!-- Parede de entrada: no museu é o texto que abre a exposição. -->
@@ -75,81 +57,21 @@ const descricao =
     </section>
 
     {
-      !canal.pendente && (
+      !CANAL.pendente && (
         <section id="canal" class="sala wall">
           <h2 class="sala-titulo">Canal</h2>
           <div class="sala-corpo">
-            <Etiqueta obra={canal} />
+            <Etiqueta obra={CANAL} />
           </div>
         </section>
       )
     }
   </main>
 
-  <footer class="rodape wall hang">
-    <p class="field">Onde me achar</p>
-    <div class="rodape-corpo">
-      <ul class="rodape-links">
-        <li>
-          <a class="quiet-link" href={SOCIAL.github} rel="me noopener noreferrer" target="_blank">
-            Felipe Faria no GitHub
-          </a>
-        </li>
-        <li>
-          <a class="quiet-link" href={SOCIAL.linkedin} rel="me noopener noreferrer" target="_blank">
-            Felipe Faria no LinkedIn
-          </a>
-        </li>
-        <li>
-          <a class="quiet-link" href={SOCIAL.youtube} rel="me noopener noreferrer" target="_blank">
-            Até Zerar no YouTube
-          </a>
-        </li>
-      </ul>
-
-      <p class="colofao">
-        Feito em Astro. Composto em Archivo e EB Garamond. Sem cookie, sem
-        rastreio e sem formulário.
-      </p>
-    </div>
-  </footer>
+  <Rodape />
 </Base>
 
 <style>
-  /* Topo: a placa da instituição. Miúda, porque quem tem que aparecer
-     grande é o nome dele, logo abaixo. */
-  .topo {
-    display: flex;
-    align-items: baseline;
-    justify-content: space-between;
-    gap: 1.5rem;
-    padding-block: 1.75rem;
-  }
-
-  .marca,
-  .menu {
-    font-size: 0.6875rem;
-    font-weight: 600;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-  }
-
-  .marca {
-    color: var(--color-ink);
-    text-decoration: none;
-  }
-
-  .menu {
-    display: flex;
-    gap: 1.5rem;
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    color: var(--color-ink-soft);
-  }
-
-  /* Entrada ------------------------------------------------------- */
-
   .entrada {
     padding-block: clamp(4rem, 14vh, 9rem) clamp(4rem, 10vh, 7rem);
   }
@@ -195,8 +117,6 @@ const descricao =
     font-variant-numeric: tabular-nums;
   }
 
-  /* Salas --------------------------------------------------------- */
-
   .sala {
     padding-block: clamp(2rem, 5vh, 3.5rem) clamp(3rem, 8vh, 5rem);
   }
@@ -214,36 +134,5 @@ const descricao =
 
   .sala-corpo {
     border-top: 1px solid var(--color-rule);
-  }
-
-  /* Rodapé -------------------------------------------------------- */
-
-  .rodape {
-    padding-block: clamp(3rem, 8vh, 5rem) clamp(4rem, 10vh, 6rem);
-    border-top: 1px solid var(--color-rule);
-  }
-
-  .rodape-links {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    display: grid;
-    gap: 0.625rem;
-    font-size: 0.9375rem;
-  }
-
-  .colofao {
-    margin-top: 2rem;
-    font-size: 0.8125rem;
-    line-height: 1.6;
-    color: var(--color-ink-soft);
-    max-width: 40ch;
-  }
-
-  @media (max-width: 47.99rem) {
-    .rodape .field {
-      margin-top: 0;
-      margin-bottom: 1rem;
-    }
   }
 </style>

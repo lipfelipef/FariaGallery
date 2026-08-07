@@ -6,9 +6,11 @@ interface Props {
   /** Vai antes do nome. Deixe vazio na home, onde o título é só o nome. */
   titulo?: string;
   descricao: string;
+  /** Página sem conteúdo ainda não deve entrar na busca. */
+  semIndexar?: boolean;
 }
 
-const { titulo, descricao } = Astro.props;
+const { titulo, descricao, semIndexar = false } = Astro.props;
 
 /**
  * O domínio não carrega o nome, então quem carrega é o título de toda
@@ -41,7 +43,9 @@ const pessoa = {
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{tituloDaAba}</title>
     <meta name="description" content={descricao} />
+    {semIndexar && <meta name="robots" content="noindex, follow" />}
     <link rel="canonical" href={canonica} />
+    <link rel="alternate" type="application/rss+xml" title={SITE.name} href="/rss.xml" />
     <link rel="alternate" hreflang="pt-BR" href={canonica} />
     <link rel="alternate" hreflang="x-default" href={canonica} />
     <link rel="sitemap" href="/sitemap-index.xml" />

@@ -31,6 +31,22 @@ export const ESTADO_TEXTO: Record<Estado, string> = {
   encerrado: 'Encerrado',
 };
 
+/**
+ * O canal fica separado porque não é software: é outro meio, e ganha sala
+ * própria. Segue a mesma ficha para a parede não ter duas gramáticas.
+ */
+export const CANAL: Obra = {
+  titulo: 'Até Zerar',
+  ano: 'a definir',
+  resumo: 'A definir: sobre o que é o canal e com que frequência sai vídeo.',
+  meio: 'Vídeo',
+  papel: 'a definir',
+  credito: 'a definir',
+  estado: 'noar',
+  link: { href: 'https://www.youtube.com/@atezerar', texto: 'Ver o canal' },
+  pendente: true,
+};
+
 export const OBRAS: Obra[] = [
   {
     titulo: 'Blucker',

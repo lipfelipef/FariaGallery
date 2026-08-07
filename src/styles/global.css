@@ -169,6 +169,95 @@ body {
     border: 1px solid var(--color-rule);
   }
 
+  /* Texto de post. Medida curta e entrelinha larga, porque aqui a
+     pessoa lê de verdade, não bate o olho como faz na etiqueta. */
+  .prosa {
+    max-width: 66ch;
+    font-size: 1.0625rem;
+    line-height: 1.7;
+  }
+
+  .prosa > * + * {
+    margin-top: 1.35em;
+  }
+
+  .prosa h2,
+  .prosa h3 {
+    font-weight: 600;
+    letter-spacing: -0.015em;
+    line-height: 1.25;
+    margin-top: 2.5em;
+  }
+
+  .prosa h2 {
+    font-size: 1.375rem;
+  }
+
+  .prosa h3 {
+    font-size: 1.125rem;
+  }
+
+  .prosa a {
+    text-decoration: underline;
+    text-decoration-color: var(--color-rule);
+    text-underline-offset: 0.2em;
+  }
+
+  .prosa a:hover {
+    text-decoration-color: var(--color-ink);
+  }
+
+  .prosa ul,
+  .prosa ol {
+    padding-left: 1.25rem;
+  }
+
+  .prosa li + li {
+    margin-top: 0.4em;
+  }
+
+  .prosa ul {
+    list-style: disc;
+  }
+
+  .prosa ol {
+    list-style: decimal;
+  }
+
+  .prosa blockquote {
+    border-left: 2px solid var(--color-rule);
+    padding-left: 1.25rem;
+    color: var(--color-ink-soft);
+  }
+
+  .prosa code {
+    font-size: 0.9em;
+    background-color: #f2f2ef;
+    padding: 0.1em 0.35em;
+    border-radius: 2px;
+  }
+
+  .prosa pre {
+    background-color: #f7f7f5;
+    border: 1px solid var(--color-rule);
+    padding: 1rem 1.15rem;
+    overflow-x: auto;
+    font-size: 0.875rem;
+    line-height: 1.6;
+  }
+
+  .prosa pre code {
+    background: none;
+    padding: 0;
+    font-size: inherit;
+  }
+
+  .prosa hr {
+    border: 0;
+    border-top: 1px solid var(--color-rule);
+    margin-block: 2.5em;
+  }
+
   /* Link de texto: sublinhado fino que engrossa no hover. */
   .quiet-link {
     text-decoration: underline;
