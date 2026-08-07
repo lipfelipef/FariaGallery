@@ -1,0 +1,10 @@
+{
+  // Diz ao Cloudflare Workers o que publicar.
+  // Site 100% estático: não existe campo "main" porque não há código de
+  // servidor, só a pasta que o `astro build` gera.
+  "name": "fariagallery",
+  "compatibility_date": "2026-08-07",
+  "assets": {
+    "directory": "./dist"
+  }
+}
