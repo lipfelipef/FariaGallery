@@ -43,6 +43,11 @@ export const UI = {
     'campo.atualizado': 'Atualizado',
     'campo.assunto': 'Assunto',
     'campo.colofao': 'Colofão',
+    'campo.duracao': 'Duração',
+    'campo.equipe': 'Equipe',
+
+    'obras.voltar': 'Voltar para as obras',
+    'link.estudo': 'Ler o estudo de caso',
 
     'estado.publico': 'Código público',
     'estado.noar': 'No ar',
@@ -111,6 +116,11 @@ export const UI = {
     'campo.atualizado': 'Updated',
     'campo.assunto': 'Subject',
     'campo.colofao': 'Colophon',
+    'campo.duracao': 'Duration',
+    'campo.equipe': 'Team',
+
+    'obras.voltar': 'Back to the works',
+    'link.estudo': 'Read the case study',
 
     'estado.publico': 'Public source',
     'estado.noar': 'Live',
@@ -179,6 +189,11 @@ export const UI = {
     'campo.atualizado': 'Actualizado',
     'campo.assunto': 'Tema',
     'campo.colofao': 'Colofón',
+    'campo.duracao': 'Duración',
+    'campo.equipe': 'Equipo',
+
+    'obras.voltar': 'Volver a las obras',
+    'link.estudo': 'Leer el estudio de caso',
 
     'estado.publico': 'Código público',
     'estado.noar': 'En línea',

@@ -2,14 +2,18 @@
 import type { Locale } from '../consts';
 import type { Obra } from '../data/obras';
 import { traduzir } from '../i18n/ui';
+import { rota } from '../i18n/utils';
 
 interface Props {
   obra: Obra;
   lang: Locale;
+  /** Verdadeiro quando existe estudo de caso escrito nesse idioma. */
+  temEstudo?: boolean;
 }
 
-const { obra, lang } = Astro.props;
+const { obra, lang, temEstudo = false } = Astro.props;
 const t = traduzir(lang);
+const urlEstudo = rota(lang, `/obras/${obra.slug}`);
 
 /** Ponto cheio quer dizer que dá para ir ver agora. Vazado, não há o que visitar. */
 const aoVivo = obra.estado !== 'encerrado';
@@ -36,7 +40,17 @@ const textoDoLink = obra.link
   </div>
 
   <div class="obra-cabeca">
-    <h3 class="work-title">{obra.titulo}</h3>
+    <h3 class="work-title">
+      {
+        temEstudo ? (
+          <a class="titulo-link" href={urlEstudo}>
+            {obra.titulo}
+          </a>
+        ) : (
+          obra.titulo
+        )
+      }
+    </h3>
     <p class="obra-resumo">{obra.resumo[lang]}</p>
   </div>
 
@@ -52,12 +66,19 @@ const textoDoLink = obra.link
   </dl>
 
   {
-    obra.link && (
+    (temEstudo || obra.link) && (
       <p class="obra-acao">
-        <a class="quiet-link" href={obra.link.href} target="_blank" rel="noopener noreferrer">
-          {textoDoLink} <span aria-hidden="true">&#8594;</span>
-          <span class="sr-only">{t('link.novaAba')}</span>
-        </a>
+        {temEstudo && (
+          <a class="quiet-link" href={urlEstudo}>
+            {t('link.estudo')} <span aria-hidden="true">&#8594;</span>
+          </a>
+        )}
+        {obra.link && (
+          <a class="quiet-link" href={obra.link.href} target="_blank" rel="noopener noreferrer">
+            {textoDoLink} <span aria-hidden="true">&#8594;</span>
+            <span class="sr-only">{t('link.novaAba')}</span>
+          </a>
+        )}
       </p>
     )
   }
@@ -131,10 +152,24 @@ const textoDoLink = obra.link
     font-style: italic;
   }
 
+  .titulo-link {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .titulo-link:hover {
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 0.12em;
+  }
+
   .obra-acao {
     grid-column: 1 / -1;
     margin-top: 1.5rem;
     font-size: 0.875rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem 2rem;
   }
 
   @media (min-width: 48rem) {

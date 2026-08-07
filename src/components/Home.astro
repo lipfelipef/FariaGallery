@@ -8,6 +8,7 @@ import Etiqueta from './Etiqueta.astro';
 import { OBRAS, CANAL } from '../data/obras';
 import { SITE, SOCIAL, CONTACT_EMAIL, EMAIL_ATIVO, CURRICULO, type Locale } from '../consts';
 import { traduzir } from '../i18n/ui';
+import { obrasComEstudo } from '../lib/estudos';
 
 interface Props {
   lang: Locale;
@@ -15,6 +16,9 @@ interface Props {
 
 const { lang } = Astro.props;
 const t = traduzir(lang);
+
+/** Obra só vira link quando existe estudo escrito naquele idioma. */
+const comEstudo = await obrasComEstudo(lang);
 
 /**
  * Obra sem ficha preenchida não vai pra parede. Some do site inteiro
@@ -60,7 +64,11 @@ const canais = [
     <section id="obras" class="sala wall">
       <h2 class="sala-titulo">{t('sala.obras')}</h2>
       <div class="sala-corpo">
-        {emCartaz.map((obra) => <Etiqueta obra={obra} lang={lang} />)}
+        {
+          emCartaz.map((obra) => (
+            <Etiqueta obra={obra} lang={lang} temEstudo={comEstudo.has(obra.slug)} />
+          ))
+        }
       </div>
     </section>
 

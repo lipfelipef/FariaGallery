@@ -26,4 +26,26 @@ const blog = defineCollection({
   }),
 });
 
-export const collections = { blog };
+/**
+ * Estudo de caso. É a sala de trás da obra: o que a etiqueta não cabe.
+ *
+ * A etiqueta responde "o que é". O estudo responde "por que ficou assim,
+ * o que quebrou e o que eu faria diferente". Sem estudo escrito, a obra
+ * continua na parede só com a etiqueta, e nenhuma página vazia é gerada.
+ */
+const estudos = defineCollection({
+  loader: glob({ base: './src/content/estudos', pattern: '**/*.md' }),
+  schema: z.object({
+    /** Precisa bater com o `slug` da obra em src/data/obras.ts. */
+    obra: z.string(),
+    idioma: z.enum(LOCALES).default('pt'),
+    rascunho: z.boolean().default(false),
+    /** Uma linha, aparece abaixo do título e na busca. */
+    chamada: z.string(),
+    /** Duração e tamanho do time. É a "dimensão" da etiqueta de museu. */
+    duracao: z.string().optional(),
+    equipe: z.string().optional(),
+  }),
+});
+
+export const collections = { blog, estudos };
