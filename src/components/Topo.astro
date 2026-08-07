@@ -21,7 +21,7 @@ const aqui = caminhoSemIdioma(Astro.url);
 
   <nav class="direita" aria-label={t('nav.obras')}>
     <ul class="menu">
-      <li><a class="quiet-link" href={`${inicio}#obras`}>{t('nav.obras')}</a></li>
+      <li><a class="quiet-link" href={rota(lang, '/obras')}>{t('nav.colecao')}</a></li>
       <li><a class="quiet-link" href={rota(lang, '/blog')}>{t('nav.blog')}</a></li>
       <li><a class="quiet-link" href={`${inicio}#contato`}>{t('nav.contato')}</a></li>
     </ul>

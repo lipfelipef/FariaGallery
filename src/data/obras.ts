@@ -28,6 +28,13 @@ export interface Obra {
   link?: { href: string; tipo: TipoLink };
   /** Marca obra cuja ficha ainda está incompleta. Não vai pra parede. */
   pendente?: boolean;
+  /**
+   * Etiquetas grossas para filtrar o acervo. Não é a stack inteira: é o que
+   * alguém digitaria procurando. Nome de tecnologia não se traduz.
+   */
+  tags: string[];
+  /** Sai na parede da home. O acervo inteiro fica na página da coleção. */
+  destaque?: boolean;
   resumo: PorIdioma;
   papel: PorIdioma;
   credito: PorIdioma;
@@ -45,6 +52,7 @@ export const CANAL: Obra = {
   estado: 'noar',
   link: { href: 'https://www.youtube.com/@atezerar', tipo: 'canal' },
   pendente: true,
+  tags: ['Vídeo'],
   resumo: {
     pt: 'A definir: sobre o que é o canal e com que frequência sai vídeo.',
     en: 'To be defined: what the channel is about and how often videos come out.',
@@ -62,6 +70,8 @@ export const OBRAS: Obra[] = [
     meio: 'Angular 19, Node.js, Express',
     estado: 'publico',
     link: { href: 'https://github.com/lipfelipef/PI.2-BluckerEcommerce', tipo: 'codigo' },
+    tags: ['Web', 'Angular', 'Node.js'],
+    destaque: true,
     resumo: {
       pt: 'Loja de jogos digitais, do catálogo até o carrinho.',
       en: 'A digital game store, from catalogue to checkout.',
@@ -73,9 +83,9 @@ export const OBRAS: Obra[] = [
       es: 'Full-stack, en pareja',
     },
     credito: {
-      pt: 'Projeto Integrador II, Senac São Paulo. Com José Victor Souza. Orientação de Evandro Carlos Teruel.',
-      en: 'Capstone project II, Senac São Paulo. With José Victor Souza. Advised by Evandro Carlos Teruel.',
-      es: 'Proyecto Integrador II, Senac São Paulo. Con José Victor Souza. Orientación de Evandro Carlos Teruel.',
+      pt: 'Projeto Integrador II, Senac Santo Amaro. Com José Victor Souza. Orientação de Evandro Carlos Teruel.',
+      en: 'Capstone project II, Senac Santo Amaro. With José Victor Souza. Advised by Evandro Carlos Teruel.',
+      es: 'Proyecto Integrador II, Senac Santo Amaro. Con José Victor Souza. Orientación de Evandro Carlos Teruel.',
     },
   },
   {
@@ -85,6 +95,8 @@ export const OBRAS: Obra[] = [
     meio: 'a definir',
     estado: 'encerrado',
     pendente: true,
+    tags: [],
+    destaque: true,
     resumo: {
       pt: 'A definir: o que era, para quem era e onde parou.',
       en: 'To be defined: what it was, who it was for, and where it stopped.',
@@ -104,6 +116,8 @@ export const OBRAS: Obra[] = [
     meio: 'HTML, CSS e JavaScript puro',
     estado: 'publico',
     link: { href: 'https://github.com/lipfelipef/SimuladoOnline', tipo: 'codigo' },
+    tags: ['Web', 'JavaScript'],
+    destaque: true,
     resumo: {
       pt: 'Monta listas de perguntas e aplica simulado de qualquer assunto.',
       en: 'Builds question lists and runs practice tests on any subject.',
@@ -123,6 +137,8 @@ export const OBRAS: Obra[] = [
     meio: 'Lógica combinacional, Logisim 2.7.1',
     estado: 'publico',
     link: { href: 'https://github.com/lipfelipef/EstufaHidroponica', tipo: 'projeto' },
+    tags: ['Hardware', 'Lógica digital'],
+    destaque: true,
     resumo: {
       pt: 'Controle de estufa de alface resolvido em lógica combinacional.',
       en: 'Lettuce greenhouse control solved with combinational logic.',
@@ -130,9 +146,9 @@ export const OBRAS: Obra[] = [
     },
     papel: { pt: 'Sozinho', en: 'Solo', es: 'En solitario' },
     credito: {
-      pt: 'Nano projeto de Conceitos de Computação, Senac São Paulo. Expressões minimizadas por mapa de Karnaugh, 13 portas de duas entradas, mais gerador e verificador de paridade ímpar.',
-      en: 'Short project for Computing Concepts, Senac São Paulo. Expressions minimised with Karnaugh maps, 13 two-input gates, plus an odd parity generator and checker.',
-      es: 'Nano proyecto de Conceptos de Computación, Senac São Paulo. Expresiones minimizadas por mapa de Karnaugh, 13 compuertas de dos entradas, más generador y verificador de paridad impar.',
+      pt: 'Nano projeto de Conceitos de Computação, Senac Santo Amaro. Expressões minimizadas por mapa de Karnaugh, 13 portas de duas entradas, mais gerador e verificador de paridade ímpar.',
+      en: 'Short project for Computing Concepts, Senac Santo Amaro. Expressions minimised with Karnaugh maps, 13 two-input gates, plus an odd parity generator and checker.',
+      es: 'Nano proyecto de Conceptos de Computación, Senac Santo Amaro. Expresiones minimizadas por mapa de Karnaugh, 13 compuertas de dos entradas, más generador y verificador de paridad impar.',
     },
   },
   {
@@ -142,6 +158,7 @@ export const OBRAS: Obra[] = [
     meio: 'Java, JavaFX, SQLite',
     estado: 'publico',
     link: { href: 'https://github.com/lipfelipef/QuizAnimado', tipo: 'codigo' },
+    tags: ['Java', 'Desktop'],
     resumo: {
       pt: 'Quiz sobre desenho dos anos 2000, com login, sorteio e pontuação.',
       en: 'A quiz about 2000s cartoons, with login, random draw, and scoring.',
@@ -149,9 +166,9 @@ export const OBRAS: Obra[] = [
     },
     papel: { pt: 'Em grupo', en: 'In a team', es: 'En grupo' },
     credito: {
-      pt: 'Projeto Integrador I, Senac São Paulo. Orientação de Marcus Vinícius Camillo Gália. Documentação escrita em LaTeX.',
-      en: 'Capstone project I, Senac São Paulo. Advised by Marcus Vinícius Camillo Gália. Documentation written in LaTeX.',
-      es: 'Proyecto Integrador I, Senac São Paulo. Orientación de Marcus Vinícius Camillo Gália. Documentación escrita en LaTeX.',
+      pt: 'Projeto Integrador I, Senac Santo Amaro. Orientação de Marcus Vinícius Camillo Gália. Documentação escrita em LaTeX.',
+      en: 'Capstone project I, Senac Santo Amaro. Advised by Marcus Vinícius Camillo Gália. Documentation written in LaTeX.',
+      es: 'Proyecto Integrador I, Senac Santo Amaro. Orientación de Marcus Vinícius Camillo Gália. Documentación escrita en LaTeX.',
     },
   },
   {
@@ -161,6 +178,7 @@ export const OBRAS: Obra[] = [
     meio: 'Python',
     estado: 'publico',
     link: { href: 'https://github.com/lipfelipef/BibliotecaTCC', tipo: 'codigo' },
+    tags: ['Python', 'Web'],
     resumo: {
       pt: 'Acervo digital com cadastro, busca e empréstimo de títulos.',
       en: 'A digital collection with registration, search, and lending of titles.',

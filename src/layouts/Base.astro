@@ -33,7 +33,11 @@ const pessoa = {
   image: new URL('/apple-touch-icon.png', SITE.url).href,
   jobTitle: 'Desenvolvedor',
   nationality: 'Brasileiro',
-  alumniOf: { '@type': 'CollegeOrUniversity', name: 'Senac São Paulo' },
+  alumniOf: {
+    '@type': 'CollegeOrUniversity',
+    name: 'Centro Universitário Senac',
+    department: { '@type': 'CollegeOrUniversity', name: 'Santo Amaro' },
+  },
   knowsAbout: ['Desenvolvimento web', 'Angular', 'Node.js', 'Java', 'Python'],
   sameAs: [SOCIAL.github, SOCIAL.linkedin, SOCIAL.youtube],
 };

@@ -1,6 +1,6 @@
 ---
 import { existsSync } from 'node:fs';
-import { fileURLToPath } from 'node:url';
+import { join } from 'node:path';
 import Base from '../layouts/Base.astro';
 import Topo from './Topo.astro';
 import Rodape from './Rodape.astro';
@@ -8,6 +8,7 @@ import Etiqueta from './Etiqueta.astro';
 import { OBRAS, CANAL } from '../data/obras';
 import { SITE, SOCIAL, CONTACT_EMAIL, EMAIL_ATIVO, CURRICULO, type Locale } from '../consts';
 import { traduzir } from '../i18n/ui';
+import { rota } from '../i18n/utils';
 import { obrasComEstudo } from '../lib/estudos';
 
 interface Props {
@@ -24,13 +25,24 @@ const comEstudo = await obrasComEstudo(lang);
  * Obra sem ficha preenchida não vai pra parede. Some do site inteiro
  * enquanto estiver marcada como `pendente`, e volta quando o campo sai.
  */
-const emCartaz = OBRAS.filter((o) => !o.pendente);
-const comCodigo = emCartaz.filter((o) => o.estado === 'publico').length;
+const acervo = OBRAS.filter((o) => !o.pendente);
+const comCodigo = acervo.filter((o) => o.estado === 'publico').length;
 
-/** O link do currículo só aparece se o arquivo existir mesmo em public/. */
-const temCurriculo = existsSync(
-  fileURLToPath(new URL(`../../public${CURRICULO}`, import.meta.url))
-);
+/**
+ * A home é a exposição, não o acervo. Só as obras marcadas como destaque
+ * ficam penduradas aqui, com a ficha inteira. O resto vive na coleção, que
+ * é o catálogo e aguenta 50 obras sem virar rolagem infinita.
+ */
+const emCartaz = acervo.filter((o) => o.destaque);
+
+/**
+ * O botão do currículo só aparece se o PDF existir mesmo em public/.
+ *
+ * Usa `process.cwd()` e não `import.meta.url`: no build o componente vira
+ * um pedaço empacotado e a URL do módulo deixa de apontar para o arquivo
+ * original, então o teste dava sempre falso.
+ */
+const temCurriculo = existsSync(join(process.cwd(), 'public', CURRICULO));
 
 const canais = [
   ...(EMAIL_ATIVO
@@ -57,18 +69,25 @@ const canais = [
           <p>{t('parede.2')}</p>
         </div>
 
-        <p class="acervo">{t('acervo')(emCartaz.length, comCodigo)}</p>
+        <p class="acervo">{t('acervo')(acervo.length, comCodigo)}</p>
       </div>
     </section>
 
     <section id="obras" class="sala wall">
-      <h2 class="sala-titulo">{t('sala.obras')}</h2>
+      <h2 class="sala-titulo">{t('sala.emCartaz')}</h2>
       <div class="sala-corpo">
         {
           emCartaz.map((obra) => (
             <Etiqueta obra={obra} lang={lang} temEstudo={comEstudo.has(obra.slug)} />
           ))
         }
+
+        <p class="para-colecao hang">
+          <span></span>
+          <a class="quiet-link" href={rota(lang, '/obras')}>
+            {t('colecao.verTudo')(acervo.length)} <span aria-hidden="true">&#8594;</span>
+          </a>
+        </p>
       </div>
     </section>
 
@@ -108,12 +127,15 @@ const canais = [
 
         {
           temCurriculo && (
-            <p class="curriculo hang">
+            <div class="curriculo hang">
               <span />
-              <a class="quiet-link" href={CURRICULO} download>
-                {t('link.curriculo')} <span aria-hidden="true">&#8595;</span>
+              <a class="botao" href={CURRICULO} download>
+                <span>{t('link.curriculo')}</span>
+                <span class="botao-seta" aria-hidden="true">
+                  &#8595;
+                </span>
               </a>
-            </p>
+            </div>
           )
         }
       </div>
@@ -199,8 +221,47 @@ const canais = [
     }
   }
 
+  .para-colecao {
+    padding-block: clamp(2rem, 4vw, 2.75rem);
+    border-top: 1px solid var(--color-rule);
+    font-size: 0.875rem;
+  }
+
   .curriculo {
     padding-block: 1.75rem clamp(2rem, 4vw, 3rem);
+  }
+
+  /* Botão de verdade, não link de texto: currículo é a ação que o
+     recrutador procura, e precisa de alvo grande e contorno visível.
+     Inverte no hover em vez de acender uma cor que não existe no site. */
+  .botao {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.9rem;
+    border: 1px solid var(--color-ink);
+    padding: 0.85rem 1.35rem;
+    font-size: 0.6875rem;
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--color-ink);
+    text-decoration: none;
+    transition:
+      background-color 180ms ease,
+      color 180ms ease;
+  }
+
+  .botao:hover {
+    background-color: var(--color-ink);
+    color: var(--color-wall);
+  }
+
+  .botao-seta {
     font-size: 0.875rem;
+    transition: transform 180ms ease;
+  }
+
+  .botao:hover .botao-seta {
+    transform: translateY(2px);
   }
 </style>

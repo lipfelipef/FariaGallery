@@ -23,7 +23,8 @@ export const UI = {
     'tema.paraEscuro': 'Mudar para a sala escura',
     'tema.paraClara': 'Mudar para a sala clara',
 
-    'artista': 'Brasileiro, n. 2006. Análise e Desenvolvimento de Sistemas, Senac São Paulo.',
+    'artista':
+      'Brasileiro, n. 2006. Análise e Desenvolvimento de Sistemas, Centro Universitário Senac, Santo Amaro.',
     'parede.1':
       'Aqui fica o registro do que eu construo. Cada obra vem com a ficha inteira: do que é feita, qual foi meu papel, com quem foi e em que estado está.',
     'parede.2':
@@ -49,6 +50,18 @@ export const UI = {
     'obras.voltar': 'Voltar para as obras',
     'link.estudo': 'Ler o estudo de caso',
 
+    'sala.emCartaz': 'Em cartaz',
+    'nav.colecao': 'Coleção',
+    'colecao.titulo': 'Coleção',
+    'colecao.chamada':
+      'O acervo inteiro, em ordem do mais novo para o mais antigo. Filtre pelo meio para achar rápido.',
+    'colecao.verTudo': (total: number) => `Ver a coleção inteira, ${total} obras`,
+    'colecao.filtrar': 'Filtrar',
+    'colecao.todas': 'Todas',
+    'colecao.contagem': (mostrando: number, total: number) =>
+      mostrando === total ? `${total} obras` : `${mostrando} de ${total} obras`,
+    'colecao.nada': 'Nenhuma obra com esse filtro.',
+
     'estado.publico': 'Código público',
     'estado.noar': 'No ar',
     'estado.encerrado': 'Encerrado',
@@ -73,7 +86,7 @@ export const UI = {
       'Feito em Astro. Composto em Archivo e EB Garamond. Sem cookie, sem rastreio e sem formulário.',
 
     'meta.home':
-      'Felipe Faria, desenvolvedor e estudante de Análise e Desenvolvimento de Sistemas no Senac São Paulo. Coleção de projetos com a ficha inteira: do que são feitos, qual foi meu papel e em que estado estão.',
+      'Felipe Faria, desenvolvedor e estudante de Análise e Desenvolvimento de Sistemas no Centro Universitário Senac, Santo Amaro. Coleção de projetos com a ficha inteira: do que são feitos, qual foi meu papel e em que estado estão.',
     'meta.blog':
       'Textos de Felipe Faria sobre desenvolvimento, projetos e o que aprendeu construindo.',
     'meta.blogVazio':
@@ -96,7 +109,8 @@ export const UI = {
     'tema.paraEscuro': 'Switch to the dark room',
     'tema.paraClara': 'Switch to the light room',
 
-    'artista': 'Brazilian, b. 2006. Systems Analysis and Development, Senac São Paulo.',
+    'artista':
+      'Brazilian, b. 2006. Systems Analysis and Development, Centro Universitário Senac, Santo Amaro campus.',
     'parede.1':
       'This is the record of what I build. Every work comes with the full label: what it is made of, what my role was, who I built it with, and what state it is in.',
     'parede.2':
@@ -122,6 +136,18 @@ export const UI = {
     'obras.voltar': 'Back to the works',
     'link.estudo': 'Read the case study',
 
+    'sala.emCartaz': 'On view',
+    'nav.colecao': 'Collection',
+    'colecao.titulo': 'Collection',
+    'colecao.chamada':
+      'The whole holdings, newest first. Filter by medium to find something fast.',
+    'colecao.verTudo': (total: number) => `See the whole collection, ${total} works`,
+    'colecao.filtrar': 'Filter',
+    'colecao.todas': 'All',
+    'colecao.contagem': (mostrando: number, total: number) =>
+      mostrando === total ? `${total} works` : `${mostrando} of ${total} works`,
+    'colecao.nada': 'No work matches that filter.',
+
     'estado.publico': 'Public source',
     'estado.noar': 'Live',
     'estado.encerrado': 'Discontinued',
@@ -146,7 +172,7 @@ export const UI = {
       'Built with Astro. Set in Archivo and EB Garamond. No cookies, no tracking, no forms.',
 
     'meta.home':
-      'Felipe Faria, developer and Systems Analysis and Development student at Senac São Paulo. A collection of projects with the full label: what they are made of, what my role was, and what state they are in.',
+      'Felipe Faria, developer and Systems Analysis and Development student at Centro Universitário Senac, Santo Amaro. A collection of projects with the full label: what they are made of, what my role was, and what state they are in.',
     'meta.blog':
       'Writing by Felipe Faria on development, projects, and what he learned building them.',
     'meta.blogVazio':
@@ -169,7 +195,8 @@ export const UI = {
     'tema.paraEscuro': 'Cambiar a la sala oscura',
     'tema.paraClara': 'Cambiar a la sala clara',
 
-    'artista': 'Brasileño, n. 2006. Análisis y Desarrollo de Sistemas, Senac São Paulo.',
+    'artista':
+      'Brasileño, n. 2006. Análisis y Desarrollo de Sistemas, Centro Universitário Senac, Santo Amaro.',
     'parede.1':
       'Aquí queda el registro de lo que construyo. Cada obra viene con la ficha completa: de qué está hecha, cuál fue mi papel, con quién la hice y en qué estado está.',
     'parede.2':
@@ -195,6 +222,18 @@ export const UI = {
     'obras.voltar': 'Volver a las obras',
     'link.estudo': 'Leer el estudio de caso',
 
+    'sala.emCartaz': 'En exhibición',
+    'nav.colecao': 'Colección',
+    'colecao.titulo': 'Colección',
+    'colecao.chamada':
+      'El acervo entero, del más nuevo al más antiguo. Filtre por medio para encontrar rápido.',
+    'colecao.verTudo': (total: number) => `Ver la colección entera, ${total} obras`,
+    'colecao.filtrar': 'Filtrar',
+    'colecao.todas': 'Todas',
+    'colecao.contagem': (mostrando: number, total: number) =>
+      mostrando === total ? `${total} obras` : `${mostrando} de ${total} obras`,
+    'colecao.nada': 'Ninguna obra con ese filtro.',
+
     'estado.publico': 'Código público',
     'estado.noar': 'En línea',
     'estado.encerrado': 'Descontinuado',
@@ -219,7 +258,7 @@ export const UI = {
       'Hecho en Astro. Compuesto en Archivo y EB Garamond. Sin cookies, sin rastreo y sin formularios.',
 
     'meta.home':
-      'Felipe Faria, desarrollador y estudiante de Análisis y Desarrollo de Sistemas en Senac São Paulo. Colección de proyectos con la ficha completa: de qué están hechos, cuál fue mi papel y en qué estado están.',
+      'Felipe Faria, desarrollador y estudiante de Análisis y Desarrollo de Sistemas en el Centro Universitário Senac, Santo Amaro. Colección de proyectos con la ficha completa: de qué están hechos, cuál fue mi papel y en qué estado están.',
     'meta.blog':
       'Textos de Felipe Faria sobre desarrollo, proyectos y lo que aprendió construyendo.',
     'meta.blogVazio':
