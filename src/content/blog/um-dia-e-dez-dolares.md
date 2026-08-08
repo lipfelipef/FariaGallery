@@ -5,7 +5,7 @@ data: 2026-08-08T19:30:00-03:00
 idioma: pt
 obra: fariagallery
 endereco: um-dia-e-dez-dolares
-ordem: 9
+ordem: 2
 assuntos:
   - Astro
   - Cloudflare

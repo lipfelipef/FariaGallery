@@ -6,7 +6,7 @@ data: 2026-08-08T01:05:00-03:00
 idioma: es
 obra: estufa-hidroponica
 endereco: estufa-hidroponica
-ordem: 5
+ordem: 6
 assuntos:
   - Lógica digital
   - Logisim

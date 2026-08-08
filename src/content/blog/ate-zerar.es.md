@@ -6,7 +6,7 @@ data: 2026-08-07T22:25:00-03:00
 idioma: es
 obra: ate-zerar
 endereco: ate-zerar
-ordem: 2
+ordem: 3
 assuntos:
   - Video
   - Games
