@@ -1,7 +1,7 @@
 ---
 titulo: 'BluckerTV: cinco meses e um assinante'
 resumo: Post-mortem de uma plataforma de vídeo construída sozinho e encerrada por decisão de negócio, não por falha técnica. O que os números ensinaram.
-data: 2026-08-07
+data: 2026-08-07T21:27:00-03:00
 idioma: pt
 obra: bluckertv
 endereco: bluckertv

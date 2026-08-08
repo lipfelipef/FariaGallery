@@ -2,7 +2,8 @@
 import Base from '../layouts/Base.astro';
 import Topo from './Topo.astro';
 import Rodape from './Rodape.astro';
-import { doTipo, ordemDoAno } from '../data/obras';
+import { doTipo, ordemDoAno, anoExibido, inicioDaObra } from '../data/obras';
+import { tempoRelativo } from '../lib/tempo';
 import type { Locale } from '../consts';
 import { traduzir } from '../i18n/ui';
 import { rota } from '../i18n/utils';
@@ -34,7 +35,23 @@ const anos = [...new Set(acervo.map((o) => o.ano))].sort(
   (a, b) =>
     ordemDoAno(acervo.find((o) => o.ano === b)!) - ordemDoAno(acervo.find((o) => o.ano === a)!)
 );
-const porAno = anos.map((ano) => ({ ano, obras: acervo.filter((o) => o.ano === ano) }));
+
+/**
+ * Cada grupo mostra o ano e, embaixo, há quanto tempo foi. O ano diz quando,
+ * o relativo diz o quão longe: "2024" não conta nada sozinho para quem lê
+ * daqui a cinco anos, "há 2 anos" conta.
+ */
+const porAno = anos.map((ano) => {
+  const obras = acervo.filter((o) => o.ano === ano);
+  const primeira = obras[0];
+  const inicio = inicioDaObra(primeira) ?? new Date(`${ano}-01-01T12:00:00Z`);
+  return {
+    ano,
+    rotulo: anoExibido(primeira, t('tempo.atualmente')),
+    relativo: primeira.ativa ? undefined : tempoRelativo(inicio, lang),
+    obras,
+  };
+});
 
 /** Etiquetas com contagem, da mais usada para a menos. Só aparece quem tem 1+. */
 const contagem = new Map<string, number>();
@@ -83,9 +100,12 @@ const destino = (slug: string, href?: string) => {
 
       <div class="catalogo">
         {
-          porAno.map(({ ano, obras }) => (
+          porAno.map(({ rotulo, relativo, obras }) => (
             <section class="grupo hang" data-grupo>
-              <p class="ano">{ano}</p>
+              <p class="ano">
+                {rotulo}
+                {relativo && <span class="ano-relativo">{relativo}</span>}
+              </p>
               <ul class="linhas">
                 {obras.map((obra) => (
                   <li class="linha" data-tags={obra.tags.join(',')}>
@@ -265,6 +285,14 @@ const destino = (slug: string, href?: string) => {
     color: var(--color-ink-soft);
     font-variant-numeric: tabular-nums;
     padding-top: 0.85rem;
+  }
+
+  .ano-relativo {
+    display: block;
+    margin-top: 0.2rem;
+    font-weight: 400;
+    font-size: 0.75rem;
+    opacity: 0.75;
   }
 
   .linhas {

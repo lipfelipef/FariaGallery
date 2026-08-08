@@ -31,6 +31,13 @@ export interface Obra {
   anoOrdem?: number;
   /** Obra ainda em andamento. Empata com o ano corrente e fica acima dele. */
   ativa?: boolean;
+  /**
+   * Quando começou e quando terminou, em ISO. Serve para calcular a duração
+   * sozinho, em vez de eu escrever "5 meses" e a conta envelhecer. Sem `fim`
+   * e com `ativa`, conta até hoje.
+   */
+  inicio?: string;
+  fim?: string;
   /** A stack, tipografada como linha de meio: separada por vírgula. */
   meio: string;
   estado: Estado;
@@ -76,6 +83,13 @@ export const ordemDoAno = (o: Obra) =>
 export const doTipo = (tipo: 'obra' | 'experiencia') =>
   OBRAS.filter((o) => !o.pendente && (o.tipo ?? 'obra') === tipo);
 
+export const inicioDaObra = (o: Obra) => (o.inicio ? new Date(o.inicio) : undefined);
+export const fimDaObra = (o: Obra) => (o.fim ? new Date(o.fim) : undefined);
+
+/** "2026" para o que terminou, "2020 - atualmente" para o que continua. */
+export const anoExibido = (o: Obra, atualmente: string) =>
+  o.ativa ? `${o.ano} - ${atualmente}` : o.ano;
+
 export const OBRAS: Obra[] = [
   {
     slug: 'blucker',
@@ -108,6 +122,8 @@ export const OBRAS: Obra[] = [
     ano: '2026',
     meio: 'PeerTube, TypeScript, PostgreSQL, nginx, FFmpeg',
     estado: 'encerrado',
+    inicio: '2026-03-01',
+    fim: '2026-08-04',
     // Empresa aberta, operada e fechada. Isso é experiência, não projeto.
     tipo: 'experiencia',
     tags: ['Vídeo', 'TypeScript', 'Infraestrutura'],
@@ -138,9 +154,10 @@ export const OBRAS: Obra[] = [
     // Em número, é a obra de maior alcance da coleção.
     slug: 'ate-zerar',
     titulo: 'Até Zerar',
-    ano: '2020 até hoje',
+    ano: '2020',
     anoOrdem: 2026,
     ativa: true,
+    inicio: '2020-01-18',
     tipo: 'experiencia',
     meio: 'Vídeo, 4K60fps',
     estado: 'noar',

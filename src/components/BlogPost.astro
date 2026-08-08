@@ -6,7 +6,7 @@ import Rodape from './Rodape.astro';
 import type { Locale } from '../consts';
 import { traduzir } from '../i18n/ui';
 import { rota } from '../i18n/utils';
-import { dataPorExtenso, dataISO, type Post } from '../lib/blog';
+import { dataComHora, dataISO, tempoRelativo, type Post } from '../lib/blog';
 
 interface Props {
   post: Post;
@@ -43,8 +43,9 @@ const { Content } = await render(post);
           <dt class="field">{t('campo.publicado')}</dt>
           <dd class="value">
             <time datetime={dataISO(post.data.data)}>
-              {dataPorExtenso(post.data.data, lang)}
+              {dataComHora(post.data.data, lang)}
             </time>
+            <span class="relativo">{tempoRelativo(post.data.data, lang)}</span>
           </dd>
 
           {
@@ -53,8 +54,9 @@ const { Content } = await render(post);
                 <dt class="field">{t('campo.atualizado')}</dt>
                 <dd class="value">
                   <time datetime={dataISO(post.data.atualizado)}>
-                    {dataPorExtenso(post.data.atualizado, lang)}
+                    {dataComHora(post.data.atualizado, lang)}
                   </time>
+                  <span class="relativo">{tempoRelativo(post.data.atualizado, lang)}</span>
                 </dd>
               </>
             )
@@ -130,6 +132,18 @@ const { Content } = await render(post);
       grid-template-columns: minmax(0, 1fr);
       row-gap: 0.125rem;
     }
+  }
+
+  /* O relativo vem depois da data exata, mais apagado: a data é o dado,
+     o "há 2 horas" é a ajuda para situar. */
+  .relativo {
+    color: var(--color-ink-soft);
+  }
+
+  .relativo::before {
+    content: '·';
+    margin-inline: 0.5rem;
+    opacity: 0.6;
   }
 
   .prosa {

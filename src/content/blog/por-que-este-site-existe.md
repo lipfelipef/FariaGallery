@@ -1,7 +1,8 @@
 ---
 titulo: Por que este site existe
 resumo: Quem eu sou, o que a Faria Gallery é, e por que cada projeto aqui aparece com ficha de museu em vez de print bonito.
-data: 2026-08-07
+data: 2026-08-07T22:27:00-03:00
+atualizado: 2026-08-07T23:10:00-03:00
 idioma: pt
 endereco: por-que-este-site-existe
 assuntos:

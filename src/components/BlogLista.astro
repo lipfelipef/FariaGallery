@@ -5,7 +5,7 @@ import Rodape from './Rodape.astro';
 import type { Locale } from '../consts';
 import { traduzir } from '../i18n/ui';
 import { rota } from '../i18n/utils';
-import { postsPublicados, dataPorExtenso, dataISO, slugDoPost } from '../lib/blog';
+import { postsPublicados, dataPorExtenso, dataISO, tempoRelativo, slugDoPost } from '../lib/blog';
 
 interface Props {
   lang: Locale;
@@ -89,9 +89,12 @@ const assuntos = [...contagem.entries()].sort((a, b) => b[1] - a[1] || a[0].loca
                   data-tags={post.data.assuntos.join(',')}
                   data-data={dataISO(post.data.data)}
                 >
-                  <time class="item-data" datetime={dataISO(post.data.data)}>
-                    {dataPorExtenso(post.data.data, lang)}
-                  </time>
+                  <p class="item-data">
+                    <time datetime={dataISO(post.data.data)}>
+                      {dataPorExtenso(post.data.data, lang)}
+                    </time>
+                    <span class="item-relativo">{tempoRelativo(post.data.data, lang)}</span>
+                  </p>
                   <div>
                     <h2 class="work-title">
                       <a class="item-link" href={rota(lang, `/blog/${slugDoPost(post)}`)}>
@@ -285,6 +288,13 @@ const assuntos = [...contagem.entries()].sort((a, b) => b[1] - a[1] || a[0].loca
     font-size: 0.8125rem;
     color: var(--color-ink-soft);
     font-variant-numeric: tabular-nums;
+  }
+
+  .item-relativo {
+    display: block;
+    margin-top: 0.2rem;
+    font-size: 0.75rem;
+    opacity: 0.75;
   }
 
   @media (min-width: 48rem) {

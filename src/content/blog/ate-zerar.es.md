@@ -1,7 +1,7 @@
 ---
 titulo: 'Até Zerar: seis años grabando juegos enteros'
 resumo: Cómo un canal de gameplay sin comentarios llegó a 165 videos y 5,7 millones de visualizaciones, y qué enseñan seis años de publicación constante sobre producción.
-data: 2026-08-07
+data: 2026-08-07T22:25:00-03:00
 idioma: es
 obra: ate-zerar
 endereco: ate-zerar

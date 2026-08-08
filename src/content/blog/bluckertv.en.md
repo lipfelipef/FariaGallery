@@ -1,7 +1,7 @@
 ---
 titulo: 'BluckerTV: five months, one subscriber'
 resumo: Post-mortem of a video platform built alone and shut down as a business decision, not a technical failure. What the numbers taught me.
-data: 2026-08-07
+data: 2026-08-07T21:27:00-03:00
 idioma: en
 obra: bluckertv
 endereco: bluckertv

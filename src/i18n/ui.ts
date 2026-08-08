@@ -44,6 +44,8 @@ export const UI = {
     'campo.assunto': 'Assunto',
     'campo.colofao': 'Colofão',
     'campo.dimensoes': 'Dimensões',
+    'campo.duracao': 'Duração',
+    'tempo.atualmente': 'atualmente',
 
     'link.texto': 'Ler o texto completo',
 
@@ -164,6 +166,8 @@ export const UI = {
     'campo.assunto': 'Subject',
     'campo.colofao': 'Colophon',
     'campo.dimensoes': 'Dimensions',
+    'campo.duracao': 'Duration',
+    'tempo.atualmente': 'present',
 
     'link.texto': 'Read the full write-up',
 
@@ -284,6 +288,8 @@ export const UI = {
     'campo.assunto': 'Tema',
     'campo.colofao': 'Colofón',
     'campo.dimensoes': 'Dimensiones',
+    'campo.duracao': 'Duración',
+    'tempo.atualmente': 'actualmente',
 
     'link.texto': 'Leer el texto completo',
 

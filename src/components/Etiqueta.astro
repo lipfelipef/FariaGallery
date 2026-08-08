@@ -1,8 +1,9 @@
 ---
 import type { Locale } from '../consts';
-import type { Obra } from '../data/obras';
+import { anoExibido, inicioDaObra, fimDaObra, type Obra } from '../data/obras';
 import { traduzir } from '../i18n/ui';
 import { rota } from '../i18n/utils';
+import { duracao } from '../lib/tempo';
 
 interface Props {
   obra: Obra;
@@ -21,8 +22,13 @@ const aoVivo = obra.estado !== 'encerrado';
 const naoPreenchido = (valor: string) =>
   obra.pendente && /^(a definir|to be defined)$/i.test(valor);
 
+/** Calculada da data, não escrita à mão: assim ela não envelhece sozinha. */
+const inicio = inicioDaObra(obra);
+const quanto = inicio ? duracao(inicio, fimDaObra(obra), lang) : undefined;
+
 const ficha = [
   { campo: t('campo.meio'), valor: obra.meio },
+  ...(quanto ? [{ campo: t('campo.duracao'), valor: quanto }] : []),
   ...(obra.dimensoes ? [{ campo: t('campo.dimensoes'), valor: obra.dimensoes[lang] }] : []),
   { campo: t('campo.papel'), valor: obra.papel[lang] },
   { campo: t('campo.credito'), valor: obra.credito[lang] },
@@ -37,7 +43,7 @@ const textoDoLink = obra.link
 <article class="obra hang">
   <div class="obra-margem">
     <span class:list={['dot', aoVivo ? 'dot-on' : 'dot-off']} aria-hidden="true"></span>
-    <span class="obra-ano">{obra.ano}</span>
+    <span class="obra-ano">{anoExibido(obra, t('tempo.atualmente'))}</span>
   </div>
 
   <div class="obra-cabeca">

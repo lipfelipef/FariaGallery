@@ -1,6 +1,7 @@
 import { getCollection, type CollectionEntry } from 'astro:content';
 import { DEFAULT_LOCALE, type Locale } from '../consts';
-import { LOCALE_DATA } from '../i18n/utils';
+
+export { dataPorExtenso, dataComHora, dataISO, diaISO, tempoRelativo } from './tempo';
 
 export type Post = CollectionEntry<'blog'>;
 
@@ -46,14 +47,3 @@ export async function postsPorObra(lang: Locale): Promise<Map<string, string>> {
   return mapa;
 }
 
-/** Data por extenso no idioma da página. Fuso em UTC para o dia não escorregar. */
-export function dataPorExtenso(d: Date, lang: Locale): string {
-  return new Intl.DateTimeFormat(LOCALE_DATA[lang], {
-    day: '2-digit',
-    month: 'long',
-    year: 'numeric',
-    timeZone: 'UTC',
-  }).format(d);
-}
-
-export const dataISO = (d: Date) => d.toISOString().slice(0, 10);
