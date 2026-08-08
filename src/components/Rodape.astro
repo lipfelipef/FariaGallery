@@ -1,5 +1,5 @@
 ---
-import { SITE, type Locale } from '../consts';
+import { SITE, REPO, type Locale } from '../consts';
 import { traduzir } from '../i18n/ui';
 
 interface Props {
@@ -11,17 +11,34 @@ const t = traduzir(lang);
 const ano = new Date().getFullYear();
 ---
 
-<footer class="rodape wall hang">
-  <p class="field">{t('campo.colofao')}</p>
-  <div>
-    <p class="colofao">{t('colofao')}</p>
-    <p class="assinatura">{SITE.name}, {ano}</p>
+<footer class="rodape wall">
+  <div class="hang">
+    <p class="field">{t('campo.colofao')}</p>
+    <div>
+      <p class="colofao">{t('colofao')}</p>
+      <p class="assinatura">{SITE.name}, {ano}</p>
+    </div>
+  </div>
+
+  <!-- Letra miúda. Fica em toda página de propósito: privacidade, licença
+       e direitos são coisas que a pessoa procura no rodapé, não num menu. -->
+  <div class="miudo hang">
+    <span></span>
+    <div>
+      <p>{t('rodape.privacidade')}</p>
+      <p>
+        <a class="quiet-link" href={REPO} rel="noopener noreferrer" target="_blank">
+          {t('rodape.codigo')}
+        </a>
+      </p>
+      <p>{t('rodape.direitos')(ano)}</p>
+    </div>
   </div>
 </footer>
 
 <style>
   .rodape {
-    padding-block: clamp(3rem, 8vh, 5rem) clamp(4rem, 10vh, 6rem);
+    padding-block: clamp(3rem, 8vh, 5rem) clamp(3rem, 8vh, 4rem);
     border-top: 1px solid var(--color-rule);
   }
 
@@ -37,6 +54,23 @@ const ano = new Date().getFullYear();
     font-size: 0.8125rem;
     color: var(--color-ink-soft);
     font-variant-numeric: tabular-nums;
+  }
+
+  .miudo {
+    margin-top: clamp(2.5rem, 6vh, 4rem);
+    padding-top: 1.75rem;
+    border-top: 1px solid var(--color-rule);
+  }
+
+  .miudo p {
+    font-size: 0.75rem;
+    line-height: 1.65;
+    color: var(--color-ink-soft);
+    max-width: 62ch;
+  }
+
+  .miudo p + p {
+    margin-top: 0.6rem;
   }
 
   @media (max-width: 47.99rem) {

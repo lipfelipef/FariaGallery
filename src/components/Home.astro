@@ -7,7 +7,7 @@ import { OBRAS, doTipo } from '../data/obras';
 import { SITE, SOCIAL, type Locale } from '../consts';
 import { traduzir } from '../i18n/ui';
 import { rota } from '../i18n/utils';
-import { postsPorObra } from '../lib/blog';
+import { postsPorObra, postsPublicados } from '../lib/blog';
 
 interface Props {
   lang: Locale;
@@ -17,23 +17,25 @@ const { lang } = Astro.props;
 const t = traduzir(lang);
 
 /** Obra só vira link quando existe post escrito sobre ela naquele idioma. */
-const textos = await postsPorObra(lang);
+const textoDaObra = await postsPorObra(lang);
 
 /**
- * Obra sem ficha preenchida não vai pra parede. Some do site inteiro
- * enquanto estiver marcada como `pendente`, e volta quando o campo sai.
+ * Ficha sem conteúdo preenchido não entra em contagem nem vai pra parede.
+ * Some do site inteiro enquanto estiver marcada como `pendente`.
  */
 const obras = doTipo('obra');
-const comCodigo = obras.filter((o) => o.estado === 'publico').length;
+const experiencias = doTipo('experiencia');
+const totalTextos = (await postsPublicados(lang)).length;
 
 /**
  * A home é a exposição, não o acervo. Só o que está marcado como destaque
  * fica pendurado aqui, com a ficha inteira, e a curadoria ignora o tipo de
  * propósito: se a coisa mais forte é uma experiência, ela vem para a parede.
- * O resto vive na coleção e na experiência, que aguentam 50 fichas sem virar
- * rolagem infinita.
+ * A ordem é a do campo `destaque`, escolhida a dedo, não a cronologia.
  */
-const emCartaz = OBRAS.filter((o) => !o.pendente && o.destaque);
+const emCartaz = OBRAS.filter((o) => !o.pendente && o.destaque).sort(
+  (a, b) => (a.destaque ?? 99) - (b.destaque ?? 99)
+);
 
 ---
 
@@ -52,7 +54,9 @@ const emCartaz = OBRAS.filter((o) => !o.pendente && o.destaque);
           <p>{t('parede.2')}</p>
         </div>
 
-        <p class="acervo">{t('acervo')(obras.length, comCodigo)}</p>
+        <p class="acervo">
+          {t('acervo')(obras.length, experiencias.length, totalTextos)}
+        </p>
       </div>
     </section>
 
@@ -61,7 +65,7 @@ const emCartaz = OBRAS.filter((o) => !o.pendente && o.destaque);
       <div class="sala-corpo">
         {
           emCartaz.map((obra) => (
-            <Etiqueta obra={obra} lang={lang} post={textos.get(obra.slug)} />
+            <Etiqueta obra={obra} lang={lang} post={textoDaObra.get(obra.slug)} />
           ))
         }
 

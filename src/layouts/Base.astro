@@ -1,6 +1,6 @@
 ---
 import '../styles/global.css';
-import { SITE, SOCIAL, type Locale } from '../consts';
+import { SITE, PERFIS, type Locale } from '../consts';
 import { traduzir } from '../i18n/ui';
 import { LANG_HTML, rota } from '../i18n/utils';
 import { destinosPorIdioma } from '../lib/idiomas';
@@ -79,7 +79,7 @@ const pessoa = {
     department: { '@type': 'CollegeOrUniversity', name: 'Santo Amaro' },
   },
   knowsAbout: ['Desenvolvimento web', 'Angular', 'Node.js', 'Java', 'Python'],
-  sameAs: SOCIAL.map((s) => s.href),
+  sameAs: PERFIS,
 };
 ---
 

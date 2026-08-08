@@ -30,8 +30,8 @@ export const UI = {
       'Aqui fica o registro do que eu construo. Cada obra vem com a ficha inteira: do que é feita, qual foi meu papel, com quem foi e em que estado está.',
     'parede.2':
       'O que não deu certo entra com a mesma ficha, porque projeto que parou também tem o que ensinar.',
-    'acervo': (total: number, publicas: number) =>
-      `${total} obras na coleção. ${publicas} com código público.`,
+    'acervo': (obras: number, experiencias: number, textos: number) =>
+      `${obras} obras na coleção, ${experiencias} experiências e ${textos} ${textos === 1 ? 'texto publicado' : 'textos publicados'}.`,
 
     'sala.contato': 'Contato',
 
@@ -71,7 +71,14 @@ export const UI = {
 
     'contato.titulo': 'Contato',
     'contato.email': 'E-mail',
-    'contato.chamada': 'Para vaga, estágio, projeto ou só trocar ideia.',
+    'contato.chamada':
+      'Para proposta de vaga, estágio, freela ou parceria. Se você quer contratar ou construir algo junto, é por aqui.',
+    'contato.local': 'Onde estou',
+    'contato.localValor': 'São Paulo, Brasil',
+    'contato.responde': 'Resposta',
+    'contato.respondeValor': 'Escrevo de volta em português, inglês ou espanhol',
+    'contato.nota':
+      'Escreva direto, sem formalidade. Se for vaga, o link da descrição já ajuda. Se for projeto, uma linha sobre o escopo e o prazo resolve.',
 
     'sala.redes': 'Onde me achar',
     'erro404.titulo': 'Esta sala não existe',
@@ -99,8 +106,12 @@ export const UI = {
         : `${mostrando} de ${total} textos`,
     'blog.nada': 'Nenhum texto com esse assunto.',
 
-    'colofao':
-      'Feito em Astro. Composto em Archivo e EB Garamond. Sem cookie, sem rastreio e sem formulário.',
+    'colofao': 'Feito em Astro. Composto em Archivo e EB Garamond.',
+    'rodape.privacidade':
+      'Este site não coleta dados pessoais, não usa cookie e não rastreia quem visita. Não há formulário, login nem banco de dados.',
+    'rodape.codigo': 'Código aberto no GitHub, sob licença MIT.',
+    'rodape.direitos': (ano: number) =>
+      `Textos, imagens e identidade visual © Felipe Faria, ${ano}. Todos os direitos reservados.`,
 
     'meta.home':
       'Felipe Faria, desenvolvedor e estudante de Análise e Desenvolvimento de Sistemas. Projetos e experiências com a ficha inteira, do que são feitos ao estado atual.',
@@ -139,8 +150,8 @@ export const UI = {
       'This is the record of what I build. Every work comes with the full label: what it is made of, what my role was, who I built it with, and what state it is in.',
     'parede.2':
       'What did not work out gets the same label, because a project that stopped still has something to teach.',
-    'acervo': (total: number, publicas: number) =>
-      `${total} works in the collection. ${publicas} with public source code.`,
+    'acervo': (obras: number, experiencias: number, textos: number) =>
+      `${obras} works in the collection, ${experiencias} experiences, and ${textos} published ${textos === 1 ? 'piece' : 'pieces'}.`,
 
     'sala.contato': 'Contact',
 
@@ -180,7 +191,14 @@ export const UI = {
 
     'contato.titulo': 'Contact',
     'contato.email': 'Email',
-    'contato.chamada': 'For a role, an internship, a project, or just to talk.',
+    'contato.chamada':
+      'For a role, an internship, freelance work, or a partnership. If you want to hire or build something together, this is the way.',
+    'contato.local': 'Based in',
+    'contato.localValor': 'São Paulo, Brazil',
+    'contato.responde': 'Reply',
+    'contato.respondeValor': 'I write back in Portuguese, English, or Spanish',
+    'contato.nota':
+      'Write directly, no formalities. For a role, the job description link already helps. For a project, one line on scope and timeline is enough.',
 
     'sala.redes': 'Where to find me',
     'erro404.titulo': 'This room does not exist',
@@ -208,8 +226,12 @@ export const UI = {
         : `${mostrando} of ${total} pieces`,
     'blog.nada': 'No piece on that subject.',
 
-    'colofao':
-      'Built with Astro. Set in Archivo and EB Garamond. No cookies, no tracking, no forms.',
+    'colofao': 'Built with Astro. Set in Archivo and EB Garamond.',
+    'rodape.privacidade':
+      'This site collects no personal data, sets no cookies, and tracks nobody. There are no forms, no login, and no database.',
+    'rodape.codigo': 'Open source on GitHub, under the MIT licence.',
+    'rodape.direitos': (ano: number) =>
+      `Text, images, and visual identity © Felipe Faria, ${ano}. All rights reserved.`,
 
     'meta.home':
       'Felipe Faria, developer and Systems Analysis and Development student. Projects and experience with the full label, from what they are made of to their current state.',
@@ -248,8 +270,8 @@ export const UI = {
       'Aquí queda el registro de lo que construyo. Cada obra viene con la ficha completa: de qué está hecha, cuál fue mi papel, con quién la hice y en qué estado está.',
     'parede.2':
       'Lo que no salió bien entra con la misma ficha, porque un proyecto que se detuvo también tiene algo que enseñar.',
-    'acervo': (total: number, publicas: number) =>
-      `${total} obras en la colección. ${publicas} con código público.`,
+    'acervo': (obras: number, experiencias: number, textos: number) =>
+      `${obras} obras en la colección, ${experiencias} experiencias y ${textos} ${textos === 1 ? 'texto publicado' : 'textos publicados'}.`,
 
     'sala.contato': 'Contacto',
 
@@ -289,7 +311,14 @@ export const UI = {
 
     'contato.titulo': 'Contacto',
     'contato.email': 'Correo',
-    'contato.chamada': 'Para una vacante, una pasantía, un proyecto o solo conversar.',
+    'contato.chamada':
+      'Para una propuesta de vacante, pasantía, freelance o alianza. Si quieres contratar o construir algo juntos, es por aquí.',
+    'contato.local': 'Dónde estoy',
+    'contato.localValor': 'São Paulo, Brasil',
+    'contato.responde': 'Respuesta',
+    'contato.respondeValor': 'Respondo en portugués, inglés o español',
+    'contato.nota':
+      'Escribe directo, sin formalidades. Si es una vacante, el enlace de la descripción ya ayuda. Si es un proyecto, una línea sobre alcance y plazo alcanza.',
 
     'sala.redes': 'Dónde encontrarme',
     'erro404.titulo': 'Esta sala no existe',
@@ -317,8 +346,12 @@ export const UI = {
         : `${mostrando} de ${total} textos`,
     'blog.nada': 'Ningún texto sobre ese tema.',
 
-    'colofao':
-      'Hecho en Astro. Compuesto en Archivo y EB Garamond. Sin cookies, sin rastreo y sin formularios.',
+    'colofao': 'Hecho en Astro. Compuesto en Archivo y EB Garamond.',
+    'rodape.privacidade':
+      'Este sitio no recoge datos personales, no usa cookies y no rastrea a quien lo visita. No hay formularios, login ni base de datos.',
+    'rodape.codigo': 'Código abierto en GitHub, bajo licencia MIT.',
+    'rodape.direitos': (ano: number) =>
+      `Textos, imágenes e identidad visual © Felipe Faria, ${ano}. Todos los derechos reservados.`,
 
     'meta.home':
       'Felipe Faria, desarrollador y estudiante de Análisis y Desarrollo de Sistemas. Proyectos y experiencia con la ficha completa, de qué están hechos a su estado actual.',

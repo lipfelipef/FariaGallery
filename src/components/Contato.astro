@@ -50,6 +50,18 @@ const temCurriculo = existsSync(join(process.cwd(), 'public', CURRICULO));
           )
         }
 
+        <dl class="ficha hang">
+          <dt class="field">{t('contato.local')}</dt>
+          <dd class="value">{t('contato.localValor')}</dd>
+          <dt class="field">{t('contato.responde')}</dt>
+          <dd class="value">{t('contato.respondeValor')}</dd>
+        </dl>
+
+        <p class="nota hang">
+          <span></span>
+          <span>{t('contato.nota')}</span>
+        </p>
+
         {
           temCurriculo && (
             <div class="curriculo hang">
@@ -113,6 +125,31 @@ const temCurriculo = existsSync(join(process.cwd(), 'public', CURRICULO));
   .endereco {
     font-size: clamp(1.125rem, 0.9rem + 0.9vw, 1.5rem);
     line-height: 1.4;
+  }
+
+  .ficha {
+    padding-block: clamp(2rem, 4vw, 2.5rem) 0;
+    row-gap: 0.5rem;
+  }
+
+  @media (max-width: 47.99rem) {
+    .ficha {
+      row-gap: 0.125rem;
+    }
+  }
+
+  /* A nota fica separada por um fio: é orientação, não dado da ficha. */
+  .nota {
+    margin-top: clamp(2rem, 4vw, 2.5rem);
+    padding-top: clamp(2rem, 4vw, 2.5rem);
+    border-top: 1px solid var(--color-rule);
+    font-size: 0.9375rem;
+    line-height: 1.6;
+    color: var(--color-ink-soft);
+  }
+
+  .nota span:last-child {
+    max-width: 52ch;
   }
 
   .curriculo {

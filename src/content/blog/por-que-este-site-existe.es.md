@@ -94,5 +94,6 @@ que existe son unos pocos bytes para el botón de tema y los filtros.
 No usa cookies ni rastrea a nadie, así que tampoco tiene ese aviso de
 consentimiento al pie. Existe en portugués, inglés y español.
 
-El código es público, [en GitHub](https://github.com/lipfelipef/FariaGallery),
-como casi todo aquí.
+El código es abierto bajo licencia MIT,
+[en GitHub](https://github.com/lipfelipef/FariaGallery). Los textos y las fotos
+no: la estructura es de quien quiera usarla, el contenido es mío.

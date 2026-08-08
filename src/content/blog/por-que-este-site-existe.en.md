@@ -93,5 +93,6 @@ few bytes for the theme toggle and the filters.
 It sets no cookies and tracks nobody, so there is no consent banner at the
 bottom either. It exists in Portuguese, English, and Spanish.
 
-The source is public, [on GitHub](https://github.com/lipfelipef/FariaGallery),
-like nearly everything else here.
+The source is open under the MIT licence,
+[on GitHub](https://github.com/lipfelipef/FariaGallery). The writing and the
+photos are not: the structure is yours to use, the content is mine.

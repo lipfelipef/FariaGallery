@@ -75,5 +75,9 @@ quebrar o build.
 
 ## Licença
 
-O código é livre para consultar e aprender. O conteúdo (textos, projetos e
-imagens) é meu.
+O **código** está sob [MIT](LICENSE): use, copie, modifique e publique à
+vontade, inclusive comercialmente.
+
+O **conteúdo** não está. Textos, fotos, nome e identidade visual são meus, com
+todos os direitos reservados. O detalhamento do que entra em cada lado está em
+[NOTICE.md](NOTICE.md).

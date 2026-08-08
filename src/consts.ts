@@ -16,6 +16,9 @@ export const SITE = {
   url: 'https://fariagallery.com',
 } as const;
 
+/** O repositorio do proprio site. Vai no rodape e no README. */
+export const REPO = 'https://github.com/lipfelipef/FariaGallery';
+
 export const CONTACT_EMAIL = 'contato@fariagallery.com';
 
 /**
@@ -40,10 +43,19 @@ export const CURRICULO = '/curriculo-felipe-faria.pdf';
 export const SOCIAL = [
   { rede: 'LinkedIn', usuario: 'Felipe Faria', href: 'https://www.linkedin.com/in/felipefariaf/' },
   { rede: 'GitHub', usuario: 'lipfelipef', href: 'https://github.com/lipfelipef' },
-  { rede: 'YouTube', usuario: 'Até Zerar', href: 'https://www.youtube.com/@atezerar' },
   { rede: 'Instagram', usuario: 'lipfelipef', href: 'https://www.instagram.com/lipfelipef' },
-  { rede: 'X', usuario: 'lipfelipef', href: 'https://x.com/lipfelipef' },
 ] as const;
+
+/**
+ * Vai no sameAs do Schema.org, e nao na lista visivel. O canal e o X ficam
+ * fora da lista de "onde me achar" por decisao dele, mas continuam aqui
+ * porque sao perfis dele e ajudam o buscador a ligar tudo a mesma pessoa.
+ */
+export const PERFIS = [
+  ...SOCIAL.map((s) => s.href),
+  'https://www.youtube.com/@atezerar',
+  'https://x.com/lipfelipef',
+];
 
 export const LOCALES = ['pt', 'en', 'es'] as const;
 export type Locale = (typeof LOCALES)[number];
