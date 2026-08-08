@@ -1,6 +1,6 @@
 ---
-titulo: 'Até Zerar: six years recording whole games'
-resumo: How a gameplay channel with no commentary reached 165 videos and 5.7 million views, and what six years of steady publishing teach about production.
+titulo: 'Até Zerar: four years recording whole games'
+resumo: How a gameplay channel with no commentary reached 165 videos and 5.7 million views, and what four years of steady publishing teach about production.
 data: 2026-08-07T22:25:00-03:00
 idioma: en
 obra: ate-zerar
@@ -12,9 +12,13 @@ assuntos:
   - Production
 ---
 
-Até Zerar started on **18 January 2020** and has never stopped. The pitch fits
+Até Zerar started in **December 2021** and has never stopped. The pitch fits
 in one line: **the whole game, start to finish, with no commentary, in 4K at 60
 frames per second.** The idea is to watch it like a film.
+
+It was not the beginning. Before it came [Blucker12](/en/experiencia), from 2018
+to 2021, with 921 videos of commentated gameplay, news, and speedruns. Até Zerar
+was born from a decision to cut almost all of that and keep one thing.
 
 Today the channel has **165 videos**, **26.3 thousand subscribers**, and **5.7
 million views**.
@@ -60,7 +64,7 @@ And these are not short videos. Runtimes go from an hour and a half to more than
 thirty hours in a single file. The complete *The Walking Dead* runs 31 hours and
 45 minutes.
 
-## What six years of consistency teach
+## What four years of consistency teach
 
 **Production is process, not inspiration.** Record, transcode, review, upload,
 write the description, build the playlist. Repeated 165 times. What sustains
@@ -80,7 +84,8 @@ did not add up.
 
 ## Where it stands
 
-Still running, with new videos going up. It is the oldest thing I maintain and
-the one with the widest reach, which is why it sits here alongside everything
-else: it is not a hobby kept apart from the work, it is six years of production
+Still running, with new videos going up. It is the widest-reaching work in the
+collection, and together with the earlier channel it adds up to almost eight
+unbroken years of publishing video. That is why it sits here alongside
+everything else: it is not a hobby kept apart from the work, it is production
 with an audience, a schedule, and an archive.

@@ -150,14 +150,49 @@ export const OBRAS: Obra[] = [
     },
   },
   {
+    // O canal que veio antes do Até Zerar, e a razão de ele existir: foi aqui
+    // que a produção de vídeo virou rotina, e foi daqui que saiu a decisão de
+    // cortar o formato comentado e ficar só com o jogo inteiro.
+    slug: 'blucker12',
+    titulo: 'Blucker12',
+    ano: '2018',
+    inicio: '2018-10-29',
+    fim: '2021-12-01',
+    tipo: 'experiencia',
+    meio: 'Vídeo, gameplay comentado e speedrun',
+    estado: 'noar',
+    link: { href: 'https://www.youtube.com/@blucker12', tipo: 'canal' },
+    tags: ['Vídeo', 'Games'],
+    resumo: {
+      pt: 'O primeiro canal: gameplay comentado, guia, notícia e speedrun, com recordes mundiais em Resident Evil 4.',
+      en: 'The first channel: commentated gameplay, guides, news, and speedruns, with world records in Resident Evil 4.',
+      es: 'El primer canal: gameplay comentado, guías, noticias y speedruns, con récords mundiales en Resident Evil 4.',
+    },
+    dimensoes: {
+      pt: '921 vídeos, 3,2 milhões de visualizações, 11,4 mil inscritos',
+      en: '921 videos, 3.2 million views, 11.4 thousand subscribers',
+      es: '921 videos, 3,2 millones de visualizaciones, 11,4 mil suscriptores',
+    },
+    papel: {
+      pt: 'Sozinho: gravação, edição, roteiro e publicação',
+      en: 'Solo: recording, editing, scripting, and publishing',
+      es: 'En solitario: grabación, edición, guion y publicación',
+    },
+    credito: {
+      pt: 'Projeto pessoal, de outubro de 2018 a dezembro de 2021. O canal segue no ar como acervo, e a produção nova passou a sair no Até Zerar.',
+      en: 'Personal project, from October 2018 to December 2021. The channel remains online as an archive, and new production moved to Até Zerar.',
+      es: 'Proyecto personal, de octubre de 2018 a diciembre de 2021. El canal sigue al aire como acervo, y la producción nueva pasó a salir en Até Zerar.',
+    },
+  },
+  {
     // Não é software, e continua sendo obra: o meio é vídeo em vez de código.
     // Em número, é a obra de maior alcance da coleção.
     slug: 'ate-zerar',
     titulo: 'Até Zerar',
-    ano: '2020',
+    ano: '2021',
     anoOrdem: 2026,
     ativa: true,
-    inicio: '2020-01-18',
+    inicio: '2021-12-01',
     tipo: 'experiencia',
     meio: 'Vídeo, 4K60fps',
     estado: 'noar',
@@ -175,9 +210,9 @@ export const OBRAS: Obra[] = [
       es: 'En solitario: grabación, edición y publicación',
     },
     credito: {
-      pt: 'Projeto pessoal, no ar desde janeiro de 2020. Do PlayStation 1 ao PlayStation 5 Pro, mais Xbox, Nintendo e PC, organizado em coleções por franquia e por ano.',
-      en: 'Personal project, running since January 2020. From PlayStation 1 to PlayStation 5 Pro, plus Xbox, Nintendo, and PC, organised into playlists by franchise and by year.',
-      es: 'Proyecto personal, al aire desde enero de 2020. Del PlayStation 1 al PlayStation 5 Pro, más Xbox, Nintendo y PC, organizado en listas por franquicia y por año.',
+      pt: 'Projeto pessoal, no ar desde dezembro de 2021, sucedendo o canal Blucker12. Do PlayStation 1 ao PlayStation 5 Pro, mais Xbox, Nintendo e PC, organizado em coleções por franquia e por ano.',
+      en: 'Personal project, running since December 2021, succeeding the Blucker12 channel. From PlayStation 1 to PlayStation 5 Pro, plus Xbox, Nintendo, and PC, organised into playlists by franchise and by year.',
+      es: 'Proyecto personal, al aire desde diciembre de 2021, sucediendo al canal Blucker12. Del PlayStation 1 al PlayStation 5 Pro, más Xbox, Nintendo y PC, organizado en listas por franquicia y por año.',
     },
     dimensoes: {
       pt: '165 vídeos, 5,7 milhões de visualizações, 26,3 mil inscritos',

@@ -1,6 +1,6 @@
 ---
-titulo: 'Até Zerar: seis anos gravando jogo inteiro'
-resumo: Como um canal de gameplay sem comentário chegou a 165 vídeos e 5,7 milhões de visualizações, e o que seis anos de publicação constante ensinam sobre produção.
+titulo: 'Até Zerar: quatro anos gravando jogo inteiro'
+resumo: Como um canal de gameplay sem comentário chegou a 165 vídeos e 5,7 milhões de visualizações, e o que quatro anos de publicação constante ensinam sobre produção.
 data: 2026-08-07T22:25:00-03:00
 idioma: pt
 obra: ate-zerar
@@ -12,9 +12,13 @@ assuntos:
   - Produção
 ---
 
-O Até Zerar começou em **18 de janeiro de 2020** e nunca parou. A proposta cabe
-numa frase: **o jogo inteiro, do início ao fim, sem comentário, em 4K a 60
-quadros por segundo.** A ideia é assistir como se fosse filme.
+O Até Zerar começou em **dezembro de 2021** e nunca parou. A proposta cabe numa
+frase: **o jogo inteiro, do início ao fim, sem comentário, em 4K a 60 quadros
+por segundo.** A ideia é assistir como se fosse filme.
+
+Ele não foi o começo. Antes dele veio o [Blucker12](/experiencia), de 2018 a
+2021, com 921 vídeos de gameplay comentado, notícia e speedrun. O Até Zerar
+nasceu de uma decisão de cortar quase tudo aquilo e ficar com uma coisa só.
 
 Hoje o canal tem **165 vídeos**, **26,3 mil inscritos** e **5,7 milhões de
 visualizações**.
@@ -58,7 +62,7 @@ as pessoas querem rever e não têm mais como jogar.
 E não são vídeos curtos. A duração vai de uma hora e meia a mais de trinta
 horas num único arquivo. *The Walking Dead* completo tem 31 horas e 45 minutos.
 
-## O que seis anos de constância ensinam
+## O que quatro anos de constância ensinam
 
 **Produção é processo, não inspiração.** Gravar, transcodificar, revisar,
 subir, escrever descrição, montar coleção. Repetido 165 vezes. O que sustenta
@@ -78,6 +82,7 @@ números, por que ela não fechava.
 
 ## O que ele é hoje
 
-Continua no ar, com vídeo novo saindo. É a coisa mais antiga que eu mantenho e
-a de maior alcance, e por isso está aqui junto do resto: não é hobby separado
-do trabalho, é seis anos de produção com público, prazo e acervo.
+Continua no ar, com vídeo novo saindo. É a obra de maior alcance da coleção, e
+somada ao canal anterior dá quase oito anos ininterruptos publicando vídeo. Está
+aqui junto do resto por isso: não é hobby separado do trabalho, é produção com
+público, prazo e acervo.

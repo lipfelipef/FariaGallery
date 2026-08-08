@@ -1,6 +1,6 @@
 ---
-titulo: 'Até Zerar: seis años grabando juegos enteros'
-resumo: Cómo un canal de gameplay sin comentarios llegó a 165 videos y 5,7 millones de visualizaciones, y qué enseñan seis años de publicación constante sobre producción.
+titulo: 'Até Zerar: cuatro años grabando juegos enteros'
+resumo: Cómo un canal de gameplay sin comentarios llegó a 165 videos y 5,7 millones de visualizaciones, y qué enseñan cuatro años de publicación constante sobre producción.
 data: 2026-08-07T22:25:00-03:00
 idioma: es
 obra: ate-zerar
@@ -12,9 +12,13 @@ assuntos:
   - Producción
 ---
 
-Até Zerar empezó el **18 de enero de 2020** y nunca paró. La propuesta cabe en
-una frase: **el juego entero, de principio a fin, sin comentarios, en 4K a 60
+Até Zerar empezó en **diciembre de 2021** y nunca paró. La propuesta cabe en una
+frase: **el juego entero, de principio a fin, sin comentarios, en 4K a 60
 cuadros por segundo.** La idea es verlo como si fuera una película.
+
+No fue el comienzo. Antes vino [Blucker12](/es/experiencia), de 2018 a 2021, con
+921 videos de gameplay comentado, noticias y speedruns. Até Zerar nació de una
+decisión de cortar casi todo aquello y quedarse con una sola cosa.
 
 Hoy el canal tiene **165 videos**, **26,3 mil suscriptores** y **5,7 millones de
 visualizaciones**.
@@ -59,7 +63,7 @@ Y no son videos cortos. La duración va de una hora y media a más de treinta
 horas en un solo archivo. *The Walking Dead* completo dura 31 horas y 45
 minutos.
 
-## Qué enseñan seis años de constancia
+## Qué enseñan cuatro años de constancia
 
 **La producción es proceso, no inspiración.** Grabar, transcodificar, revisar,
 subir, escribir la descripción, armar la lista. Repetido 165 veces. Lo que
@@ -79,6 +83,7 @@ descubrir, con números, por qué no cerraba.
 
 ## Cómo está hoy
 
-Sigue al aire, con videos nuevos saliendo. Es lo más antiguo que mantengo y lo
-de mayor alcance, y por eso está aquí junto al resto: no es un pasatiempo
-separado del trabajo, son seis años de producción con público, plazo y acervo.
+Sigue al aire, con videos nuevos saliendo. Es la obra de mayor alcance de la
+colección, y sumada al canal anterior da casi ocho años ininterrumpidos
+publicando video. Por eso está aquí junto al resto: no es un pasatiempo separado
+del trabajo, es producción con público, plazo y acervo.
