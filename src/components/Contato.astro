@@ -152,6 +152,13 @@ const temCurriculo = existsSync(join(process.cwd(), 'public', CURRICULO));
     max-width: 52ch;
   }
 
+  /* Sem currículo publicado, a nota é o último bloco da página e encostava no
+     fio do rodapé, com zero de respiro. O de cima tinha 41px e o de baixo
+     nenhum, e era isso que fazia o texto parecer grudado na linha. */
+  .nota:last-child {
+    padding-bottom: clamp(3rem, 8vh, 5rem);
+  }
+
   .curriculo {
     padding-block: 2.5rem clamp(3rem, 8vh, 5rem);
   }

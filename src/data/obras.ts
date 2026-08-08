@@ -155,9 +155,14 @@ export const OBRAS: Obra[] = [
     // cortar o formato comentado e ficar só com o jogo inteiro.
     slug: 'blucker12',
     titulo: 'Blucker12',
-    ano: '2018',
-    inicio: '2018-10-29',
-    fim: '2021-12-01',
+    // Período por extenso: numa experiência o que importa é de quando até
+    // quando, não o ano solto. As datas batem com o LinkedIn dele.
+    ano: '2018 - 2021',
+    inicio: '2018-10-01',
+    // Primeiro dia depois do fim, e não o último dia dele: assim dezembro de
+    // 2021 conta inteiro e a duração fecha nos mesmos 3 anos e 3 meses que o
+    // LinkedIn mostra.
+    fim: '2022-01-01',
     tipo: 'experiencia',
     meio: 'Vídeo, gameplay comentado e speedrun',
     estado: 'noar',

@@ -47,8 +47,16 @@ const porAno = anos.map((ano) => {
   return {
     ano,
     rotulo: anoExibido(primeira, t('tempo.atualmente')),
-    /** Distância em ano de calendário. Ver `anosAtras` sobre por que não é duração. */
-    relativo: primeira.ativa ? undefined : anosAtras(Number.parseInt(ano, 10), lang),
+    /**
+     * "há 2 anos" só na coleção. Numa experiência a pergunta é quanto tempo a
+     * pessoa ficou, não há quanto tempo o ano foi, e a duração de cada linha
+     * já responde isso. Dizer "2018, há 8 anos" ao lado de "3 anos e 3 meses"
+     * só confunde as duas contas.
+     */
+    relativo:
+      tipo === 'experiencia' || primeira.ativa
+        ? undefined
+        : anosAtras(Number.parseInt(ano, 10), lang),
     obras,
   };
 });

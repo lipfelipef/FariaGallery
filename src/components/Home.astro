@@ -62,19 +62,16 @@ const emCartaz = OBRAS.filter((o) => !o.pendente && o.destaque).sort(
              que um recrutador procura, e leva direto ao contato. -->
         <p class="disponivel">
           <span class="dot dot-on" aria-hidden="true"></span>
-          <a class="quiet-link" href={rota(lang, '/contato')}>
-            {t('disponivel')} <span aria-hidden="true">&#8594;</span>
-          </a>
+          <a class="quiet-link" href={rota(lang, '/contato')}>{t('disponivel')}</a>
         </p>
       </div>
     </section>
 
     <section id="obras" class="sala wall">
       <h2 class="sala-titulo">{t('sala.emCartaz')}</h2>
-      <!-- `percurso` liga os pontos das etiquetas numa linha só, para ler de
-           cima a baixo como uma coisa que levou à outra: o canal levou à
-           plataforma de vídeo, que levou ao e-commerce. -->
-      <div class="sala-corpo percurso">
+      <!-- A ordem conta a sequência: o canal levou à plataforma de vídeo, que
+           levou ao e-commerce. Ver o campo `destaque` em obras.ts. -->
+      <div class="sala-corpo">
         {
           emCartaz.map((obra) => (
             <Etiqueta obra={obra} lang={lang} post={textoDaObra.get(obra.slug)} />
@@ -93,20 +90,24 @@ const emCartaz = OBRAS.filter((o) => !o.pendente && o.destaque).sort(
     <section id="redes" class="sala wall">
       <h2 class="sala-titulo">{t('sala.redes')}</h2>
       <div class="sala-corpo">
-        <dl class="redes hang">
+        <!-- Cada rede é uma linha inteira, no mesmo desenho das linhas da
+             coleção: o alvo de clique ocupa a largura toda, em vez de ser um
+             nome curto perdido no meio de uma faixa vazia. -->
+        <ul class="redes">
           {
             SOCIAL.map(({ rede, usuario, href }) => (
-              <>
-                <dt class="field">{rede}</dt>
-                <dd class="value">
-                  <a class="quiet-link" href={href} rel="me noopener noreferrer" target="_blank">
-                    {usuario}
-                  </a>
-                </dd>
-              </>
+              <li>
+                <a class="rede" href={href} rel="me noopener noreferrer" target="_blank">
+                  <span class="field rede-nome">{rede}</span>
+                  <span class="rede-usuario">{usuario}</span>
+                  <span class="rede-seta" aria-hidden="true">
+                    &#8599;
+                  </span>
+                </a>
+              </li>
             ))
           }
-        </dl>
+        </ul>
       </div>
     </section>
   </main>
@@ -196,31 +197,10 @@ const emCartaz = OBRAS.filter((o) => !o.pendente && o.destaque).sort(
     flex: none;
   }
 
-  /* A linha do percurso.
-     Cada etiqueta desenha um fio que sai do seu ponto vermelho e desce até o
-     fim do próprio bloco. Como os blocos são vizinhos, os fios se encontram e
-     viram uma linha só, sem precisar medir a altura de nada. A última não
-     desenha, senão a linha continuaria para o vazio.
-     O fio nasce do ponto, então acompanha a etiqueta onde quer que ela esteja:
-     na coluna da margem no desktop, no topo do bloco no celular. */
-  .percurso :global(.obra) {
-    /* Corta o fio na borda do bloco. É o que permite dar a ele uma altura
-       exagerada logo abaixo e não precisar medir a distância até o próximo
-       ponto, que muda com o texto e com o tamanho da tela. */
-    overflow: hidden;
-  }
-
-  .percurso :global(.obra:not(:last-of-type) .dot)::after {
-    content: '';
-    position: absolute;
-    left: 50%;
-    /* Nasce logo abaixo do ponto, seja onde o ponto estiver. */
-    top: calc(100% + 0.35rem);
-    width: 1px;
-    height: 100vh;
-    background: var(--color-rule);
-    transform: translateX(-50%);
-  }
+  /* Já teve um fio ligando os pontos das etiquetas aqui, e foi removido:
+     como cada etiqueta é alta, o fio virava um traço comprido descendo o bloco
+     inteiro em vez de ligar um ponto ao outro. A sequência continua sendo dada
+     pela ordem em que as três aparecem. */
 
   .canais {
     padding-block: clamp(2rem, 4vw, 3rem) 0;
@@ -240,13 +220,67 @@ const emCartaz = OBRAS.filter((o) => !o.pendente && o.destaque).sort(
   }
 
   .redes {
-    padding-block: clamp(2rem, 4vw, 3rem);
-    row-gap: 0.75rem;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    padding-block: clamp(1.5rem, 3vw, 2rem) clamp(2rem, 4vw, 3rem);
+  }
+
+  /* Mesma anatomia da linha da coleção: rótulo na coluna da margem, valor no
+     corpo, seta na ponta aparecendo no hover. */
+  .rede {
+    display: grid;
+    grid-template-columns: var(--hang) minmax(0, 1fr) 1.25rem;
+    align-items: baseline;
+    gap: 0 var(--gutter);
+    padding-block: 0.9rem;
+    border-bottom: 1px solid var(--color-rule);
+    color: inherit;
+    text-decoration: none;
+    transition: background-color 160ms ease;
+  }
+
+  .redes li:first-child .rede {
+    border-top: 1px solid var(--color-rule);
+  }
+
+  .rede:hover {
+    background-color: var(--color-paper);
+  }
+
+  .rede-nome {
+    padding-top: 0;
+  }
+
+  .rede-usuario {
+    font-size: 1.0625rem;
+    color: var(--color-ink);
+  }
+
+  .rede-seta {
+    justify-self: end;
+    font-size: 0.875rem;
+    color: var(--color-ink-soft);
+    opacity: 0;
+    transition:
+      opacity 160ms ease,
+      transform 160ms ease;
+  }
+
+  .rede:hover .rede-seta {
+    opacity: 1;
+    transform: translate(2px, -2px);
   }
 
   @media (max-width: 47.99rem) {
-    .redes {
-      row-gap: 0.125rem;
+    .rede {
+      grid-template-columns: minmax(0, 1fr) 1.25rem;
+      row-gap: 0.2rem;
+    }
+
+    .rede-nome {
+      grid-column: 1 / -1;
+      margin-top: 0;
     }
   }
 
