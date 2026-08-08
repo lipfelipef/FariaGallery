@@ -16,6 +16,7 @@ export const UI = {
     'pular': 'Pular para o conteúdo',
 
     'nav.obras': 'Obras',
+    'nav.inicio': 'Início',
     'nav.blog': 'Blog',
     'nav.contato': 'Contato',
 
@@ -79,6 +80,9 @@ export const UI = {
     'colecao.contagem': (mostrando: number, total: number) =>
       mostrando === total ? `${total} obras` : `${mostrando} de ${total} obras`,
     'colecao.nada': 'Nenhuma obra com esse filtro.',
+    /** Abre o resto das etiquetas de filtro, que ficam recolhidas. */
+    'filtro.mais': (n: number) => `Mais ${n}`,
+    'filtro.menos': 'Recolher',
 
     'estado.publico': 'Código público',
     'estado.noar': 'No ar',
@@ -171,6 +175,7 @@ export const UI = {
     'pular': 'Skip to content',
 
     'nav.obras': 'Works',
+    'nav.inicio': 'Home',
     'nav.blog': 'Blog',
     'nav.contato': 'Contact',
 
@@ -225,6 +230,8 @@ export const UI = {
     'colecao.contagem': (mostrando: number, total: number) =>
       mostrando === total ? `${total} works` : `${mostrando} of ${total} works`,
     'colecao.nada': 'No work matches that filter.',
+    'filtro.mais': (n: number) => `${n} more`,
+    'filtro.menos': 'Collapse',
 
     'estado.publico': 'Public source',
     'estado.noar': 'Live',
@@ -315,6 +322,7 @@ export const UI = {
     'pular': 'Saltar al contenido',
 
     'nav.obras': 'Obras',
+    'nav.inicio': 'Inicio',
     'nav.blog': 'Blog',
     'nav.contato': 'Contacto',
 
@@ -369,6 +377,8 @@ export const UI = {
     'colecao.contagem': (mostrando: number, total: number) =>
       mostrando === total ? `${total} obras` : `${mostrando} de ${total} obras`,
     'colecao.nada': 'Ninguna obra con ese filtro.',
+    'filtro.mais': (n: number) => `${n} más`,
+    'filtro.menos': 'Recoger',
 
     'estado.publico': 'Código público',
     'estado.noar': 'En línea',

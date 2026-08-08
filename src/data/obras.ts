@@ -34,6 +34,28 @@ export const meioDe = (obra: Obra, lang: Locale): string =>
   typeof obra.meio === 'string' ? obra.meio : obra.meio[lang];
 
 /**
+ * As poucas etiquetas que são palavra, e não nome de tecnologia.
+ *
+ * `Angular`, `Python`, `SQLite` e `YouTube` se escrevem igual nos três
+ * idiomas, então não entram aqui. Estas três entravam em português na página
+ * inglesa, e etiqueta de filtro é das primeiras coisas que se lê numa sala:
+ * "Infraestrutura" no meio de uma página em inglês denuncia tradução pela
+ * metade, para quem visita e para o buscador.
+ *
+ * A chave continua sendo o português, e é ela que viaja no `data-tags` do
+ * HTML. Assim o filtro compara sempre o mesmo valor, em qualquer idioma, e
+ * traduzir uma etiqueta nunca quebra a filtragem.
+ */
+const TAGS_TRADUZIDAS: Record<string, PorIdioma> = {
+  Vídeo: { pt: 'Vídeo', en: 'Video', es: 'Video' },
+  Infraestrutura: { pt: 'Infraestrutura', en: 'Infrastructure', es: 'Infraestructura' },
+  'Lógica digital': { pt: 'Lógica digital', en: 'Digital logic', es: 'Lógica digital' },
+};
+
+/** A etiqueta como ela aparece na tela, no idioma da página. */
+export const tagDe = (tag: string, lang: Locale): string => TAGS_TRADUZIDAS[tag]?.[lang] ?? tag;
+
+/**
  * Cola o número à palavra que ele mede, com espaço que não quebra.
  *
  * Sem isto a linha racha no pior lugar possível e sobra "26,3" no fim de uma

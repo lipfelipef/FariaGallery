@@ -2,7 +2,7 @@
 import Base from '../layouts/Base.astro';
 import Topo from './Topo.astro';
 import Rodape from './Rodape.astro';
-import type { Locale } from '../consts';
+import { LIMITE_FILTROS, FOLGA_FILTROS, type Locale } from '../consts';
 import { traduzir } from '../i18n/ui';
 import { rota } from '../i18n/utils';
 import { postsEmPercurso, dataPorExtenso, dataISO, tempoRelativo, slugDoPost } from '../lib/blog';
@@ -27,12 +27,43 @@ const posicao = new Map(percurso.map((post, i) => [post.id, i]));
 const posts = [...percurso].reverse();
 const vazio = posts.length === 0;
 
-/** Assuntos com contagem, do mais usado para o menos. */
+/**
+ * Assuntos com contagem, do mais usado para o menos.
+ *
+ * O desempate é o texto mais recente que usa aquele assunto, e não a ordem
+ * alfabética. A diferença aparece justamente aqui: quase todo assunto aparece
+ * uma vez só, então com contagem empatada o alfabeto decidia tudo, e o começo
+ * da lista virava "Angular, Arquitetura, Django, Faria Gallery, Games", com
+ * Java, JavaScript, Node.js e Python fora da vista por começarem com letra
+ * mais adiante. Agora quem abre a fila é o assunto do que ele escreveu por
+ * último, que é o que a pessoa tem mais chance de estar procurando.
+ *
+ * `posts` já vem do mais novo para o mais antigo, então o menor índice é o
+ * mais recente.
+ */
 const contagem = new Map<string, number>();
-for (const post of posts) {
-  for (const a of post.data.assuntos) contagem.set(a, (contagem.get(a) ?? 0) + 1);
-}
-const assuntos = [...contagem.entries()].sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]));
+const maisRecente = new Map<string, number>();
+posts.forEach((post, i) => {
+  for (const a of post.data.assuntos) {
+    contagem.set(a, (contagem.get(a) ?? 0) + 1);
+    if (!maisRecente.has(a)) maisRecente.set(a, i);
+  }
+});
+const assuntos = [...contagem.entries()].sort(
+  (a, b) => b[1] - a[1] || maisRecente.get(a[0])! - maisRecente.get(b[0])! || a[0].localeCompare(b[0])
+);
+
+/**
+ * Quantos assuntos ficam à vista.
+ *
+ * Aqui é onde o problema aparece primeiro: cada texto novo traz uns três
+ * assuntos, quase todos usados uma vez só. Oito textos já davam 22 botões, e
+ * cinquenta dariam perto de cem. Os mais usados ficam na frente, o resto entra
+ * por um clique. Nada some da página.
+ */
+const cabemTodos = assuntos.length <= LIMITE_FILTROS + FOLGA_FILTROS;
+const aVista = cabemTodos ? assuntos.length : LIMITE_FILTROS;
+const recolhidos = assuntos.length - aVista;
 ---
 
 <Base
@@ -80,11 +111,28 @@ const assuntos = [...contagem.entries()].sort((a, b) => b[1] - a[1] || a[0].loca
                     <button class="etiqueta etiqueta-ativa" type="button" data-tag="" aria-pressed="true">
                       {t('colecao.todas')} <span class="etiqueta-n">{posts.length}</span>
                     </button>
-                    {assuntos.map(([a, n]) => (
-                      <button class="etiqueta" type="button" data-tag={a} aria-pressed="false">
+                    {assuntos.map(([a, n], i) => (
+                      <button
+                        class="etiqueta"
+                        type="button"
+                        data-tag={a}
+                        aria-pressed="false"
+                        hidden={i >= aVista}
+                        data-recolhida={i >= aVista ? '' : undefined}
+                      >
                         {a} <span class="etiqueta-n">{n}</span>
                       </button>
                     ))}
+                    {recolhidos > 0 && (
+                      <button
+                        class="etiqueta etiqueta-mais"
+                        type="button"
+                        data-mais
+                        aria-expanded="false"
+                      >
+                        {t('filtro.mais')(recolhidos)}
+                      </button>
+                    )}
                   </div>
                 )}
 
@@ -127,7 +175,13 @@ const assuntos = [...contagem.entries()].sort((a, b) => b[1] - a[1] || a[0].loca
   <Rodape lang={lang} />
 </Base>
 
-<script is:inline>
+<script
+  is:inline
+  define:vars={{
+    rotuloMais: recolhidos > 0 ? t('filtro.mais')(recolhidos) : '',
+    rotuloMenos: t('filtro.menos'),
+  }}
+>
   (function () {
     var filtro = document.querySelector('[data-filtro]');
     if (!filtro) return;
@@ -168,9 +222,27 @@ const assuntos = [...contagem.entries()].sort((a, b) => b[1] - a[1] || a[0].loca
       if (nada) nada.hidden = visiveis > 0;
     }
 
+    /* Os assuntos raros ficam recolhidos, e este botão os chama. Recolher
+       nunca esconde o assunto que está filtrando a lista: sumir com o filtro
+       em uso deixaria a lista curta sem explicação na tela. */
+    var recolhiveis = filtro.querySelectorAll('[data-recolhida]');
+    var aberto = false;
+
     filtro.addEventListener('click', function (e) {
       var b = e.target.closest('.etiqueta');
       if (!b) return;
+
+      // Antes de tudo: este botão abre a gaveta, não filtra. Sem esta saída
+      // ele cairia no ramo de assunto com a tag vazia e desligaria o filtro.
+      if (b.hasAttribute('data-mais')) {
+        aberto = !aberto;
+        recolhiveis.forEach(function (o) {
+          o.hidden = !aberto && !o.classList.contains('etiqueta-ativa');
+        });
+        b.textContent = aberto ? rotuloMenos : rotuloMais;
+        b.setAttribute('aria-expanded', String(aberto));
+        return;
+      }
 
       if (b.hasAttribute('data-ordem')) {
         ordenar(b.getAttribute('data-ordem'));
@@ -266,6 +338,26 @@ const assuntos = [...contagem.entries()].sort((a, b) => b[1] - a[1] || a[0].loca
   .etiqueta:hover {
     border-color: var(--color-ink-soft);
     color: var(--color-ink);
+  }
+
+  /* Sem isto o `hidden` não esconde nada: o atributo vale `display: none` na
+     folha do navegador, e qualquer `display` escrito aqui ganha dele. */
+  .etiqueta[hidden] {
+    display: none;
+  }
+
+  /* Não é assunto, é a chave que abre a gaveta. Sem moldura, para não ser
+     confundida com um filtro a mais. */
+  .etiqueta-mais {
+    border-color: transparent;
+    text-decoration: underline;
+    text-decoration-color: var(--color-rule);
+    text-underline-offset: 0.25em;
+  }
+
+  .etiqueta-mais:hover {
+    border-color: transparent;
+    text-decoration-color: var(--color-ink);
   }
 
   .etiqueta-ativa {

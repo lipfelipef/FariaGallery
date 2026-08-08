@@ -2,10 +2,10 @@
 import Base from '../layouts/Base.astro';
 import Topo from './Topo.astro';
 import Rodape from './Rodape.astro';
-import { doTipo, ordemDoAno, anoExibido, inicioDaObra, fimDaObra, meioDe } from '../data/obras';
+import { doTipo, ordemDoAno, anoExibido, inicioDaObra, fimDaObra, meioDe, tagDe } from '../data/obras';
 import { anosAtras, duracao, ROTULOS_DURACAO } from '../lib/tempo';
 import { LOCALE_DATA } from '../i18n/utils';
-import type { Locale } from '../consts';
+import { LIMITE_FILTROS, FOLGA_FILTROS, type Locale } from '../consts';
 import { traduzir } from '../i18n/ui';
 import { rota } from '../i18n/utils';
 import { postsPorObra } from '../lib/blog';
@@ -90,12 +90,37 @@ const porAno = anos.map((ano) => {
   };
 });
 
-/** Etiquetas com contagem, da mais usada para a menos. Só aparece quem tem 1+. */
+/**
+ * Etiquetas com contagem, da mais usada para a menos.
+ *
+ * O desempate é a obra mais nova que carrega aquela etiqueta, e não a ordem
+ * alfabética: com contagem empatada, o alfabeto poria "Angular" na frente de
+ * "Python" por motivo nenhum, e o corte das que ficam à vista cairia sempre
+ * no fim do dicionário. `porAno` já está do mais novo para o mais antigo.
+ */
+const ordemDaObra = new Map(porAno.flatMap((g) => g.obras).map((o, i) => [o.slug, i]));
 const contagem = new Map<string, number>();
+const maisNova = new Map<string, number>();
 for (const obra of acervo) {
-  for (const tag of obra.tags) contagem.set(tag, (contagem.get(tag) ?? 0) + 1);
+  for (const tag of obra.tags) {
+    contagem.set(tag, (contagem.get(tag) ?? 0) + 1);
+    const posicao = ordemDaObra.get(obra.slug) ?? Number.MAX_SAFE_INTEGER;
+    if (posicao < (maisNova.get(tag) ?? Number.MAX_SAFE_INTEGER)) maisNova.set(tag, posicao);
+  }
 }
-const tags = [...contagem.entries()].sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]));
+const tags = [...contagem.entries()].sort(
+  (a, b) => b[1] - a[1] || maisNova.get(a[0])! - maisNova.get(b[0])! || a[0].localeCompare(b[0])
+);
+
+/**
+ * Quantas ficam à vista. A ordenação acima já pôs as mais usadas na frente,
+ * então o corte cai sempre nas mais raras, que são as que menos ajudam a
+ * achar alguma coisa. Enquanto a lista inteira couber sem incomodar, ela sai
+ * inteira: recolher duas etiquetas custa mais do que mostrar as duas.
+ */
+const cabemTodas = tags.length <= LIMITE_FILTROS + FOLGA_FILTROS;
+const aVista = cabemTodas ? tags.length : LIMITE_FILTROS;
+const recolhidas = tags.length - aVista;
 
 /** A linha leva ao texto da obra, se houver. Senão, ao repositório dela. */
 const destino = (slug: string, href?: string) => {
@@ -124,11 +149,25 @@ const destino = (slug: string, href?: string) => {
               {t('colecao.todas')} <span class="etiqueta-n">{acervo.length}</span>
             </button>
             {
-              tags.map(([tag, n]) => (
-                <button class="etiqueta" type="button" data-tag={tag} aria-pressed="false">
-                  {tag} <span class="etiqueta-n">{n}</span>
+              tags.map(([tag, n], i) => (
+                <button
+                  class="etiqueta"
+                  type="button"
+                  data-tag={tag}
+                  aria-pressed="false"
+                  hidden={i >= aVista}
+                  data-recolhida={i >= aVista ? '' : undefined}
+                >
+                  {tagDe(tag, lang)} <span class="etiqueta-n">{n}</span>
                 </button>
               ))
+            }
+            {
+              recolhidas > 0 && (
+                <button class="etiqueta etiqueta-mais" type="button" data-mais aria-expanded="false">
+                  {t('filtro.mais')(recolhidas)}
+                </button>
+              )
             }
           </div>
           <p class="contagem" data-contagem>{t('colecao.contagem')(acervo.length, acervo.length)}</p>
@@ -240,11 +279,21 @@ const destino = (slug: string, href?: string) => {
   })();
 </script>
 
-<script is:inline define:vars={{ textoContagem: { um: t('colecao.contagem')(1, 2).replace(/\d+/g, '#') } }}>
+<script
+  is:inline
+  define:vars={{
+    textoContagem: { um: t('colecao.contagem')(1, 2).replace(/\d+/g, '#') },
+    rotuloMais: recolhidas > 0 ? t('filtro.mais')(recolhidas) : '',
+    rotuloMenos: t('filtro.menos'),
+  }}
+>
   (function () {
     var filtro = document.querySelector('[data-filtro]');
     if (!filtro) return;
-    var botoes = filtro.querySelectorAll('.etiqueta');
+    // Só os que filtram de verdade. O botão que abre o resto também tem a
+    // classe `etiqueta`, porque é o mesmo objeto de vidro na parede, mas ele
+    // não é um filtro e não pode entrar nesta lista.
+    var botoes = filtro.querySelectorAll('.etiqueta[data-tag]');
     var linhas = document.querySelectorAll('.linha');
     var grupos = document.querySelectorAll('[data-grupo]');
     var contagem = document.querySelector('[data-contagem]');
@@ -286,6 +335,23 @@ const destino = (slug: string, href?: string) => {
         // Clicar de novo na etiqueta ativa desliga o filtro.
         aplicar(b.classList.contains('etiqueta-ativa') ? '' : tag);
       });
+    });
+
+    /* As etiquetas raras, e o botão que as chama.
+       Recolher nunca esconde a etiqueta que está filtrando a página: sumir
+       com o filtro em uso deixaria a lista curta sem explicação na tela. */
+    var mais = filtro.querySelector('[data-mais]');
+    if (!mais) return;
+    var recolhiveis = filtro.querySelectorAll('[data-recolhida]');
+    var aberto = false;
+
+    mais.addEventListener('click', function () {
+      aberto = !aberto;
+      recolhiveis.forEach(function (b) {
+        b.hidden = !aberto && !b.classList.contains('etiqueta-ativa');
+      });
+      mais.textContent = aberto ? rotuloMenos : rotuloMais;
+      mais.setAttribute('aria-expanded', String(aberto));
     });
   })();
 </script>
@@ -360,10 +426,30 @@ const destino = (slug: string, href?: string) => {
     color: var(--color-ink);
   }
 
+  /* Sem isto o `hidden` não esconde nada: o atributo vale `display: none` na
+     folha do navegador, e qualquer `display` escrito aqui ganha dele. */
+  .etiqueta[hidden] {
+    display: none;
+  }
+
   .etiqueta-ativa {
     background-color: var(--color-ink);
     border-color: var(--color-ink);
     color: var(--color-wall);
+  }
+
+  /* Não é etiqueta de assunto, é a chave que abre a gaveta. Sem moldura, para
+     não ser confundida com um filtro a mais. */
+  .etiqueta-mais {
+    border-color: transparent;
+    text-decoration: underline;
+    text-decoration-color: var(--color-rule);
+    text-underline-offset: 0.25em;
+  }
+
+  .etiqueta-mais:hover {
+    border-color: transparent;
+    text-decoration-color: var(--color-ink);
   }
 
   .etiqueta-n {
