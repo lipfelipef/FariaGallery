@@ -12,9 +12,20 @@ interface Props {
   descricao: string;
   /** Página sem conteúdo ainda não deve entrar na busca. */
   semIndexar?: boolean;
+  /**
+   * Preenchido só em post. Sem isto, o buscador vê a página como um site
+   * qualquer e não sabe que é texto com autor, data e assunto, que é o que
+   * habilita a página a aparecer como artigo no resultado.
+   */
+  artigo?: {
+    titulo: string;
+    publicado: Date;
+    atualizado?: Date;
+    assuntos: readonly string[];
+  };
 }
 
-const { lang, titulo, descricao, semIndexar = false } = Astro.props;
+const { lang, titulo, descricao, semIndexar = false, artigo } = Astro.props;
 const t = traduzir(lang);
 
 /** Todo título termina no nome, que é o que faz ele aparecer na busca. */
@@ -32,7 +43,29 @@ const cartao = new URL('/card.png', SITE.url).href;
  */
 const idiomas = (await destinosPorIdioma(Astro.url)).filter((alt) => alt.exata);
 
+/**
+ * Schema.org do artigo. Declara autor, data de publicação, idioma e assunto,
+ * e amarra o texto à mesma pessoa do outro bloco pelo `@id`, para o buscador
+ * entender que é o mesmo Felipe e não dois homônimos.
+ */
+const artigoSchema = artigo && {
+  '@context': 'https://schema.org',
+  '@type': 'BlogPosting',
+  headline: artigo.titulo,
+  description: descricao,
+  datePublished: artigo.publicado.toISOString(),
+  dateModified: (artigo.atualizado ?? artigo.publicado).toISOString(),
+  inLanguage: LANG_HTML[lang],
+  keywords: artigo.assuntos.join(', '),
+  image: cartao,
+  author: { '@id': `${SITE.url}#pessoa` },
+  publisher: { '@id': `${SITE.url}#pessoa` },
+  mainEntityOfPage: { '@type': 'WebPage', '@id': canonica },
+  isPartOf: { '@type': 'Blog', name: `${SITE.name}, blog`, url: new URL(rota(lang, '/blog'), SITE.url).href },
+};
+
 const pessoa = {
+  '@id': `${SITE.url}#pessoa`,
   '@context': 'https://schema.org',
   '@type': 'Person',
   name: SITE.name,
@@ -75,8 +108,22 @@ const pessoa = {
     <link rel="icon" href="/favicon-48.png" sizes="48x48" type="image/png" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
 
-    <meta property="og:type" content="website" />
+    <meta name="author" content={SITE.name} />
+    <meta property="og:type" content={artigo ? 'article' : 'website'} />
     <meta property="og:site_name" content={SITE.name} />
+    {
+      artigo && (
+        <>
+          <meta property="article:author" content={SITE.name} />
+          <meta property="article:published_time" content={artigo.publicado.toISOString()} />
+          <meta
+            property="article:modified_time"
+            content={(artigo.atualizado ?? artigo.publicado).toISOString()}
+          />
+          {artigo.assuntos.map((a) => <meta property="article:tag" content={a} />)}
+        </>
+      )
+    }
     <meta property="og:locale" content={LANG_HTML[lang].replace('-', '_')} />
     <meta property="og:title" content={tituloDaAba} />
     <meta property="og:description" content={descricao} />
@@ -111,6 +158,11 @@ const pessoa = {
     </script>
 
     <script type="application/ld+json" is:inline set:html={JSON.stringify(pessoa)} />
+    {
+      artigoSchema && (
+        <script type="application/ld+json" is:inline set:html={JSON.stringify(artigoSchema)} />
+      )
+    }
   </head>
 
   <body>

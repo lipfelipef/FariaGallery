@@ -1,6 +1,6 @@
 ---
-titulo: 'BluckerTV: cinco meses, una plataforma entera, un suscriptor'
-resumo: Post-mortem de una plataforma brasileña de video bajo demanda construida en solitario y cerrada por decisión de negocio, no por falla técnica. Lo que enseñaron los números y por qué parar temprano fue lo correcto.
+titulo: 'BluckerTV: cinco meses y un suscriptor'
+resumo: Post-mortem de una plataforma de video construida en solitario y cerrada por decisión de negocio, no por falla técnica. Lo que enseñaron los números.
 data: 2026-08-07
 idioma: es
 obra: bluckertv

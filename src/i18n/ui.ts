@@ -74,6 +74,9 @@ export const UI = {
     'contato.chamada': 'Para vaga, estágio, projeto ou só trocar ideia.',
 
     'sala.redes': 'Onde me achar',
+    'erro404.titulo': 'Esta sala não existe',
+    'erro404.texto':
+      'O endereço que você abriu não corresponde a nada aqui. Pode ser link antigo, pode ser erro de digitação. As saídas estão abaixo.',
     'nav.experiencia': 'Experiência',
     'experiencia.titulo': 'Experiência',
     'experiencia.chamada':
@@ -92,11 +95,17 @@ export const UI = {
       'Feito em Astro. Composto em Archivo e EB Garamond. Sem cookie, sem rastreio e sem formulário.',
 
     'meta.home':
-      'Felipe Faria, desenvolvedor e estudante de Análise e Desenvolvimento de Sistemas no Centro Universitário Senac, Santo Amaro. Coleção de projetos com a ficha inteira: do que são feitos, qual foi meu papel e em que estado estão.',
+      'Felipe Faria, desenvolvedor e estudante de Análise e Desenvolvimento de Sistemas. Projetos e experiências com a ficha inteira, do que são feitos ao estado atual.',
     'meta.blog':
-      'Textos de Felipe Faria sobre desenvolvimento, projetos e o que aprendeu construindo.',
+      'Textos de Felipe Faria sobre desenvolvimento, infraestrutura e o que aprendeu construindo e encerrando projetos, com números e post-mortem honesto.',
     'meta.blogVazio':
-      'Textos de Felipe Faria sobre o que ele constrói. A sala ainda está sendo montada.',
+      'Textos de Felipe Faria sobre desenvolvimento e os projetos que ele constrói. A primeira publicação sai quando houver algo que valha ser lido.',
+    'meta.colecao':
+      'Todos os projetos de Felipe Faria, do mais novo ao mais antigo: web, Java, Python e lógica digital, com a stack, o papel dele e o estado de cada um.',
+    'meta.experiencia':
+      'A experiência de Felipe Faria: o canal Até Zerar, com 5,7 milhões de visualizações, e a BluckerTV, plataforma de vídeo aberta e encerrada em 2026.',
+    'meta.contato':
+      'Fale com Felipe Faria, desenvolvedor e estudante de Análise e Desenvolvimento de Sistemas em São Paulo. Contato direto por e-mail e currículo em PDF.',
   },
 
   en: {
@@ -166,6 +175,9 @@ export const UI = {
     'contato.chamada': 'For a role, an internship, a project, or just to talk.',
 
     'sala.redes': 'Where to find me',
+    'erro404.titulo': 'This room does not exist',
+    'erro404.texto':
+      'The address you opened does not match anything here. Could be an old link, could be a typo. The ways out are below.',
     'nav.experiencia': 'Experience',
     'experiencia.titulo': 'Experience',
     'experiencia.chamada':
@@ -184,11 +196,17 @@ export const UI = {
       'Built with Astro. Set in Archivo and EB Garamond. No cookies, no tracking, no forms.',
 
     'meta.home':
-      'Felipe Faria, developer and Systems Analysis and Development student at Centro Universitário Senac, Santo Amaro. A collection of projects with the full label: what they are made of, what my role was, and what state they are in.',
+      'Felipe Faria, developer and Systems Analysis and Development student. Projects and experience with the full label, from what they are made of to their current state.',
     'meta.blog':
-      'Writing by Felipe Faria on development, projects, and what he learned building them.',
+      'Writing by Felipe Faria on development, infrastructure, and what he learned building and shutting down projects, with real numbers and honest post-mortems.',
     'meta.blogVazio':
-      'Writing by Felipe Faria about what he builds. The room is still being installed.',
+      'Writing by Felipe Faria on development and the projects he builds. The first piece goes up when there is something worth reading.',
+    'meta.colecao':
+      'Every project by Felipe Faria, newest first: web, Java, Python, and digital logic, with the stack, his role, and the current state of each one.',
+    'meta.experiencia':
+      'Felipe Faria experience: the Até Zerar channel, with 5.7 million views, and BluckerTV, a video platform opened and shut down in 2026.',
+    'meta.contato':
+      'Get in touch with Felipe Faria, developer and Systems Analysis and Development student in São Paulo. Direct email contact and a résumé in PDF.',
   },
 
   es: {
@@ -258,6 +276,9 @@ export const UI = {
     'contato.chamada': 'Para una vacante, una pasantía, un proyecto o solo conversar.',
 
     'sala.redes': 'Dónde encontrarme',
+    'erro404.titulo': 'Esta sala no existe',
+    'erro404.texto':
+      'La dirección que abriste no corresponde a nada aquí. Puede ser un enlace viejo o un error de tipeo. Las salidas están abajo.',
     'nav.experiencia': 'Experiencia',
     'experiencia.titulo': 'Experiencia',
     'experiencia.chamada':
@@ -276,11 +297,17 @@ export const UI = {
       'Hecho en Astro. Compuesto en Archivo y EB Garamond. Sin cookies, sin rastreo y sin formularios.',
 
     'meta.home':
-      'Felipe Faria, desarrollador y estudiante de Análisis y Desarrollo de Sistemas en el Centro Universitário Senac, Santo Amaro. Colección de proyectos con la ficha completa: de qué están hechos, cuál fue mi papel y en qué estado están.',
+      'Felipe Faria, desarrollador y estudiante de Análisis y Desarrollo de Sistemas. Proyectos y experiencia con la ficha completa, de qué están hechos a su estado actual.',
     'meta.blog':
-      'Textos de Felipe Faria sobre desarrollo, proyectos y lo que aprendió construyendo.',
+      'Textos de Felipe Faria sobre desarrollo, infraestructura y lo que aprendió construyendo y cerrando proyectos, con números reales y post-mortem honesto.',
     'meta.blogVazio':
-      'Textos de Felipe Faria sobre lo que construye. La sala todavía se está montando.',
+      'Textos de Felipe Faria sobre desarrollo y los proyectos que construye. La primera publicación sale cuando haya algo que valga la pena leer.',
+    'meta.colecao':
+      'Todos los proyectos de Felipe Faria, del más nuevo al más antiguo: web, Java, Python y lógica digital, con la stack, su papel y el estado de cada uno.',
+    'meta.experiencia':
+      'La experiencia de Felipe Faria: el canal Até Zerar, con 5,7 millones de visualizaciones, y BluckerTV, plataforma de video abierta y cerrada en 2026.',
+    'meta.contato':
+      'Habla con Felipe Faria, desarrollador y estudiante de Análisis y Desarrollo de Sistemas en São Paulo. Contacto directo por correo y currículum en PDF.',
   },
 } as const;
 

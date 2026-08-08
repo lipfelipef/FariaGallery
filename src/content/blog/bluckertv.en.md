@@ -1,6 +1,6 @@
 ---
-titulo: 'BluckerTV: five months, a whole platform, one subscriber'
-resumo: Post-mortem of a Brazilian video on demand platform built alone and shut down as a business decision, not a technical failure. What the numbers taught, and why stopping early was the right call.
+titulo: 'BluckerTV: five months, one subscriber'
+resumo: Post-mortem of a video platform built alone and shut down as a business decision, not a technical failure. What the numbers taught me.
 data: 2026-08-07
 idioma: en
 obra: bluckertv

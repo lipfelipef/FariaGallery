@@ -20,7 +20,10 @@ const textos = await postsPorObra(lang);
 
 const acervo = doTipo(tipo);
 const titulo = tipo === 'obra' ? t('colecao.titulo') : t('experiencia.titulo');
+/** Aparece na página. Curta e direta. */
 const chamada = tipo === 'obra' ? t('colecao.chamada') : t('experiencia.chamada');
+/** Aparece no resultado de busca. Mais longa e com as palavras que se procura. */
+const descricao = tipo === 'obra' ? t('meta.colecao') : t('meta.experiencia');
 
 /**
  * O catálogo de museu agrupa por ano e vai do mais novo para o mais antigo.
@@ -47,7 +50,7 @@ const destino = (slug: string, href?: string) => {
 };
 ---
 
-<Base lang={lang} titulo={titulo} descricao={chamada}>
+<Base lang={lang} titulo={titulo} descricao={descricao}>
   <Topo lang={lang} />
 
   <main id="conteudo">

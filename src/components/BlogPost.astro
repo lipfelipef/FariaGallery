@@ -18,7 +18,17 @@ const t = traduzir(lang);
 const { Content } = await render(post);
 ---
 
-<Base lang={lang} titulo={post.data.titulo} descricao={post.data.resumo}>
+<Base
+  lang={lang}
+  titulo={post.data.titulo}
+  descricao={post.data.resumo}
+  artigo={{
+    titulo: post.data.titulo,
+    publicado: post.data.data,
+    atualizado: post.data.atualizado,
+    assuntos: post.data.assuntos,
+  }}
+>
   <Topo lang={lang} />
 
   <main id="conteudo">

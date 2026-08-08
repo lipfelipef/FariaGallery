@@ -1,0 +1,7 @@
+# fariagallery.com
+# Site estatico, sem area privada e sem endpoint. Tudo pode ser rastreado.
+
+User-agent: *
+Allow: /
+
+Sitemap: https://fariagallery.com/sitemap-index.xml
