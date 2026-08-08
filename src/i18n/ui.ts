@@ -94,8 +94,10 @@ export const UI = {
     'contato.localValor': 'São Paulo, Brasil',
     'contato.responde': 'Resposta',
     'contato.respondeValor': 'Escrevo de volta em português, inglês ou espanhol',
-    'contato.nota':
-      'Escreva direto, sem formalidade. Se for vaga, o link da descrição já ajuda. Se for projeto, uma linha sobre o escopo e o prazo resolve.',
+    'contato.nota': [
+      'Escreva direto, sem formalidade. Se for vaga, o link da descrição já ajuda.',
+      'Se for projeto, uma linha sobre o escopo e o prazo resolve.',
+    ],
 
     'sala.redes': 'Onde me achar',
     'erro404.titulo': 'Esta sala não existe',
@@ -107,8 +109,10 @@ export const UI = {
     'experiencia.vazio': 'Nada aqui ainda.',
 
     'blog.titulo': 'Blog',
-    'blog.chamada':
-      'Texto sobre o que eu construo: o que deu certo, o que travou e o que eu faria diferente.',
+    'blog.chamada': [
+      'Texto sobre o que eu construo: o que deu certo,',
+      'o que travou e o que eu faria diferente.',
+    ],
     'blog.vazio.titulo': 'Sala em montagem',
     'blog.vazio.texto':
       'Ainda não há texto pendurado aqui. O primeiro sai quando tiver algo que valha ser lido, não antes.',
@@ -227,8 +231,10 @@ export const UI = {
     'contato.localValor': 'São Paulo, Brazil',
     'contato.responde': 'Reply',
     'contato.respondeValor': 'I write back in Portuguese, English, or Spanish',
-    'contato.nota':
-      'Write directly, no formalities. For a role, the job description link already helps. For a project, one line on scope and timeline is enough.',
+    'contato.nota': [
+      'Write directly, no formalities. For a role, the job description link already helps.',
+      'For a project, one line on scope and timeline is enough.',
+    ],
 
     'sala.redes': 'Where to find me',
     'erro404.titulo': 'This room does not exist',
@@ -242,8 +248,10 @@ export const UI = {
     'experiencia.vazio': 'Nothing here yet.',
 
     'blog.titulo': 'Blog',
-    'blog.chamada':
-      'Writing about what I build: what worked, what got stuck, and what I would do differently.',
+    'blog.chamada': [
+      'Writing about what I build: what worked,',
+      'what got stuck, and what I would do differently.',
+    ],
     'blog.vazio.titulo': 'Room being installed',
     'blog.vazio.texto':
       'Nothing is hanging here yet. The first piece goes up when there is something worth reading, not before.',
@@ -360,8 +368,10 @@ export const UI = {
     'contato.localValor': 'São Paulo, Brasil',
     'contato.responde': 'Respuesta',
     'contato.respondeValor': 'Respondo en portugués, inglés o español',
-    'contato.nota':
-      'Escribe directo, sin formalidades. Si es una vacante, el enlace de la descripción ya ayuda. Si es un proyecto, una línea sobre alcance y plazo alcanza.',
+    'contato.nota': [
+      'Escribe directo, sin formalidades. Si es una vacante, el enlace de la descripción ya ayuda.',
+      'Si es un proyecto, una línea sobre alcance y plazo alcanza.',
+    ],
 
     'sala.redes': 'Dónde encontrarme',
     'erro404.titulo': 'Esta sala no existe',
@@ -373,8 +383,10 @@ export const UI = {
     'experiencia.vazio': 'Nada aquí todavía.',
 
     'blog.titulo': 'Blog',
-    'blog.chamada':
-      'Textos sobre lo que construyo: lo que funcionó, lo que se trabó y lo que haría distinto.',
+    'blog.chamada': [
+      'Textos sobre lo que construyo: lo que funcionó,',
+      'lo que se trabó y lo que haría distinto.',
+    ],
     'blog.vazio.titulo': 'Sala en montaje',
     'blog.vazio.texto':
       'Todavía no hay nada colgado aquí. El primero sale cuando haya algo que valga la pena leer, no antes.',

@@ -61,7 +61,9 @@ const temCurriculo = existsSync(join(process.cwd(), 'public', CURRICULO));
 
         <p class="nota hang">
           <span></span>
-          <span>{t('contato.nota')}</span>
+          <span class="nota-texto">
+            {t('contato.nota').map((linha) => <span>{linha}</span>)}
+          </span>
         </p>
 
         {
@@ -156,8 +158,12 @@ const temCurriculo = existsSync(join(process.cwd(), 'public', CURRICULO));
     color: var(--color-ink-soft);
   }
 
-  .nota span:last-child {
-    max-width: 52ch;
+  /* Uma frase por linha, escolhida no texto. A medida comporta a linha mais
+     longa dos três idiomas, que é a do espanhol; menos que isso e ela dobraria,
+     desfazendo a quebra. */
+  .nota-texto span {
+    display: block;
+    max-width: 92ch;
   }
 
   /* Sem currículo publicado, a nota é o último bloco da página e encostava no
