@@ -9,7 +9,6 @@ import {
   numeroColado,
   type Obra,
 } from '../data/obras';
-import Linhas from './Linhas.astro';
 import { traduzir } from '../i18n/ui';
 import { rota } from '../i18n/utils';
 import { duracao } from '../lib/tempo';
@@ -68,7 +67,9 @@ const textoDoLink = obra.link
         )
       }
     </h3>
-    <Linhas linhas={linhasDe(obra.resumo[lang])} class="obra-resumo" />
+    <p class="obra-resumo linhas">
+      {linhasDe(obra.resumo[lang]).map((linha) => <span>{linha}</span>)}
+    </p>
   </div>
 
   <dl class="obra-ficha">
@@ -79,17 +80,18 @@ const textoDoLink = obra.link
           {/* Quem escreveu a quebra quer aquelas linhas, então a medida de
               leitura de 46ch dá lugar a uma que as comporte, senão a frase
               dobra e a quebra escolhida some no meio. */}
-          <Linhas
-            linhas={linhas}
-            como="dd"
-            class={[
+          <dd
+            class:list={[
               'value',
-              naoPreenchido(linhas[0]) ? 'value-pendente' : '',
-              linhas.length > 1 ? 'value-linhas' : '',
-            ]
-              .filter(Boolean)
-              .join(' ')}
-          />
+              'linhas',
+              naoPreenchido(linhas[0]) && 'value-pendente',
+              linhas.length > 1 && 'value-linhas',
+            ]}
+          >
+            {linhas.map((linha) => (
+              <span>{linha}</span>
+            ))}
+          </dd>
         </>
       ))
     }

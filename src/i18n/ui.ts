@@ -40,8 +40,10 @@ export const UI = {
       'Aqui fica o registro do que eu construo. Cada obra vem com a ficha inteira: do que é feita, qual foi meu papel, com quem foi e em que estado está.',
     'parede.2':
       'O que não deu certo entra com a mesma ficha, porque projeto que parou também tem o que ensinar.',
-    'acervo': (obras: number, experiencias: number, textos: number) =>
-      `${obras} obras na coleção, ${experiencias} experiências e ${textos} ${textos === 1 ? 'texto publicado' : 'textos publicados'}.`,
+    'acervo': (obras: number, experiencias: number, textos: number) => [
+      `${obras} obras de coleção, ${experiencias} experiências`,
+      `${textos} ${textos === 1 ? 'texto publicado' : 'textos publicados'}.`,
+    ],
     'disponivel': 'Disponível para novas oportunidades',
 
     'sala.contato': 'Contato',
@@ -136,8 +138,10 @@ export const UI = {
     'blog.nada': 'Nenhum texto com esse assunto.',
 
     'colofao': 'Feito em Astro. Composto em Archivo e EB Garamond.',
-    'rodape.privacidade':
-      'Este site não coleta dados pessoais, não usa cookie e não rastreia quem visita. Não há formulário, nem banco de dados.',
+    'rodape.privacidade': [
+      'Este site não coleta dados pessoais, não usa cookies,',
+      'Não rastreia quem visita e nem há banco de dados.',
+    ],
     'rodape.codigo': 'Código aberto no GitHub, sob licença MIT.',
     'rodape.direitos': (ano: number) => [
       `Textos, imagens e identidade visual © Felipe Faria, ${ano}.`,
@@ -184,8 +188,10 @@ export const UI = {
       'This is the record of what I build. Every work comes with the full label: what it is made of, what my role was, who I built it with, and what state it is in.',
     'parede.2':
       'What did not work out gets the same label, because a project that stopped still has something to teach.',
-    'acervo': (obras: number, experiencias: number, textos: number) =>
-      `${obras} works in the collection, ${experiencias} experiences, and ${textos} published ${textos === 1 ? 'piece' : 'pieces'}.`,
+    'acervo': (obras: number, experiencias: number, textos: number) => [
+      `${obras} works in the collection, ${experiencias} experiences`,
+      `${textos} published ${textos === 1 ? 'piece' : 'pieces'}.`,
+    ],
     'disponivel': 'Available for new opportunities',
 
     'sala.contato': 'Contact',
@@ -276,8 +282,10 @@ export const UI = {
     'blog.nada': 'No piece on that subject.',
 
     'colofao': 'Built with Astro. Set in Archivo and EB Garamond.',
-    'rodape.privacidade':
-      'This site collects no personal data, sets no cookies, and tracks nobody. There are no forms and no database.',
+    'rodape.privacidade': [
+      'This site collects no personal data and sets no cookies,',
+      'It tracks nobody and has no database.',
+    ],
     'rodape.codigo': 'Open source on GitHub, under the MIT licence.',
     'rodape.direitos': (ano: number) => [
       `Text, images, and visual identity © Felipe Faria, ${ano}.`,
@@ -324,8 +332,10 @@ export const UI = {
       'Aquí queda el registro de lo que construyo. Cada obra viene con la ficha completa: de qué está hecha, cuál fue mi papel, con quién la hice y en qué estado está.',
     'parede.2':
       'Lo que no salió bien entra con la misma ficha, porque un proyecto que se detuvo también tiene algo que enseñar.',
-    'acervo': (obras: number, experiencias: number, textos: number) =>
-      `${obras} obras en la colección, ${experiencias} experiencias y ${textos} ${textos === 1 ? 'texto publicado' : 'textos publicados'}.`,
+    'acervo': (obras: number, experiencias: number, textos: number) => [
+      `${obras} obras de colección, ${experiencias} experiencias`,
+      `${textos} ${textos === 1 ? 'texto publicado' : 'textos publicados'}.`,
+    ],
     'disponivel': 'Disponible para nuevas oportunidades',
 
     'sala.contato': 'Contacto',
@@ -416,8 +426,10 @@ export const UI = {
     'blog.nada': 'Ningún texto sobre ese tema.',
 
     'colofao': 'Hecho en Astro. Compuesto en Archivo y EB Garamond.',
-    'rodape.privacidade':
-      'Este sitio no recoge datos personales, no usa cookies y no rastrea a quien lo visita. No hay formularios ni base de datos.',
+    'rodape.privacidade': [
+      'Este sitio no recoge datos personales, no usa cookies,',
+      'No rastrea a quien lo visita ni tiene base de datos.',
+    ],
     'rodape.codigo': 'Código abierto en GitHub, bajo licencia MIT.',
     'rodape.direitos': (ano: number) => [
       `Textos, imágenes e identidad visual © Felipe Faria, ${ano}.`,

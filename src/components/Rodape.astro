@@ -2,7 +2,6 @@
 import { REPO, type Locale } from '../consts';
 import { traduzir } from '../i18n/ui';
 import { anoAtual } from '../lib/tempo';
-import Linhas from './Linhas.astro';
 
 interface Props {
   lang: Locale;
@@ -23,13 +22,17 @@ const ano = anoAtual();
   <p class="field">{t('campo.colofao')}</p>
   <div class="nota">
     <p>{t('colofao')}</p>
-    <p>{t('rodape.privacidade')}</p>
+    <p class="linhas">
+      {t('rodape.privacidade').map((linha) => <span>{linha}</span>)}
+    </p>
     <p>
       <a class="quiet-link" href={REPO} rel="noopener noreferrer" target="_blank">
         {t('rodape.codigo')}
       </a>
     </p>
-    <Linhas linhas={t('rodape.direitos')(ano)} class="direitos" />
+    <p class="direitos linhas">
+      {t('rodape.direitos')(ano).map((linha) => <span>{linha}</span>)}
+    </p>
   </div>
 </footer>
 

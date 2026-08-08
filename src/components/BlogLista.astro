@@ -2,7 +2,6 @@
 import Base from '../layouts/Base.astro';
 import Topo from './Topo.astro';
 import Rodape from './Rodape.astro';
-import Linhas from './Linhas.astro';
 import type { Locale } from '../consts';
 import { traduzir } from '../i18n/ui';
 import { rota } from '../i18n/utils';
@@ -48,7 +47,7 @@ const assuntos = [...contagem.entries()].sort((a, b) => b[1] - a[1] || a[0].loca
     <section class="abertura wall hang">
       <div class="abertura-corpo">
         <h1 class="titulo-sala">{t('blog.titulo')}</h1>
-        <Linhas linhas={t('blog.chamada')} class="chamada" />
+        <p class="chamada linhas">{t('blog.chamada').map((linha) => <span>{linha}</span>)}</p>
       </div>
     </section>
 

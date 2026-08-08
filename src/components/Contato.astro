@@ -4,7 +4,6 @@ import { join } from 'node:path';
 import Base from '../layouts/Base.astro';
 import Topo from './Topo.astro';
 import Rodape from './Rodape.astro';
-import Linhas from './Linhas.astro';
 import { CONTACT_EMAIL, EMAIL_ATIVO, CURRICULO, type Locale } from '../consts';
 import { traduzir } from '../i18n/ui';
 
@@ -32,7 +31,9 @@ const temCurriculo = existsSync(join(process.cwd(), 'public', CURRICULO));
     <section class="abertura wall hang">
       <div class="abertura-corpo">
         <h1 class="titulo-sala">{t('contato.titulo')}</h1>
-        <Linhas linhas={t('contato.chamada')} class="chamada" />
+        <p class="chamada linhas">
+          {t('contato.chamada').map((linha) => <span>{linha}</span>)}
+        </p>
       </div>
     </section>
 
@@ -60,7 +61,9 @@ const temCurriculo = existsSync(join(process.cwd(), 'public', CURRICULO));
 
         <p class="nota hang">
           <span></span>
-          <Linhas linhas={t('contato.nota')} como="span" class="nota-texto" />
+          <span class="nota-texto linhas">
+            {t('contato.nota').map((linha) => <span>{linha}</span>)}
+          </span>
         </p>
 
         {

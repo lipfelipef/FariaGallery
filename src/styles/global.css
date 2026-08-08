@@ -359,8 +359,11 @@ body {
      misturam e a ficha do artista, que sao tres informacoes distintas, vira
      um paragrafo so.
 
-     O espaco no fim de cada frase vem do HTML, pelo Linhas.astro. Em bloco
-     ele e' ignorado; existe para o caso de o texto voltar a correr. */
+     Estas duas regras moram no global de proposito. Ja tentei embrulhar tudo
+     num componente Astro, e quebrou o site: o CSS de componente e' escopado
+     por `data-astro-cid`, entao o paragrafo criado dentro do componente
+     deixava de casar com o estilo escrito no componente pai, e a ficha do
+     artista e a nota de direitos perderam cor e tamanho. */
   .linhas > span {
     display: block;
   }

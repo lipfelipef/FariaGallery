@@ -3,7 +3,6 @@ import Base from '../layouts/Base.astro';
 import Topo from './Topo.astro';
 import Rodape from './Rodape.astro';
 import Etiqueta from './Etiqueta.astro';
-import Linhas from './Linhas.astro';
 import { OBRAS, doTipo } from '../data/obras';
 import { SITE, SOCIAL, type Locale } from '../consts';
 import { traduzir } from '../i18n/ui';
@@ -63,15 +62,19 @@ const percurso = [...emCartaz].reverse();
     <section class="entrada wall hang">
       <div class="entrada-corpo entrance">
         <h1 class="nome">{SITE.name}</h1>
-        <Linhas linhas={t('artista')} class="linha-artista" />
+        <p class="linha-artista linhas">
+          {t('artista').map((linha) => <span>{linha}</span>)}
+        </p>
 
         <div class="texto-parede">
           <p>{t('parede.1')}</p>
           <p>{t('parede.2')}</p>
         </div>
 
-        <p class="acervo">
-          {t('acervo')(obras.length, experiencias.length, totalTextos)}
+        <p class="acervo linhas">
+          {t('acervo')(obras.length, experiencias.length, totalTextos).map((linha) => (
+            <span>{linha}</span>
+          ))}
         </p>
 
         <!-- Aviso de disponibilidade. Fica na entrada porque é a primeira coisa

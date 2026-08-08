@@ -2,7 +2,6 @@
 import Base from '../layouts/Base.astro';
 import Topo from './Topo.astro';
 import Rodape from './Rodape.astro';
-import Linhas from './Linhas.astro';
 import { doTipo, ordemDoAno, anoExibido, inicioDaObra, fimDaObra, meioDe } from '../data/obras';
 import { anosAtras, duracao, ROTULOS_DURACAO } from '../lib/tempo';
 import { LOCALE_DATA } from '../i18n/utils';
@@ -112,7 +111,7 @@ const destino = (slug: string, href?: string) => {
     <section class="abertura wall hang">
       <div class="abertura-corpo">
         <h1 class="titulo-sala">{titulo}</h1>
-        <Linhas linhas={chamada} class="chamada" />
+        <p class="chamada linhas">{chamada.map((linha) => <span>{linha}</span>)}</p>
       </div>
     </section>
 
