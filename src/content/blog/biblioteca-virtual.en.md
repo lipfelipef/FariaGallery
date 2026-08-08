@@ -2,7 +2,7 @@
 titulo: 'Virtual Library: my final project, two years on'
 resumo: A library system in Django, built at technical high school in 2024. Revisited today, it teaches more through the mistakes left in the repository than through what worked.
 data: 2026-08-07T23:40:00-03:00
-atualizado: 2026-08-08T00:10:00-03:00
+atualizado: 2026-08-08T00:30:00-03:00
 idioma: en
 obra: biblioteca-virtual
 endereco: biblioteca-virtual
@@ -13,8 +13,9 @@ assuntos:
 ---
 
 Virtual Library was the final project of my technical high school diploma in
-Internet Computing, built as a team in November 2024, at Escola Estadual Prof.
-Luiz Simione Sobrinho.
+Internet Computing, delivered in November 2024 at Escola Estadual Prof. Luiz
+Simione Sobrinho. It was team work, with Caio Cardoso Silva, Gabriel Medeiros,
+and Heloisa Teodozio.
 
 It is a catalogue system in **Django**: books, authors, genres, and languages,
 each physical copy carrying a loan status, user login, and a librarian area
@@ -101,12 +102,11 @@ Not a line of the 2024 code changed. I compared it file by file, before and
 after: the 58 files match, and the only difference in the whole repository is
 the line holding the key.
 
-And there was a surprise waiting. The repository had two commits, "falta
-algumas partes" and "90% completo". Once the database left the history, the
-second one turned out empty: the only thing it changed was `db.sqlite3`, which
-had grown 4 KB because someone opened the system and clicked through a few
-screens. Months of work fit into a single commit, and the other one was the
-database getting fatter.
+And there was a surprise waiting. The repository had two commits. Once the
+database left the history, the second one turned out empty: the only thing it
+changed was `db.sqlite3`, which had grown 4 KB because someone opened the
+system and clicked through a few screens. Months of work fit into a single
+commit, and the other one was the database getting fatter.
 
 ## Why this is here
 

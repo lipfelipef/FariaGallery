@@ -260,9 +260,9 @@ export const OBRAS: Obra[] = [
     },
     papel: { pt: 'Em grupo', en: 'In a team', es: 'En grupo' },
     credito: {
-      pt: 'Trabalho de Conclusão de Curso do Ensino Médio Técnico em Informática para Internet.',
-      en: 'Final project for the technical high school diploma in Internet Computing.',
-      es: 'Trabajo de Conclusión de Curso de la Educación Media Técnica en Informática para Internet.',
+      pt: 'Trabalho de Conclusão de Curso do Ensino Médio Técnico em Informática para Internet, com Caio Cardoso Silva, Gabriel Medeiros e Heloisa Teodozio.',
+      en: 'Final project for the technical high school diploma in Internet Computing, with Caio Cardoso Silva, Gabriel Medeiros, and Heloisa Teodozio.',
+      es: 'Trabajo de Conclusión de Curso de la Educación Media Técnica en Informática para Internet, con Caio Cardoso Silva, Gabriel Medeiros y Heloisa Teodozio.',
     },
   },
 ];

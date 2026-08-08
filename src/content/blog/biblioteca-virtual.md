@@ -2,7 +2,7 @@
 titulo: 'Biblioteca Virtual: meu TCC, dois anos depois'
 resumo: Um sistema de biblioteca em Django, feito no técnico em 2024. Revisitado hoje, ele ensina mais pelos erros que ficaram no repositório do que pelo que funcionava.
 data: 2026-08-07T23:40:00-03:00
-atualizado: 2026-08-08T00:10:00-03:00
+atualizado: 2026-08-08T00:30:00-03:00
 idioma: pt
 obra: biblioteca-virtual
 endereco: biblioteca-virtual
@@ -13,8 +13,9 @@ assuntos:
 ---
 
 A Biblioteca Virtual foi o Trabalho de Conclusão de Curso do Ensino Médio
-Técnico em Informática para Internet, feito em grupo em novembro de 2024, na
-Escola Estadual Prof. Luiz Simione Sobrinho.
+Técnico em Informática para Internet, entregue em novembro de 2024 na Escola
+Estadual Prof. Luiz Simione Sobrinho. Foi trabalho de grupo, com Caio Cardoso
+Silva, Gabriel Medeiros e Heloisa Teodozio.
 
 É um sistema de acervo em **Django**: cadastro de livro, autor, gênero e
 idioma, cada exemplar com status de empréstimo, login de usuário e uma área de
@@ -99,11 +100,11 @@ O código de 2024 não mudou uma linha. Comparei arquivo por arquivo, antes e
 depois: os 58 arquivos batem, e a única diferença em todo o repositório é a
 linha da chave.
 
-E sobrou uma curiosidade que eu não esperava. O repositório tinha dois commits,
-"falta algumas partes" e "90% completo". Quando o banco saiu do histórico, o
-segundo virou vazio: a única coisa que ele mudava era o `db.sqlite3`, que
-engordou 4 KB porque alguém abriu o sistema e clicou em algumas telas. Meses de
-trabalho couberam em um commit só, e o outro era o banco crescendo.
+E sobrou uma curiosidade que eu não esperava. O repositório tinha dois commits.
+Quando o banco saiu do histórico, o segundo virou vazio: a única coisa que ele
+mudava era o `db.sqlite3`, que engordou 4 KB porque alguém abriu o sistema e
+clicou em algumas telas. Meses de trabalho couberam em um commit só, e o outro
+era o banco crescendo.
 
 ## Por que isso está aqui
 
