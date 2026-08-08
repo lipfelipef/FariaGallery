@@ -1,5 +1,13 @@
 # fariagallery.com
 # Site estatico, sem area privada e sem endpoint. Tudo pode ser rastreado.
+#
+# Nao ha nada a esconder aqui, entao nao ha `Disallow`. Vale lembrar que
+# robots.txt nunca foi mecanismo de seguranca: ele e um pedido, que so os
+# robos educados cumprem, e a lista do que se pede para nao visitar acaba
+# servindo de mapa para quem quer justamente aquilo. O que precisa ficar fora
+# da busca sai por `noindex` na propria pagina, como faz a de erro.
+#
+# Revisado em 2026-08-08.
 
 User-agent: *
 Allow: /

@@ -2,11 +2,19 @@
 # Como reportar um problema de seguranca neste site.
 # Site estatico, sem back-end, banco, formulario ou login: a superficie e
 # pequena de proposito. Ainda assim, se voce achar algo, fale.
+#
+# O que o site faz, para voce nao perder tempo procurando o que nao existe:
+# entrega HTML pronto, com CSS e fontes do proprio dominio. Nao ha rota de
+# API, nao ha upload, nao ha campo que aceite texto de quem visita e nao ha
+# cookie. A unica coisa guardada no navegador e a escolha entre sala clara e
+# escura, em localStorage, e ela nunca sai dali.
+#
+# Revisado em 2026-08-08.
 
 # A ordem abaixo e a ordem de preferencia, como manda o RFC: o e-mail
 # responde direto, a pagina serve de alternativa.
 Contact: mailto:felipe@fariagallery.com
 Contact: https://fariagallery.com/contato/
-Expires: 2027-08-07T00:00:00.000Z
+Expires: 2027-08-08T00:00:00.000Z
 Preferred-Languages: pt-BR, en, es
 Canonical: https://fariagallery.com/.well-known/security.txt
