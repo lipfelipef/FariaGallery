@@ -110,8 +110,18 @@ export const UI = {
 
     'sala.redes': 'Onde me achar',
     'erro404.titulo': 'Esta sala não existe',
-    'erro404.texto':
-      'O endereço que você abriu não corresponde a nada aqui. Pode ser link antigo, pode ser erro de digitação. As saídas estão abaixo.',
+    /**
+     * Uma frase por linha, e a quebra é escolhida aqui. Ver `artista` acima:
+     * mesma regra, mesmo motivo. Sem isto a frase dobrava onde a largura
+     * mandava e sobrava "As" pendurado no fim da segunda linha.
+     *
+     * Vira uma frase só na descrição que vai para o buscador.
+     */
+    'erro404.texto': [
+      'O endereço que você abriu não corresponde a nada aqui.',
+      'Pode ser link antigo, pode ser erro de digitação.',
+      'As saídas estão abaixo.',
+    ],
     'nav.experiencia': 'Experiência',
     'experiencia.titulo': 'Experiência',
     'experiencia.chamada': [
@@ -258,8 +268,11 @@ export const UI = {
 
     'sala.redes': 'Where to find me',
     'erro404.titulo': 'This room does not exist',
-    'erro404.texto':
-      'The address you opened does not match anything here. Could be an old link, could be a typo. The ways out are below.',
+    'erro404.texto': [
+      'The address you opened does not match anything here.',
+      'Could be an old link, could be a typo.',
+      'The ways out are below.',
+    ],
     'nav.experiencia': 'Experience',
     'experiencia.titulo': 'Experience',
     'experiencia.chamada': [
@@ -404,8 +417,11 @@ export const UI = {
 
     'sala.redes': 'Dónde encontrarme',
     'erro404.titulo': 'Esta sala no existe',
-    'erro404.texto':
-      'La dirección que abriste no corresponde a nada aquí. Puede ser un enlace viejo o un error de tipeo. Las salidas están abajo.',
+    'erro404.texto': [
+      'La dirección que abriste no corresponde a nada aquí.',
+      'Puede ser un enlace viejo o un error de tipeo.',
+      'Las salidas están abajo.',
+    ],
     'nav.experiencia': 'Experiencia',
     'experiencia.titulo': 'Experiencia',
     'experiencia.chamada': [

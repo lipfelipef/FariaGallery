@@ -27,18 +27,26 @@ const traducoes = Object.fromEntries(
       lang: LANG_HTML[lang],
       titulo: UI[lang]['erro404.titulo'],
       texto: UI[lang]['erro404.texto'],
+      /** A mesma fila do menu do topo, com o início na frente. */
       saidas: [
         { rotulo: UI[lang]['nav.inicio'], href: rota(lang, '/') },
         { rotulo: UI[lang]['nav.colecao'], href: rota(lang, '/obras') },
+        { rotulo: UI[lang]['nav.experiencia'], href: rota(lang, '/experiencia') },
         { rotulo: UI[lang]['nav.blog'], href: rota(lang, '/blog') },
         { rotulo: UI[lang]['nav.contato'], href: rota(lang, '/contato') },
       ],
     },
   ])
 );
+
+/**
+ * Na tela o texto é uma frase por linha; para o buscador é uma frase só.
+ * Descrição com quebra no meio sairia picada no resultado de busca.
+ */
+const descricao = t('erro404.texto').join(' ');
 ---
 
-<Base lang="pt" titulo={t('erro404.titulo')} descricao={t('erro404.texto')} semIndexar>
+<Base lang="pt" titulo={t('erro404.titulo')} descricao={descricao} semIndexar>
   <Topo lang="pt" />
 
   <main id="conteudo">
@@ -46,11 +54,14 @@ const traducoes = Object.fromEntries(
       <p class="field">404</p>
       <div>
         <h1 class="titulo" data-titulo>{t('erro404.titulo')}</h1>
-        <p class="texto" data-texto>{t('erro404.texto')}</p>
+        <p class="texto linhas" data-texto>
+          {t('erro404.texto').map((linha) => <span>{linha}</span>)}
+        </p>
 
         <ul class="saidas" data-saidas>
           <li><a class="quiet-link" href={rota('pt', '/')}>{t('nav.inicio')}</a></li>
           <li><a class="quiet-link" href={rota('pt', '/obras')}>{t('nav.colecao')}</a></li>
+          <li><a class="quiet-link" href={rota('pt', '/experiencia')}>{t('nav.experiencia')}</a></li>
           <li><a class="quiet-link" href={rota('pt', '/blog')}>{t('nav.blog')}</a></li>
           <li><a class="quiet-link" href={rota('pt', '/contato')}>{t('nav.contato')}</a></li>
         </ul>
@@ -81,7 +92,17 @@ const traducoes = Object.fromEntries(
     document.documentElement.lang = t.lang;
     document.title = t.titulo + document.title.slice(document.title.indexOf(' | '));
     document.querySelector('[data-titulo]').textContent = t.titulo;
-    document.querySelector('[data-texto]').textContent = t.texto;
+
+    // Uma frase por linha, igual ao que o servidor escreve. Trocar o
+    // `textContent` do parágrafo inteiro juntaria as três num bloco só e
+    // desfaria a quebra escolhida.
+    var texto = document.querySelector('[data-texto]');
+    texto.textContent = '';
+    t.texto.forEach(function (linha) {
+      var span = document.createElement('span');
+      span.textContent = linha;
+      texto.appendChild(span);
+    });
 
     var itens = document.querySelectorAll('[data-saidas] a');
     t.saidas.forEach(function (saida, i) {
@@ -108,10 +129,22 @@ const traducoes = Object.fromEntries(
 
   .texto {
     margin-top: 1rem;
-    max-width: 44ch;
     font-size: 1.0625rem;
     line-height: 1.6;
     color: var(--color-ink-soft);
+  }
+
+  /* A quebra vem da classe `linhas`, no global.css. A medida aqui só existe
+     para comportar a linha mais longa dos três idiomas, que é a primeira em
+     português: 428px, contra 416 do inglês e 395 do espanhol.
+
+     Eram 44ch, e 44ch dá exatamente 429px nesta tipografia. Um pixel de folga
+     não é folga: bastava o navegador arredondar diferente, ou a fonte demorar
+     a carregar, para a frase dobrar e devolver o defeito que a quebra à mão
+     veio corrigir. 48ch dá 468px, quarenta de sobra, e alarga o bloco em
+     menos de 40 pixels. */
+  .texto span {
+    max-width: 48ch;
   }
 
   .saidas {
