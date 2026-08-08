@@ -4,7 +4,7 @@ import { join } from 'node:path';
 import Base from '../layouts/Base.astro';
 import Topo from './Topo.astro';
 import Rodape from './Rodape.astro';
-import { SOCIAL, CONTACT_EMAIL, EMAIL_ATIVO, CURRICULO, type Locale } from '../consts';
+import { CONTACT_EMAIL, EMAIL_ATIVO, CURRICULO, type Locale } from '../consts';
 import { traduzir } from '../i18n/ui';
 
 interface Props {
@@ -22,19 +22,6 @@ const t = traduzir(lang);
  * original, então o teste dava sempre falso.
  */
 const temCurriculo = existsSync(join(process.cwd(), 'public', CURRICULO));
-
-/**
- * Só canal de falar comigo. GitHub entra porque é onde o código mora e
- * recrutador vai olhar; o Até Zerar não entra, porque é obra e vive na
- * coleção, não aqui.
- */
-const canais = [
-  ...(EMAIL_ATIVO
-    ? [{ campo: t('contato.email'), texto: CONTACT_EMAIL, href: `mailto:${CONTACT_EMAIL}`, externo: false }]
-    : []),
-  { campo: 'LinkedIn', texto: 'Felipe Faria', href: SOCIAL.linkedin, externo: true },
-  { campo: 'GitHub', texto: 'lipfelipef', href: SOCIAL.github, externo: true },
-];
 ---
 
 <Base lang={lang} titulo={t('contato.titulo')} descricao={t('contato.chamada')}>
@@ -50,25 +37,18 @@ const canais = [
 
     <section class="wall">
       <div class="corpo">
-        <dl class="canais hang">
-          {
-            canais.map(({ campo, texto, href, externo }) => (
-              <>
-                <dt class="field">{campo}</dt>
-                <dd class="value">
-                  <a
-                    class="quiet-link"
-                    href={href}
-                    rel={externo ? 'me noopener noreferrer' : undefined}
-                    target={externo ? '_blank' : undefined}
-                  >
-                    {texto}
-                  </a>
-                </dd>
-              </>
-            ))
-          }
-        </dl>
+        {
+          EMAIL_ATIVO && (
+            <dl class="canal hang">
+              <dt class="field">{t('contato.email')}</dt>
+              <dd class="endereco">
+                <a class="quiet-link" href={`mailto:${CONTACT_EMAIL}`}>
+                  {CONTACT_EMAIL}
+                </a>
+              </dd>
+            </dl>
+          )
+        }
 
         {
           temCurriculo && (
@@ -123,19 +103,20 @@ const canais = [
     border-top: 1px solid var(--color-rule);
   }
 
-  .canais {
-    padding-block: clamp(2rem, 4vw, 3rem) 0;
-    row-gap: 0.75rem;
+  .canal {
+    padding-block: clamp(2.5rem, 5vw, 3.5rem) 0;
+    row-gap: 0.5rem;
   }
 
-  @media (max-width: 47.99rem) {
-    .canais {
-      row-gap: 0.125rem;
-    }
+  /* Sendo o único canal da página, o endereço não é legenda: é o conteúdo.
+     Por isso vem no corpo do texto e não no tamanho de ficha. */
+  .endereco {
+    font-size: clamp(1.125rem, 0.9rem + 0.9vw, 1.5rem);
+    line-height: 1.4;
   }
 
   .curriculo {
-    padding-block: 2rem clamp(3rem, 8vh, 5rem);
+    padding-block: 2.5rem clamp(3rem, 8vh, 5rem);
   }
 
   /* Botão de verdade, não link de texto: currículo é a ação que o

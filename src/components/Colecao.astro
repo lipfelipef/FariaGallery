@@ -2,7 +2,7 @@
 import Base from '../layouts/Base.astro';
 import Topo from './Topo.astro';
 import Rodape from './Rodape.astro';
-import { OBRAS, ordemDoAno } from '../data/obras';
+import { doTipo, ordemDoAno } from '../data/obras';
 import type { Locale } from '../consts';
 import { traduzir } from '../i18n/ui';
 import { rota } from '../i18n/utils';
@@ -10,13 +10,17 @@ import { postsPorObra } from '../lib/blog';
 
 interface Props {
   lang: Locale;
+  /** `obra` monta a coleção, `experiencia` monta a outra sala. */
+  tipo?: 'obra' | 'experiencia';
 }
 
-const { lang } = Astro.props;
+const { lang, tipo = 'obra' } = Astro.props;
 const t = traduzir(lang);
 const textos = await postsPorObra(lang);
 
-const acervo = OBRAS.filter((o) => !o.pendente);
+const acervo = doTipo(tipo);
+const titulo = tipo === 'obra' ? t('colecao.titulo') : t('experiencia.titulo');
+const chamada = tipo === 'obra' ? t('colecao.chamada') : t('experiencia.chamada');
 
 /**
  * O catálogo de museu agrupa por ano e vai do mais novo para o mais antigo.
@@ -43,14 +47,14 @@ const destino = (slug: string, href?: string) => {
 };
 ---
 
-<Base lang={lang} titulo={t('colecao.titulo')} descricao={t('colecao.chamada')}>
+<Base lang={lang} titulo={titulo} descricao={chamada}>
   <Topo lang={lang} />
 
   <main id="conteudo">
     <section class="abertura wall hang">
       <div class="abertura-corpo">
-        <h1 class="titulo-sala">{t('colecao.titulo')}</h1>
-        <p class="chamada">{t('colecao.chamada')}</p>
+        <h1 class="titulo-sala">{titulo}</h1>
+        <p class="chamada">{chamada}</p>
       </div>
     </section>
 

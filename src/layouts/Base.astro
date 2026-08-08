@@ -46,7 +46,7 @@ const pessoa = {
     department: { '@type': 'CollegeOrUniversity', name: 'Santo Amaro' },
   },
   knowsAbout: ['Desenvolvimento web', 'Angular', 'Node.js', 'Java', 'Python'],
-  sameAs: [SOCIAL.github, SOCIAL.linkedin, SOCIAL.youtube],
+  sameAs: SOCIAL.map((s) => s.href),
 };
 ---
 

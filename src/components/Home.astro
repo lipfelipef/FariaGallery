@@ -3,8 +3,8 @@ import Base from '../layouts/Base.astro';
 import Topo from './Topo.astro';
 import Rodape from './Rodape.astro';
 import Etiqueta from './Etiqueta.astro';
-import { OBRAS } from '../data/obras';
-import { SITE, type Locale } from '../consts';
+import { OBRAS, doTipo } from '../data/obras';
+import { SITE, SOCIAL, type Locale } from '../consts';
 import { traduzir } from '../i18n/ui';
 import { rota } from '../i18n/utils';
 import { postsPorObra } from '../lib/blog';
@@ -23,15 +23,17 @@ const textos = await postsPorObra(lang);
  * Obra sem ficha preenchida não vai pra parede. Some do site inteiro
  * enquanto estiver marcada como `pendente`, e volta quando o campo sai.
  */
-const acervo = OBRAS.filter((o) => !o.pendente);
-const comCodigo = acervo.filter((o) => o.estado === 'publico').length;
+const obras = doTipo('obra');
+const comCodigo = obras.filter((o) => o.estado === 'publico').length;
 
 /**
- * A home é a exposição, não o acervo. Só as obras marcadas como destaque
- * ficam penduradas aqui, com a ficha inteira. O resto vive na coleção, que
- * é o catálogo e aguenta 50 obras sem virar rolagem infinita.
+ * A home é a exposição, não o acervo. Só o que está marcado como destaque
+ * fica pendurado aqui, com a ficha inteira, e a curadoria ignora o tipo de
+ * propósito: se a coisa mais forte é uma experiência, ela vem para a parede.
+ * O resto vive na coleção e na experiência, que aguentam 50 fichas sem virar
+ * rolagem infinita.
  */
-const emCartaz = acervo.filter((o) => o.destaque);
+const emCartaz = OBRAS.filter((o) => !o.pendente && o.destaque);
 
 ---
 
@@ -50,7 +52,7 @@ const emCartaz = acervo.filter((o) => o.destaque);
           <p>{t('parede.2')}</p>
         </div>
 
-        <p class="acervo">{t('acervo')(acervo.length, comCodigo)}</p>
+        <p class="acervo">{t('acervo')(obras.length, comCodigo)}</p>
       </div>
     </section>
 
@@ -66,12 +68,31 @@ const emCartaz = acervo.filter((o) => o.destaque);
         <p class="para-colecao hang">
           <span></span>
           <a class="quiet-link" href={rota(lang, '/obras')}>
-            {t('colecao.verTudo')(acervo.length)} <span aria-hidden="true">&#8594;</span>
+            {t('colecao.verTudo')(obras.length)} <span aria-hidden="true">&#8594;</span>
           </a>
         </p>
       </div>
     </section>
 
+    <section id="redes" class="sala wall">
+      <h2 class="sala-titulo">{t('sala.redes')}</h2>
+      <div class="sala-corpo">
+        <dl class="redes hang">
+          {
+            SOCIAL.map(({ rede, usuario, href }) => (
+              <>
+                <dt class="field">{rede}</dt>
+                <dd class="value">
+                  <a class="quiet-link" href={href} rel="me noopener noreferrer" target="_blank">
+                    {usuario}
+                  </a>
+                </dd>
+              </>
+            ))
+          }
+        </dl>
+      </div>
+    </section>
   </main>
 
   <Rodape lang={lang} />
@@ -157,6 +178,17 @@ const emCartaz = acervo.filter((o) => o.destaque);
     padding-block: clamp(2rem, 4vw, 2.75rem);
     border-top: 1px solid var(--color-rule);
     font-size: 0.875rem;
+  }
+
+  .redes {
+    padding-block: clamp(2rem, 4vw, 3rem);
+    row-gap: 0.75rem;
+  }
+
+  @media (max-width: 47.99rem) {
+    .redes {
+      row-gap: 0.125rem;
+    }
   }
 
   .curriculo {

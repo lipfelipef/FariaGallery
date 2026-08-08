@@ -71,8 +71,14 @@ export const UI = {
 
     'contato.titulo': 'Contato',
     'contato.email': 'E-mail',
-    'contato.chamada':
-      'Para vaga, estágio, projeto ou só trocar ideia. Respondo no LinkedIn, e o código está no GitHub.',
+    'contato.chamada': 'Para vaga, estágio, projeto ou só trocar ideia.',
+
+    'sala.redes': 'Onde me achar',
+    'nav.experiencia': 'Experiência',
+    'experiencia.titulo': 'Experiência',
+    'experiencia.chamada':
+      'O que eu toco fora de projeto fechado: canal, trabalho e o que vier.',
+    'experiencia.vazio': 'Nada aqui ainda.',
 
     'blog.titulo': 'Blog',
     'blog.chamada':
@@ -157,8 +163,14 @@ export const UI = {
 
     'contato.titulo': 'Contact',
     'contato.email': 'Email',
-    'contato.chamada':
-      'For a role, an internship, a project, or just to talk. I answer on LinkedIn, and the code lives on GitHub.',
+    'contato.chamada': 'For a role, an internship, a project, or just to talk.',
+
+    'sala.redes': 'Where to find me',
+    'nav.experiencia': 'Experience',
+    'experiencia.titulo': 'Experience',
+    'experiencia.chamada':
+      'What I run outside of a finished project: the channel, work, and whatever comes next.',
+    'experiencia.vazio': 'Nothing here yet.',
 
     'blog.titulo': 'Blog',
     'blog.chamada':
@@ -243,8 +255,14 @@ export const UI = {
 
     'contato.titulo': 'Contacto',
     'contato.email': 'Correo',
-    'contato.chamada':
-      'Para una vacante, una pasantía, un proyecto o solo conversar. Respondo en LinkedIn, y el código está en GitHub.',
+    'contato.chamada': 'Para una vacante, una pasantía, un proyecto o solo conversar.',
+
+    'sala.redes': 'Dónde encontrarme',
+    'nav.experiencia': 'Experiencia',
+    'experiencia.titulo': 'Experiencia',
+    'experiencia.chamada':
+      'Lo que llevo fuera de un proyecto cerrado: el canal, trabajo y lo que venga.',
+    'experiencia.vazio': 'Nada aquí todavía.',
 
     'blog.titulo': 'Blog',
     'blog.chamada':

@@ -44,6 +44,12 @@ export interface Obra {
   tags: string[];
   /** Sai na parede da home. O acervo inteiro fica na página da coleção. */
   destaque?: boolean;
+  /**
+   * Onde a ficha mora. `obra` é projeto fechado, com começo e fim, e vai
+   * para a coleção. `experiencia` é o que continua rodando (canal, emprego,
+   * estágio) e vai para a página de experiência. Padrão: obra.
+   */
+  tipo?: 'obra' | 'experiencia';
   resumo: PorIdioma;
   papel: PorIdioma;
   credito: PorIdioma;
@@ -61,6 +67,10 @@ export interface Obra {
  */
 export const ordemDoAno = (o: Obra) =>
   (o.anoOrdem ?? (Number.parseInt(o.ano, 10) || 0)) + (o.ativa ? 0.5 : 0);
+
+/** Fichas de um tipo, já sem as que ainda estão incompletas. */
+export const doTipo = (tipo: 'obra' | 'experiencia') =>
+  OBRAS.filter((o) => !o.pendente && (o.tipo ?? 'obra') === tipo);
 
 export const OBRAS: Obra[] = [
   {
@@ -125,6 +135,7 @@ export const OBRAS: Obra[] = [
     ano: '2020 até hoje',
     anoOrdem: 2026,
     ativa: true,
+    tipo: 'experiencia',
     meio: 'Vídeo, 4K60fps',
     estado: 'noar',
     link: { href: 'https://www.youtube.com/@atezerar', tipo: 'canal' },

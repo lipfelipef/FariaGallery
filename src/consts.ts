@@ -19,12 +19,12 @@ export const SITE = {
 export const CONTACT_EMAIL = 'contato@fariagallery.com';
 
 /**
- * O endereco acima so funciona depois de ligar o Email Routing na Cloudflare.
- * Enquanto isso for `false`, o site nao mostra o e-mail: link de contato que
- * cai no vazio e pior do que nao ter contato nenhum.
- * Ligou o Email Routing? Troca para `true` e o e-mail aparece no site.
+ * ATENCAO: o endereco acima so recebe de verdade depois de ligar o Email
+ * Routing na Cloudflare. Esta em `true` porque a pagina de contato passou a
+ * ter o e-mail como unico canal, por decisao do Felipe. Enquanto o Email
+ * Routing nao estiver ligado, quem escrever recebe o e-mail de volta.
  */
-export const EMAIL_ATIVO = false;
+export const EMAIL_ATIVO = true;
 
 /**
  * Currículo em PDF. O link só aparece no site se este arquivo existir de
@@ -32,12 +32,18 @@ export const EMAIL_ATIVO = false;
  */
 export const CURRICULO = '/curriculo-felipe-faria.pdf';
 
-/** Vira o sameAs do Schema.org tipo Person. Ordem importa pouco, presenca importa. */
-export const SOCIAL = {
-  github: 'https://github.com/lipfelipef',
-  linkedin: 'https://www.linkedin.com/in/felipefariaf/',
-  youtube: 'https://www.youtube.com/@atezerar',
-} as const;
+/**
+ * Vira o sameAs do Schema.org tipo Person, e a lista de redes da home.
+ * A ordem aqui e a ordem que aparece no site: primeiro o que um recrutador
+ * abre, depois o resto.
+ */
+export const SOCIAL = [
+  { rede: 'LinkedIn', usuario: 'Felipe Faria', href: 'https://www.linkedin.com/in/felipefariaf/' },
+  { rede: 'GitHub', usuario: 'lipfelipef', href: 'https://github.com/lipfelipef' },
+  { rede: 'YouTube', usuario: 'Até Zerar', href: 'https://www.youtube.com/@atezerar' },
+  { rede: 'Instagram', usuario: 'lipfelipef', href: 'https://www.instagram.com/lipfelipef' },
+  { rede: 'X', usuario: 'lipfelipef', href: 'https://x.com/lipfelipef' },
+] as const;
 
 export const LOCALES = ['pt', 'en', 'es'] as const;
 export type Locale = (typeof LOCALES)[number];
