@@ -78,7 +78,9 @@ const recolhidos = assuntos.length - aVista;
     <section class="abertura wall hang">
       <div class="abertura-corpo">
         <h1 class="titulo-sala">{t('blog.titulo')}</h1>
-        <p class="chamada linhas">{t('blog.chamada').map((linha) => <span>{linha}</span>)}</p>
+        <p class="chamada linhas">
+          {t('blog.chamada').map((linha, i) => (<>{i > 0 && ' '}<span>{linha}</span></>))}
+        </p>
       </div>
     </section>
 

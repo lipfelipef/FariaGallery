@@ -16,7 +16,6 @@ export const UI = {
     'pular': 'Pular para o conteúdo',
 
     'nav.obras': 'Obras',
-    'nav.inicio': 'Início',
     'nav.blog': 'Blog',
     'nav.contato': 'Contato',
 
@@ -184,7 +183,6 @@ export const UI = {
     'pular': 'Skip to content',
 
     'nav.obras': 'Works',
-    'nav.inicio': 'Home',
     'nav.blog': 'Blog',
     'nav.contato': 'Contact',
 
@@ -333,7 +331,6 @@ export const UI = {
     'pular': 'Saltar al contenido',
 
     'nav.obras': 'Obras',
-    'nav.inicio': 'Inicio',
     'nav.blog': 'Blog',
     'nav.contato': 'Contacto',
 

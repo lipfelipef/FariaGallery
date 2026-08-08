@@ -63,7 +63,7 @@ const percurso = [...emCartaz].reverse();
       <div class="entrada-corpo entrance">
         <h1 class="nome">{SITE.name}</h1>
         <p class="linha-artista linhas">
-          {t('artista').map((linha) => <span>{linha}</span>)}
+          {t('artista').map((linha, i) => (<>{i > 0 && ' '}<span>{linha}</span></>))}
         </p>
 
         <div class="texto-parede">
@@ -72,8 +72,11 @@ const percurso = [...emCartaz].reverse();
         </div>
 
         <p class="acervo linhas">
-          {t('acervo')(obras.length, experiencias.length, totalTextos).map((linha) => (
-            <span>{linha}</span>
+          {t('acervo')(obras.length, experiencias.length, totalTextos).map((linha, i) => (
+            <>
+              {i > 0 && ' '}
+              <span>{linha}</span>
+            </>
           ))}
         </p>
 

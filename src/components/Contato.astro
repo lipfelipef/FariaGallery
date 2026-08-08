@@ -21,7 +21,7 @@ const t = traduzir(lang);
       <div class="abertura-corpo">
         <h1 class="titulo-sala">{t('contato.titulo')}</h1>
         <p class="chamada linhas">
-          {t('contato.chamada').map((linha) => <span>{linha}</span>)}
+          {t('contato.chamada').map((linha, i) => (<>{i > 0 && ' '}<span>{linha}</span></>))}
         </p>
       </div>
     </section>
@@ -51,7 +51,7 @@ const t = traduzir(lang);
         <p class="nota hang">
           <span></span>
           <span class="nota-texto linhas">
-            {t('contato.nota').map((linha) => <span>{linha}</span>)}
+            {t('contato.nota').map((linha, i) => (<>{i > 0 && ' '}<span>{linha}</span></>))}
           </span>
         </p>
       </div>

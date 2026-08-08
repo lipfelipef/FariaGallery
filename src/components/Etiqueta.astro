@@ -68,7 +68,7 @@ const textoDoLink = obra.link
       }
     </h3>
     <p class="obra-resumo linhas">
-      {linhasDe(obra.resumo[lang]).map((linha) => <span>{linha}</span>)}
+      {linhasDe(obra.resumo[lang]).map((linha, i) => (<>{i > 0 && ' '}<span>{linha}</span></>))}
     </p>
   </div>
 
@@ -88,8 +88,11 @@ const textoDoLink = obra.link
               linhas.length > 1 && 'value-linhas',
             ]}
           >
-            {linhas.map((linha) => (
-              <span>{linha}</span>
+            {linhas.map((linha, i) => (
+              <>
+                {i > 0 && ' '}
+                <span>{linha}</span>
+              </>
             ))}
           </dd>
         </>

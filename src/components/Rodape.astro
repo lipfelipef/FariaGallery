@@ -23,7 +23,7 @@ const ano = anoAtual();
   <div class="nota">
     <p>{t('colofao')}</p>
     <p class="linhas">
-      {t('rodape.privacidade').map((linha) => <span>{linha}</span>)}
+      {t('rodape.privacidade').map((linha, i) => (<>{i > 0 && ' '}<span>{linha}</span></>))}
     </p>
     <p>
       <a class="quiet-link" href={REPO} rel="noopener noreferrer" target="_blank">
@@ -31,7 +31,7 @@ const ano = anoAtual();
       </a>
     </p>
     <p class="direitos linhas">
-      {t('rodape.direitos')(ano).map((linha) => <span>{linha}</span>)}
+      {t('rodape.direitos')(ano).map((linha, i) => (<>{i > 0 && ' '}<span>{linha}</span></>))}
     </p>
   </div>
 </footer>

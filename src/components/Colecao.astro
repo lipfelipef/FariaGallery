@@ -136,7 +136,9 @@ const destino = (slug: string, href?: string) => {
     <section class="abertura wall hang">
       <div class="abertura-corpo">
         <h1 class="titulo-sala">{titulo}</h1>
-        <p class="chamada linhas">{chamada.map((linha) => <span>{linha}</span>)}</p>
+        <p class="chamada linhas">
+          {chamada.map((linha, i) => (<>{i > 0 && ' '}<span>{linha}</span></>))}
+        </p>
       </div>
     </section>
 
