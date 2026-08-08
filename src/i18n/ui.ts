@@ -128,8 +128,10 @@ export const UI = {
     'rodape.privacidade':
       'Este site não coleta dados pessoais, não usa cookie e não rastreia quem visita. Não há formulário, login nem banco de dados.',
     'rodape.codigo': 'Código aberto no GitHub, sob licença MIT.',
-    'rodape.direitos': (ano: number) =>
-      `Textos, imagens e identidade visual © Felipe Faria, ${ano}. Todos os direitos reservados.`,
+    'rodape.direitos': (ano: number) => [
+      `Textos, imagens e identidade visual © Felipe Faria, ${ano}.`,
+      'Todos os direitos reservados.',
+    ],
 
     'meta.home':
       'Felipe Faria, desenvolvedor e estudante de Análise e Desenvolvimento de Sistemas. Projetos e experiências com a ficha inteira, do material ao estado atual.',
@@ -259,8 +261,10 @@ export const UI = {
     'rodape.privacidade':
       'This site collects no personal data, sets no cookies, and tracks nobody. There are no forms, no login, and no database.',
     'rodape.codigo': 'Open source on GitHub, under the MIT licence.',
-    'rodape.direitos': (ano: number) =>
-      `Text, images, and visual identity © Felipe Faria, ${ano}. All rights reserved.`,
+    'rodape.direitos': (ano: number) => [
+      `Text, images, and visual identity © Felipe Faria, ${ano}.`,
+      'All rights reserved.',
+    ],
 
     'meta.home':
       'Felipe Faria, developer and Systems Analysis and Development student. Projects and experience with the full label, from material to current state.',
@@ -388,8 +392,10 @@ export const UI = {
     'rodape.privacidade':
       'Este sitio no recoge datos personales, no usa cookies y no rastrea a quien lo visita. No hay formularios, login ni base de datos.',
     'rodape.codigo': 'Código abierto en GitHub, bajo licencia MIT.',
-    'rodape.direitos': (ano: number) =>
-      `Textos, imágenes e identidad visual © Felipe Faria, ${ano}. Todos los derechos reservados.`,
+    'rodape.direitos': (ano: number) => [
+      `Textos, imágenes e identidad visual © Felipe Faria, ${ano}.`,
+      'Todos los derechos reservados.',
+    ],
 
     'meta.home':
       'Felipe Faria, desarrollador y estudiante de Análisis y Desarrollo de Sistemas. Proyectos y experiencia con la ficha completa, del material al estado actual.',

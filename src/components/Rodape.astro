@@ -1,6 +1,7 @@
 ---
 import { REPO, type Locale } from '../consts';
 import { traduzir } from '../i18n/ui';
+import { anoAtual } from '../lib/tempo';
 
 interface Props {
   lang: Locale;
@@ -8,7 +9,8 @@ interface Props {
 
 const { lang } = Astro.props;
 const t = traduzir(lang);
-const ano = new Date().getFullYear();
+/** No fuso de São Paulo, e não no da máquina que compila. Ver `anoAtual`. */
+const ano = anoAtual();
 ---
 
 <!--
@@ -26,9 +28,31 @@ const ano = new Date().getFullYear();
         {t('rodape.codigo')}
       </a>
     </p>
-    <p>{t('rodape.direitos')(ano)}</p>
+    <p class="direitos">
+      {t('rodape.direitos')(ano).map((linha) => <span>{linha}</span>)}
+    </p>
   </div>
 </footer>
+
+<!--
+  O ano da nota de direitos se corrige sozinho.
+
+  O site é estático, então o que vale é o ano do último build. Sem isto, um
+  site publicado em 2026 e deixado quieto continuaria dizendo 2026 em 2027.
+  O ano é lido no fuso de São Paulo, igual ao do servidor.
+-->
+<script is:inline define:vars={{ fuso: 'America/Sao_Paulo', anoDoBuild: ano }}>
+  (function () {
+    var el = document.querySelector('.direitos span');
+    if (!el) return;
+    var agora = Number(
+      new Intl.DateTimeFormat('en-CA', { year: 'numeric', timeZone: fuso }).format(new Date())
+    );
+    if (agora !== anoDoBuild) {
+      el.textContent = el.textContent.replace(String(anoDoBuild), String(agora));
+    }
+  })();
+</script>
 
 <style>
   .rodape {
@@ -41,6 +65,11 @@ const ano = new Date().getFullYear();
     line-height: 1.65;
     color: var(--color-ink-soft);
     max-width: 62ch;
+  }
+
+  /* Uma frase por linha: a autoria numa, a reserva de direitos noutra. */
+  .direitos span {
+    display: block;
   }
 
   .nota p + p {

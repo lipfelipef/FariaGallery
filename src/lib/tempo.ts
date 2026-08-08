@@ -69,6 +69,20 @@ export function tempoRelativo(d: Date, lang: Locale, agora = new Date()): string
 }
 
 /**
+ * O ano corrente em São Paulo.
+ *
+ * `new Date().getFullYear()` devolve o ano do relógio de quem executa, e quem
+ * executa é a máquina de build da Cloudflare, em UTC. Entre 21h e meia-noite
+ * de 31 de dezembro aqui já é 1º de janeiro lá, e um deploy nessa janela
+ * colocaria o ano seguinte no rodapé antes da virada no Brasil.
+ */
+export function anoAtual(agora = new Date()): number {
+  return Number(
+    new Intl.DateTimeFormat('en-CA', { year: 'numeric', timeZone: FUSO }).format(agora)
+  );
+}
+
+/**
  * "este ano", "ano passado", "há 2 anos", contando ANO DE CALENDÁRIO.
  *
  * O `tempoRelativo` não serve para rótulo de ano, e o erro é visível: ele mede
@@ -79,11 +93,8 @@ export function tempoRelativo(d: Date, lang: Locale, agora = new Date()): string
  * Aqui a conta é só uma subtração de anos, que é o que a pessoa faz de cabeça.
  */
 export function anosAtras(ano: number, lang: Locale, agora = new Date()): string {
-  const atual = Number(
-    new Intl.DateTimeFormat('en-CA', { year: 'numeric', timeZone: FUSO }).format(agora)
-  );
   const fmt = new Intl.RelativeTimeFormat(LOCALE_DATA[lang], { numeric: 'auto' });
-  return fmt.format(ano - atual, 'year');
+  return fmt.format(ano - anoAtual(agora), 'year');
 }
 
 /**
