@@ -2,6 +2,7 @@
 titulo: 'Biblioteca Virtual: mi trabajo final, dos años después'
 resumo: Un sistema de biblioteca en Django, hecho en la educación media técnica en 2024. Revisitado hoy, enseña más por los errores que quedaron en el repositorio que por lo que funcionaba.
 data: 2026-08-07T23:40:00-03:00
+atualizado: 2026-08-08T00:10:00-03:00
 idioma: es
 obra: biblioteca-virtual
 endereco: biblioteca-virtual
@@ -82,14 +83,37 @@ plantillas, con el nombre que Windows le da cuando alguien aprieta Ctrl+C y
 Ctrl+V. Es el respaldo manual de quien todavía no confía en el control de
 versiones, y es justamente lo que git existe para volver innecesario.
 
+## Qué hice al respecto
+
+Escribir todo esto y dejar el repositorio como estaba sería raro, así que lo
+limpié.
+
+La base, las carpetas `__pycache__` y la carpeta duplicada salieron del
+**historial entero**, no solo del estado actual. Esa distinción es justamente
+el punto: sacar un archivo en un commit nuevo no lo saca del pasado, y en git
+el pasado sigue siendo descargable por cualquiera. La clave ahora viene de una
+variable de entorno. Entraron un `.gitignore`, un `requirements.txt` con la
+versión de Django de la entrega y un `README` que explica cómo correr el
+proyecto desde cero, ya que sin base versionada hay que crear una.
+
+El código de 2024 no cambió ni una línea. Lo comparé archivo por archivo, antes
+y después: los 58 archivos coinciden, y la única diferencia en todo el
+repositorio es la línea de la clave.
+
+Y quedó una curiosidad que no esperaba. El repositorio tenía dos commits,
+"falta algumas partes" y "90% completo". Cuando la base salió del historial, el
+segundo quedó vacío: lo único que cambiaba era el `db.sqlite3`, que engordó
+4 KB porque alguien abrió el sistema y pasó por algunas pantallas. Meses de
+trabajo cupieron en un solo commit, y el otro era la base creciendo.
+
 ## Por qué esto está aquí
 
 Ninguno de esos cuatro errores aparece en el sitio funcionando. El sistema
 funciona, el tribunal lo aprobó, el curso terminó.
 
-Aparecen cuando alguien abre el repositorio, que es exactamente lo que hace un
-reclutador. Y aparecen porque **hoy sé qué buscar**, cosa que dos años atrás no
-sabía.
+Aparecían cuando alguien abría el repositorio, que es exactamente lo que hace
+un reclutador. Y vi los cuatro porque **hoy sé qué buscar**, cosa que dos años
+atrás no sabía.
 
 Por eso este proyecto sigue en la colección en vez de ser borrado. La distancia
 entre lo que hice en 2024 y lo que veo en 2026 es la información más útil que

@@ -2,6 +2,7 @@
 titulo: 'Virtual Library: my final project, two years on'
 resumo: A library system in Django, built at technical high school in 2024. Revisited today, it teaches more through the mistakes left in the repository than through what worked.
 data: 2026-08-07T23:40:00-03:00
+atualizado: 2026-08-08T00:10:00-03:00
 idioma: en
 obra: biblioteca-virtual
 endereco: biblioteca-virtual
@@ -82,14 +83,39 @@ left behind, named the way Windows names things when someone hits Ctrl+C and
 Ctrl+V. It is the manual backup of someone who does not yet trust version
 control, and it is exactly what git exists to make unnecessary.
 
+## What I did about it
+
+Writing all of that and leaving the repository as it was would have been odd,
+so I cleaned it up.
+
+The database, the `__pycache__` folders, and the duplicate folder came out of
+the **entire history**, not just the current state. That distinction is the
+whole point: removing a file in a new commit does not remove it from the past,
+and in git the past stays downloadable by anyone. The key now comes from an
+environment variable. In went a `.gitignore`, a `requirements.txt` pinning the
+Django version used at delivery, and a `README` explaining how to run the
+project from scratch, since without a versioned database you have to create
+one.
+
+Not a line of the 2024 code changed. I compared it file by file, before and
+after: the 58 files match, and the only difference in the whole repository is
+the line holding the key.
+
+And there was a surprise waiting. The repository had two commits, "falta
+algumas partes" and "90% completo". Once the database left the history, the
+second one turned out empty: the only thing it changed was `db.sqlite3`, which
+had grown 4 KB because someone opened the system and clicked through a few
+screens. Months of work fit into a single commit, and the other one was the
+database getting fatter.
+
 ## Why this is here
 
 None of those four mistakes shows up in the running site. The system works, the
 board approved it, the course ended.
 
-They show up when someone opens the repository, which is exactly what a
-recruiter does. And they show up because **today I know what to look for**,
-which two years ago I did not.
+They showed up when someone opened the repository, which is exactly what a
+recruiter does. And I only spotted all four because **today I know what to look
+for**, which two years ago I did not.
 
 That is why this project stays in the collection instead of being deleted. The
 distance between what I built in 2024 and what I can see in 2026 is the most

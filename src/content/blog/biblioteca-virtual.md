@@ -2,6 +2,7 @@
 titulo: 'Biblioteca Virtual: meu TCC, dois anos depois'
 resumo: Um sistema de biblioteca em Django, feito no técnico em 2024. Revisitado hoje, ele ensina mais pelos erros que ficaram no repositório do que pelo que funcionava.
 data: 2026-08-07T23:40:00-03:00
+atualizado: 2026-08-08T00:10:00-03:00
 idioma: pt
 obra: biblioteca-virtual
 endereco: biblioteca-virtual
@@ -82,14 +83,36 @@ com o nome que o Windows dá quando alguém aperta Ctrl+C e Ctrl+V. É o backup
 manual de quem ainda não confia no controle de versão, e é justamente o que o
 git existe para tornar desnecessário.
 
+## O que eu fiz a respeito
+
+Escrever tudo isso e deixar como estava seria estranho, então limpei o
+repositório.
+
+O banco, os `__pycache__` e a pasta duplicada saíram do **histórico inteiro**,
+não só do estado atual. Essa distinção é o ponto: tirar um arquivo num commit
+novo não tira ele do passado, e no git o passado continua baixável por qualquer
+um. A chave passou a vir de variável de ambiente. Entraram um `.gitignore`, um
+`requirements.txt` com a versão do Django da entrega e um `README` explicando
+como rodar o projeto do zero, já que sem banco versionado é preciso criar um.
+
+O código de 2024 não mudou uma linha. Comparei arquivo por arquivo, antes e
+depois: os 58 arquivos batem, e a única diferença em todo o repositório é a
+linha da chave.
+
+E sobrou uma curiosidade que eu não esperava. O repositório tinha dois commits,
+"falta algumas partes" e "90% completo". Quando o banco saiu do histórico, o
+segundo virou vazio: a única coisa que ele mudava era o `db.sqlite3`, que
+engordou 4 KB porque alguém abriu o sistema e clicou em algumas telas. Meses de
+trabalho couberam em um commit só, e o outro era o banco crescendo.
+
 ## Por que isso está aqui
 
 Nenhum desses quatro erros aparece no site rodando. O sistema funciona, a
 banca aprovou, o curso terminou.
 
-Eles aparecem quando alguém abre o repositório, que é exatamente o que um
-recrutador faz. E aparecem porque **hoje eu sei o que procurar**, o que dois
-anos atrás eu não sabia.
+Eles apareciam quando alguém abria o repositório, que é exatamente o que um
+recrutador faz. E eu só enxerguei os quatro porque **hoje sei o que procurar**,
+o que dois anos atrás eu não sabia.
 
 É por isso que este projeto continua na coleção em vez de ser apagado. A
 distância entre o que eu fiz em 2024 e o que eu enxergo em 2026 é a informação
