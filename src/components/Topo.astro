@@ -1,8 +1,8 @@
 ---
-import { SITE, LOCALES, type Locale } from '../consts';
+import { SITE, type Locale } from '../consts';
 import { traduzir, UI } from '../i18n/ui';
-import { rota, caminhoSemIdioma } from '../i18n/utils';
-
+import { rota } from '../i18n/utils';
+import { destinosPorIdioma } from '../lib/idiomas';
 
 interface Props {
   lang: Locale;
@@ -11,7 +11,8 @@ interface Props {
 const { lang } = Astro.props;
 const t = traduzir(lang);
 
-const aqui = caminhoSemIdioma(Astro.url);
+/** Nunca oferece um idioma que levaria a um endereço inexistente. */
+const idiomas = await destinosPorIdioma(Astro.url);
 ---
 
 <header class="topo wall">
@@ -26,15 +27,23 @@ const aqui = caminhoSemIdioma(Astro.url);
 
     <ul class="idiomas" aria-label={t('idioma.escolher')}>
       {
-        LOCALES.map((outro) => (
+        idiomas.map(({ lang: outro, href, exata }) => (
           <li>
             <a
-              class:list={['idioma', outro === lang && 'idioma-atual']}
-              href={rota(outro, aqui)}
+              class:list={[
+                'idioma',
+                outro === lang && 'idioma-atual',
+                !exata && 'idioma-parcial',
+              ]}
+              href={href}
               hreflang={outro}
               lang={outro}
               aria-current={outro === lang ? 'true' : undefined}
-              title={UI[outro]['idioma.nome']}
+              title={
+                exata
+                  ? UI[outro]['idioma.nome']
+                  : `${UI[outro]['idioma.nome']}: ${UI[outro]['idioma.semTexto']}`
+              }
             >
               {UI[outro]['idioma.curto']}
             </a>
@@ -158,6 +167,17 @@ const aqui = caminhoSemIdioma(Astro.url);
 
   .idioma-atual {
     color: var(--color-ink);
+  }
+
+  /* Idioma que não tem esta página. Continua clicável e leva ao lugar mais
+     próximo, mas fica visivelmente mais apagado para não prometer o que não
+     existe. */
+  .idioma-parcial {
+    opacity: 0.45;
+  }
+
+  .idioma-parcial:hover {
+    opacity: 1;
   }
 
   /* Mesma tipografia do menu: é rótulo de sala, não enfeite. */

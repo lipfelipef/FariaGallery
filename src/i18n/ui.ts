@@ -11,6 +11,7 @@ export const UI = {
     'idioma.nome': 'Português',
     'idioma.curto': 'PT',
     'idioma.escolher': 'Escolher idioma',
+    'idioma.semTexto': 'este texto ainda não existe neste idioma',
 
     'pular': 'Pular para o conteúdo',
 
@@ -96,6 +97,7 @@ export const UI = {
     'idioma.nome': 'English',
     'idioma.curto': 'EN',
     'idioma.escolher': 'Choose language',
+    'idioma.semTexto': 'this text does not exist in this language yet',
 
     'pular': 'Skip to content',
 
@@ -181,6 +183,7 @@ export const UI = {
     'idioma.nome': 'Español',
     'idioma.curto': 'ES',
     'idioma.escolher': 'Elegir idioma',
+    'idioma.semTexto': 'este texto todavía no existe en este idioma',
 
     'pular': 'Saltar al contenido',
 

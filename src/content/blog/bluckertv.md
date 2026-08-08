@@ -91,8 +91,8 @@ sobreviveu ao encerramento da empresa.
 Recorte público de julho de 2026, da aba de transparência da própria
 plataforma:
 
-| | |
-|---|---|
+| Métrica | Julho de 2026 |
+| --- | --- |
 | Usuários | 72 |
 | Vídeos | 270 |
 | Visualizações | 3.361 |

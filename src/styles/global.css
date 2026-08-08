@@ -290,6 +290,47 @@ body {
     margin-block: 2.5em;
   }
 
+  /* Tabela dentro de post. O navegador nao da espacamento nenhum por
+     padrao, entao sem isto as celulas colam umas nas outras. O cabecalho
+     usa a mesma tipografia dos campos da etiqueta, porque cumpre a mesma
+     funcao: nomear a coluna sem competir com o dado. */
+  .prosa table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.9375rem;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .prosa thead th {
+    font-size: 0.6875rem;
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--color-ink-soft);
+    text-align: left;
+    padding-block: 0 0.75rem;
+    border-bottom: 1px solid var(--color-rule);
+  }
+
+  .prosa tbody td {
+    padding-block: 0.7rem;
+    border-bottom: 1px solid var(--color-rule);
+    vertical-align: top;
+  }
+
+  .prosa thead th + th,
+  .prosa tbody td + td {
+    text-align: right;
+    padding-left: 1.5rem;
+  }
+
+  @media (max-width: 34rem) {
+    .prosa table {
+      display: block;
+      overflow-x: auto;
+    }
+  }
+
   /* Link de texto: sublinhado fino que engrossa no hover. */
   .quiet-link {
     text-decoration: underline;

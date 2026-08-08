@@ -2,7 +2,8 @@
 import '../styles/global.css';
 import { SITE, SOCIAL, type Locale } from '../consts';
 import { traduzir } from '../i18n/ui';
-import { alternativas, LANG_HTML, rota } from '../i18n/utils';
+import { LANG_HTML, rota } from '../i18n/utils';
+import { destinosPorIdioma } from '../lib/idiomas';
 
 interface Props {
   lang: Locale;
@@ -22,8 +23,14 @@ const tituloDaAba = titulo
   : `${SITE.domain} | ${SITE.name}`;
 
 const canonica = new URL(Astro.url.pathname, SITE.url).href;
-const idiomas = alternativas(Astro.url);
 const cartao = new URL('/card.png', SITE.url).href;
+
+/**
+ * Só entra no hreflang o idioma que tem ESTA página de verdade. Anunciar
+ * uma tradução que não existe é dizer ao buscador que duas páginas
+ * diferentes são a mesma coisa, e ele penaliza por isso.
+ */
+const idiomas = (await destinosPorIdioma(Astro.url)).filter((alt) => alt.exata);
 
 const pessoa = {
   '@context': 'https://schema.org',
@@ -56,9 +63,10 @@ const pessoa = {
     <link rel="sitemap" href="/sitemap-index.xml" />
 
     {
-      idiomas.map((alt) => (
-        <link rel="alternate" hreflang={alt.hreflang} href={alt.href} />
-      ))
+      idiomas.length > 1 &&
+        idiomas.map((alt) => (
+          <link rel="alternate" hreflang={alt.hreflang} href={new URL(alt.href, SITE.url).href} />
+        ))
     }
     <link rel="alternate" hreflang="x-default" href={new URL('/', SITE.url).href} />
 
