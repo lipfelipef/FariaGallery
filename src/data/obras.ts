@@ -238,11 +238,11 @@ export const OBRAS: Obra[] = [
       en: 'A quiz about 2000s cartoons, with login, random draw, and scoring.',
       es: 'Quiz sobre dibujos animados de los 2000, con login, sorteo y puntuación.',
     },
-    papel: { pt: 'Em grupo', en: 'In a team', es: 'En grupo' },
+    papel: { pt: 'Sozinho', en: 'Solo', es: 'En solitario' },
     credito: {
-      pt: 'Projeto Integrador I, Senac Santo Amaro. Orientação de Marcus Vinícius Camillo Gália. Documentação escrita em LaTeX.',
-      en: 'Capstone project I, Senac Santo Amaro. Advised by Marcus Vinícius Camillo Gália. Documentation written in LaTeX.',
-      es: 'Proyecto Integrador I, Senac Santo Amaro. Orientación de Marcus Vinícius Camillo Gália. Documentación escrita en LaTeX.',
+      pt: 'Projeto pessoal. Contas em SQLite local, com senha em hash BCrypt, verificação em dois fatores por PIN e recuperação por código. Dificuldade que sobe e desce conforme o acerto.',
+      en: 'Personal project. Accounts in a local SQLite database, with BCrypt-hashed passwords, two-factor verification by PIN, and recovery by code. Difficulty that rises and falls with performance.',
+      es: 'Proyecto personal. Cuentas en SQLite local, con contraseña en hash BCrypt, verificación en dos factores por PIN y recuperación por código. Dificultad que sube y baja según el acierto.',
     },
   },
   {
