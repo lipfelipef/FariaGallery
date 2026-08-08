@@ -24,8 +24,18 @@ export const UI = {
     'tema.paraEscuro': 'Mudar para a sala escura',
     'tema.paraClara': 'Mudar para a sala clara',
 
-    'artista':
-      'Brasileiro, n. 2006. Análise e Desenvolvimento de Sistemas, Centro Universitário Senac, Santo Amaro.',
+    /**
+     * Uma frase por linha, e a quebra é escolhida aqui.
+     *
+     * Texto corrido quebrava onde a largura mandava, e saía coisa como
+     * "Análise e / Desenvolvimento de Sistemas, Centro / Universitário Senac".
+     * Ficha de museu não quebra assim: cada linha fecha uma informação.
+     */
+    'artista': [
+      'Brasileiro, n. 2006.',
+      'Análise e Desenvolvimento de Sistemas.',
+      'Centro Universitário Senac, Santo Amaro.',
+    ],
     'parede.1':
       'Aqui fica o registro do que eu construo. Cada obra vem com a ficha inteira: do que é feita, qual foi meu papel, com quem foi e em que estado está.',
     'parede.2':
@@ -53,8 +63,10 @@ export const UI = {
     'sala.emCartaz': 'Em cartaz',
     'nav.colecao': 'Coleção',
     'colecao.titulo': 'Coleção',
-    'colecao.chamada':
-      'O acervo inteiro, em ordem do mais novo para o mais antigo. Filtre pelo meio para achar rápido.',
+    'colecao.chamada': [
+      'O acervo inteiro, do mais novo para o mais antigo.',
+      'Filtre pelo meio para achar rápido.',
+    ],
     'colecao.verTudo': (total: number) => `Ver a coleção inteira, ${total} obras`,
     'colecao.filtrar': 'Filtrar',
     'colecao.todas': 'Todas',
@@ -74,8 +86,10 @@ export const UI = {
 
     'contato.titulo': 'Contato',
     'contato.email': 'E-mail',
-    'contato.chamada':
-      'Para proposta de vaga, estágio, freela ou parceria. Se você quer contratar ou construir algo junto, é por aqui.',
+    'contato.chamada': [
+      'Para proposta de vaga, estágio, freela ou parceria.',
+      'Se você quer contratar ou construir algo junto, é por aqui.',
+    ],
     'contato.local': 'Onde estou',
     'contato.localValor': 'São Paulo, Brasil',
     'contato.responde': 'Resposta',
@@ -89,8 +103,7 @@ export const UI = {
       'O endereço que você abriu não corresponde a nada aqui. Pode ser link antigo, pode ser erro de digitação. As saídas estão abaixo.',
     'nav.experiencia': 'Experiência',
     'experiencia.titulo': 'Experiência',
-    'experiencia.chamada':
-      'O que eu toco fora de projeto fechado: canal, trabalho e o que vier.',
+    'experiencia.chamada': ['O que eu toco fora de projeto fechado: canal, trabalho e o que vier.'],
     'experiencia.vazio': 'Nada aqui ainda.',
 
     'blog.titulo': 'Blog',
@@ -149,8 +162,11 @@ export const UI = {
     'tema.paraEscuro': 'Switch to the dark room',
     'tema.paraClara': 'Switch to the light room',
 
-    'artista':
-      'Brazilian, b. 2006. Systems Analysis and Development, Centro Universitário Senac, Santo Amaro campus.',
+    'artista': [
+      'Brazilian, b. 2006.',
+      'Systems Analysis and Development.',
+      'Centro Universitário Senac, Santo Amaro campus.',
+    ],
     'parede.1':
       'This is the record of what I build. Every work comes with the full label: what it is made of, what my role was, who I built it with, and what state it is in.',
     'parede.2':
@@ -178,8 +194,10 @@ export const UI = {
     'sala.emCartaz': 'On view',
     'nav.colecao': 'Collection',
     'colecao.titulo': 'Collection',
-    'colecao.chamada':
-      'The whole holdings, newest first. Filter by medium to find something fast.',
+    'colecao.chamada': [
+      'The whole holdings, newest first.',
+      'Filter by medium to find something fast.',
+    ],
     'colecao.verTudo': (total: number) => `See the whole collection, ${total} works`,
     'colecao.filtrar': 'Filter',
     'colecao.todas': 'All',
@@ -199,8 +217,10 @@ export const UI = {
 
     'contato.titulo': 'Contact',
     'contato.email': 'Email',
-    'contato.chamada':
-      'For a role, an internship, freelance work, or a partnership. If you want to hire or build something together, this is the way.',
+    'contato.chamada': [
+      'For a role, an internship, freelance work, or a partnership.',
+      'If you want to hire or build something together, this is the way.',
+    ],
     'contato.local': 'Based in',
     'contato.localValor': 'São Paulo, Brazil',
     'contato.responde': 'Reply',
@@ -214,8 +234,9 @@ export const UI = {
       'The address you opened does not match anything here. Could be an old link, could be a typo. The ways out are below.',
     'nav.experiencia': 'Experience',
     'experiencia.titulo': 'Experience',
-    'experiencia.chamada':
+    'experiencia.chamada': [
       'What I run outside of a finished project: the channel, work, and whatever comes next.',
+    ],
     'experiencia.vazio': 'Nothing here yet.',
 
     'blog.titulo': 'Blog',
@@ -272,8 +293,11 @@ export const UI = {
     'tema.paraEscuro': 'Cambiar a la sala oscura',
     'tema.paraClara': 'Cambiar a la sala clara',
 
-    'artista':
-      'Brasileño, n. 2006. Análisis y Desarrollo de Sistemas, Centro Universitário Senac, Santo Amaro.',
+    'artista': [
+      'Brasileño, n. 2006.',
+      'Análisis y Desarrollo de Sistemas.',
+      'Centro Universitário Senac, Santo Amaro.',
+    ],
     'parede.1':
       'Aquí queda el registro de lo que construyo. Cada obra viene con la ficha completa: de qué está hecha, cuál fue mi papel, con quién la hice y en qué estado está.',
     'parede.2':
@@ -301,8 +325,10 @@ export const UI = {
     'sala.emCartaz': 'En exhibición',
     'nav.colecao': 'Colección',
     'colecao.titulo': 'Colección',
-    'colecao.chamada':
-      'El acervo entero, del más nuevo al más antiguo. Filtre por medio para encontrar rápido.',
+    'colecao.chamada': [
+      'El acervo entero, del más nuevo al más antiguo.',
+      'Filtre por medio para encontrar rápido.',
+    ],
     'colecao.verTudo': (total: number) => `Ver la colección entera, ${total} obras`,
     'colecao.filtrar': 'Filtrar',
     'colecao.todas': 'Todas',
@@ -322,8 +348,10 @@ export const UI = {
 
     'contato.titulo': 'Contacto',
     'contato.email': 'Correo',
-    'contato.chamada':
-      'Para una propuesta de vacante, pasantía, freelance o alianza. Si quieres contratar o construir algo juntos, es por aquí.',
+    'contato.chamada': [
+      'Para una propuesta de vacante, pasantía, freelance o alianza.',
+      'Si quieres contratar o construir algo juntos, es por aquí.',
+    ],
     'contato.local': 'Dónde estoy',
     'contato.localValor': 'São Paulo, Brasil',
     'contato.responde': 'Respuesta',
@@ -337,8 +365,7 @@ export const UI = {
       'La dirección que abriste no corresponde a nada aquí. Puede ser un enlace viejo o un error de tipeo. Las salidas están abajo.',
     'nav.experiencia': 'Experiencia',
     'experiencia.titulo': 'Experiencia',
-    'experiencia.chamada':
-      'Lo que llevo fuera de un proyecto cerrado: el canal, trabajo y lo que venga.',
+    'experiencia.chamada': ['Lo que llevo fuera de un proyecto cerrado: el canal, trabajo y lo que venga.'],
     'experiencia.vazio': 'Nada aquí todavía.',
 
     'blog.titulo': 'Blog',

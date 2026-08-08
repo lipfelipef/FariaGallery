@@ -31,7 +31,9 @@ const temCurriculo = existsSync(join(process.cwd(), 'public', CURRICULO));
     <section class="abertura wall hang">
       <div class="abertura-corpo">
         <h1 class="titulo-sala">{t('contato.titulo')}</h1>
-        <p class="chamada">{t('contato.chamada')}</p>
+        <p class="chamada">
+          {t('contato.chamada').map((linha) => <span>{linha}</span>)}
+        </p>
       </div>
     </section>
 
@@ -105,10 +107,16 @@ const temCurriculo = existsSync(join(process.cwd(), 'public', CURRICULO));
 
   .chamada {
     margin-top: 1rem;
-    max-width: 46ch;
     font-size: 1.0625rem;
     line-height: 1.6;
     color: var(--color-ink-soft);
+  }
+
+  /* Uma frase por linha, escolhida no texto. A medida acompanha a linha mais
+     longa dos três idiomas, senão ela dobraria e desfaria a quebra. */
+  .chamada span {
+    display: block;
+    max-width: 68ch;
   }
 
   .corpo {

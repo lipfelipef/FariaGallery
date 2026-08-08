@@ -47,7 +47,9 @@ const emCartaz = OBRAS.filter((o) => !o.pendente && o.destaque).sort(
     <section class="entrada wall hang">
       <div class="entrada-corpo entrance">
         <h1 class="nome">{SITE.name}</h1>
-        <p class="linha-artista">{t('artista')}</p>
+        <p class="linha-artista">
+          {t('artista').map((linha) => <span>{linha}</span>)}
+        </p>
 
         <div class="texto-parede">
           <p>{t('parede.1')}</p>
@@ -141,7 +143,14 @@ const emCartaz = OBRAS.filter((o) => !o.pendente && o.destaque).sort(
     margin-top: 1rem;
     font-size: 0.9375rem;
     color: var(--color-ink-soft);
-    max-width: 34ch;
+  }
+
+  /* Uma frase por linha. A medida máxima saiu daqui de propósito: ela existia
+     para forçar a quebra, e agora a quebra vem do texto. Mantida só a largura
+     necessária para a linha mais longa não dobrar sozinha. */
+  .linha-artista span {
+    display: block;
+    max-width: 48ch;
   }
 
   .texto-parede {

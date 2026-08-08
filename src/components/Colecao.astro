@@ -111,7 +111,7 @@ const destino = (slug: string, href?: string) => {
     <section class="abertura wall hang">
       <div class="abertura-corpo">
         <h1 class="titulo-sala">{titulo}</h1>
-        <p class="chamada">{chamada}</p>
+        <p class="chamada">{chamada.map((linha) => <span>{linha}</span>)}</p>
       </div>
     </section>
 
@@ -313,10 +313,16 @@ const destino = (slug: string, href?: string) => {
 
   .chamada {
     margin-top: 1rem;
-    max-width: 46ch;
     font-size: 1.0625rem;
     line-height: 1.6;
     color: var(--color-ink-soft);
+  }
+
+  /* Uma frase por linha, escolhida no texto. A medida acompanha a linha mais
+     longa dos três idiomas, senão ela dobraria e desfaria a quebra. */
+  .chamada span {
+    display: block;
+    max-width: 68ch;
   }
 
   /* Filtro ------------------------------------------------------- */
