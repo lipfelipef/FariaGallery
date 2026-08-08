@@ -110,7 +110,10 @@ const textoDoLink = obra.link
         )}
         {obra.link && (
           <a class="quiet-link" href={obra.link.href} target="_blank" rel="noopener noreferrer">
-            {textoDoLink} <span aria-hidden="true">&#8594;</span>
+            {/* O espaço precisa ser explícito: quebra de linha entre duas
+                tags some na compilação, e o texto extraído sairia com a seta
+                grudada no aviso, "→(abre em nova aba)". */}
+            {textoDoLink} <span aria-hidden="true">&#8594;</span>{' '}
             <span class="sr-only">{t('link.novaAba')}</span>
           </a>
         )}

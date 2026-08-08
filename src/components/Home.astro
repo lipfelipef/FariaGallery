@@ -100,7 +100,10 @@ const percurso = [...emCartaz].reverse();
             <li class="marco">
               <a class="marco-link" href={`#${obra.slug}`}>
                 <span class="dot dot-on" aria-hidden="true" />
-                <span class="marco-ano">{obra.ano}</span>
+                {/* O espaço entre os dois é lido por quem extrai o texto da
+                    página. Sem ele o marco vira "2026BluckerTV". Na tela não
+                    muda nada: a grade é que posiciona as células. */}
+                <span class="marco-ano">{obra.ano}</span>{' '}
                 <span class="marco-nome">{obra.titulo}</span>
               </a>
             </li>
@@ -135,8 +138,10 @@ const percurso = [...emCartaz].reverse();
             SOCIAL.map(({ rede, usuario, href }) => (
               <li>
                 <a class="rede" href={href} rel="me noopener noreferrer" target="_blank">
-                  <span class="field rede-nome">{rede}</span>
-                  <span class="rede-usuario">{usuario}</span>
+                  {/* Mesmo motivo do marco acima: sem o espaço o texto
+                      extraído sai "InstagramFelipe Faria". */}
+                  <span class="field rede-nome">{rede}</span>{' '}
+                  <span class="rede-usuario">{usuario}</span>{' '}
                   <span class="rede-seta" aria-hidden="true">
                     &#8599;
                   </span>
