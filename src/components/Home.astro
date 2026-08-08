@@ -57,12 +57,24 @@ const emCartaz = OBRAS.filter((o) => !o.pendente && o.destaque).sort(
         <p class="acervo">
           {t('acervo')(obras.length, experiencias.length, totalTextos)}
         </p>
+
+        <!-- Aviso de disponibilidade. Fica na entrada porque é a primeira coisa
+             que um recrutador procura, e leva direto ao contato. -->
+        <p class="disponivel">
+          <span class="dot dot-on" aria-hidden="true"></span>
+          <a class="quiet-link" href={rota(lang, '/contato')}>
+            {t('disponivel')} <span aria-hidden="true">&#8594;</span>
+          </a>
+        </p>
       </div>
     </section>
 
     <section id="obras" class="sala wall">
       <h2 class="sala-titulo">{t('sala.emCartaz')}</h2>
-      <div class="sala-corpo">
+      <!-- `percurso` liga os pontos das etiquetas numa linha só, para ler de
+           cima a baixo como uma coisa que levou à outra: o canal levou à
+           plataforma de vídeo, que levou ao e-commerce. -->
+      <div class="sala-corpo percurso">
         {
           emCartaz.map((obra) => (
             <Etiqueta obra={obra} lang={lang} post={textoDaObra.get(obra.slug)} />
@@ -165,6 +177,49 @@ const emCartaz = OBRAS.filter((o) => !o.pendente && o.destaque).sort(
 
   .sala-corpo {
     border-top: 1px solid var(--color-rule);
+  }
+
+  /* Disponibilidade. Mesma voz de campo da etiqueta, com o ponto vermelho na
+     frente para o olho achar antes de ler. */
+  .disponivel {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-top: 2rem;
+    font-size: 0.6875rem;
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+  }
+
+  .disponivel .dot {
+    flex: none;
+  }
+
+  /* A linha do percurso.
+     Cada etiqueta desenha um fio que sai do seu ponto vermelho e desce até o
+     fim do próprio bloco. Como os blocos são vizinhos, os fios se encontram e
+     viram uma linha só, sem precisar medir a altura de nada. A última não
+     desenha, senão a linha continuaria para o vazio.
+     O fio nasce do ponto, então acompanha a etiqueta onde quer que ela esteja:
+     na coluna da margem no desktop, no topo do bloco no celular. */
+  .percurso :global(.obra) {
+    /* Corta o fio na borda do bloco. É o que permite dar a ele uma altura
+       exagerada logo abaixo e não precisar medir a distância até o próximo
+       ponto, que muda com o texto e com o tamanho da tela. */
+    overflow: hidden;
+  }
+
+  .percurso :global(.obra:not(:last-of-type) .dot)::after {
+    content: '';
+    position: absolute;
+    left: 50%;
+    /* Nasce logo abaixo do ponto, seja onde o ponto estiver. */
+    top: calc(100% + 0.35rem);
+    width: 1px;
+    height: 100vh;
+    background: var(--color-rule);
+    transform: translateX(-50%);
   }
 
   .canais {

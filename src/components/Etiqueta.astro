@@ -16,9 +16,6 @@ const { obra, lang, post } = Astro.props;
 const t = traduzir(lang);
 const urlTexto = post ? rota(lang, `/blog/${post}`) : undefined;
 
-/** Ponto cheio quer dizer que dá para ir ver agora. Vazado, não há o que visitar. */
-const aoVivo = obra.estado !== 'encerrado';
-
 const naoPreenchido = (valor: string) =>
   obra.pendente && /^(a definir|to be defined)$/i.test(valor);
 
@@ -42,7 +39,7 @@ const textoDoLink = obra.link
 
 <article class="obra hang">
   <div class="obra-margem">
-    <span class:list={['dot', aoVivo ? 'dot-on' : 'dot-off']} aria-hidden="true"></span>
+    <span class="dot dot-on" aria-hidden="true"></span>
     <span class="obra-ano">{anoExibido(obra, t('tempo.atualmente'))}</span>
   </div>
 

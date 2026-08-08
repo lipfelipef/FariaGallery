@@ -99,7 +99,7 @@ export const OBRAS: Obra[] = [
     estado: 'publico',
     link: { href: 'https://github.com/lipfelipef/PI.2-BluckerEcommerce', tipo: 'codigo' },
     tags: ['Web', 'Angular', 'Node.js'],
-    destaque: 2,
+    destaque: 3,
     resumo: {
       pt: 'Loja de jogos digitais, do catálogo até o carrinho.',
       en: 'A digital game store, from catalogue to checkout.',
@@ -127,7 +127,7 @@ export const OBRAS: Obra[] = [
     // Empresa aberta, operada e fechada. Isso é experiência, não projeto.
     tipo: 'experiencia',
     tags: ['Vídeo', 'TypeScript', 'Infraestrutura'],
-    destaque: 1,
+    destaque: 2,
     resumo: {
       pt: 'Plataforma brasileira de vídeo sob demanda, construída inteira por uma pessoa e encerrada por decisão de negócio, não por falha técnica.',
       en: 'A Brazilian video on demand platform, built entirely by one person and shut down as a business decision, not a technical failure.',
@@ -198,7 +198,7 @@ export const OBRAS: Obra[] = [
     estado: 'noar',
     link: { href: 'https://www.youtube.com/@atezerar', tipo: 'canal' },
     tags: ['Vídeo', 'Games'],
-    destaque: 3,
+    destaque: 1,
     resumo: {
       pt: 'Jogo inteiro, do início ao fim, sem comentário e em 4K60fps. A ideia é assistir como se fosse filme.',
       en: 'Whole games, start to finish, with no commentary, in 4K60fps. Made to be watched like a film.',

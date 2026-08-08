@@ -32,6 +32,7 @@ export const UI = {
       'O que não deu certo entra com a mesma ficha, porque projeto que parou também tem o que ensinar.',
     'acervo': (obras: number, experiencias: number, textos: number) =>
       `${obras} obras na coleção, ${experiencias} experiências e ${textos} ${textos === 1 ? 'texto publicado' : 'textos publicados'}.`,
+    'disponivel': 'Disponível para novas oportunidades',
 
     'sala.contato': 'Contato',
 
@@ -156,6 +157,7 @@ export const UI = {
       'What did not work out gets the same label, because a project that stopped still has something to teach.',
     'acervo': (obras: number, experiencias: number, textos: number) =>
       `${obras} works in the collection, ${experiencias} experiences, and ${textos} published ${textos === 1 ? 'piece' : 'pieces'}.`,
+    'disponivel': 'Available for new opportunities',
 
     'sala.contato': 'Contact',
 
@@ -278,6 +280,7 @@ export const UI = {
       'Lo que no salió bien entra con la misma ficha, porque un proyecto que se detuvo también tiene algo que enseñar.',
     'acervo': (obras: number, experiencias: number, textos: number) =>
       `${obras} obras en la colección, ${experiencias} experiencias y ${textos} ${textos === 1 ? 'texto publicado' : 'textos publicados'}.`,
+    'disponivel': 'Disponible para nuevas oportunidades',
 
     'sala.contato': 'Contacto',
 
