@@ -13,6 +13,19 @@
   "preview_urls": false,
 
   "assets": {
-    "directory": "./dist"
+    "directory": "./dist",
+
+    // Sem isto, endereco que nao existe devolve 404 de corpo vazio e quem
+    // visita ve a tela de erro do proprio navegador, fora do site. Com
+    // "404-page" a Cloudflare procura o 404.html mais proximo na pasta e o
+    // entrega com status 404, que e o certo: a pessoa continua dentro da
+    // galeria e o buscador continua sabendo que aquele endereco nao existe.
+    //
+    // Mandar para a home seria pior. O buscador chama isso de soft 404:
+    // responder 200 para pagina que nao existe faz ele indexar copia da home
+    // em endereco inventado, e quem errou de digitar nem descobre o erro.
+    // O padrao e "none", que responde 404 sem corpo nenhum: e dai que vinha a
+    // tela de erro do navegador.
+    "not_found_handling": "404-page"
   }
 }

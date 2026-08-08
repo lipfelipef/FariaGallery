@@ -26,6 +26,24 @@ export interface DestinoIdioma {
 export async function destinosPorIdioma(url: URL): Promise<DestinoIdioma[]> {
   const aqui = caminhoSemIdioma(url);
   const partes = aqui.split('/').filter(Boolean);
+
+  /**
+   * A página de erro é uma só, em português, porque não dá para saber o idioma
+   * de um endereço que não existe. Sem esta saída o seletor de idioma dela
+   * oferecia `/en/404/` e `/es/404/`, que não são páginas: quem estava perdido
+   * e clicava num idioma caía em outro erro, agora sem página nenhuma para
+   * mostrar. Daqui, trocar de idioma leva à entrada da galeria naquele idioma,
+   * que é o lugar certo para quem se perdeu.
+   */
+  if (partes[0] === '404') {
+    return LOCALES.map((lang) => ({
+      lang,
+      hreflang: HREFLANG[lang],
+      href: rota(lang, '/'),
+      exata: true,
+    }));
+  }
+
   const ehPost = partes[0] === 'blog' && partes.length > 1;
   const slug = ehPost ? partes.slice(1).join('/') : null;
 
