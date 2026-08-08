@@ -105,7 +105,10 @@ export const UI = {
       'O endereço que você abriu não corresponde a nada aqui. Pode ser link antigo, pode ser erro de digitação. As saídas estão abaixo.',
     'nav.experiencia': 'Experiência',
     'experiencia.titulo': 'Experiência',
-    'experiencia.chamada': ['O que eu toco fora de projeto fechado: canal, trabalho e o que vier.'],
+    'experiencia.chamada': [
+      'O que roda fora de projeto fechado.',
+      'Plataforma, trabalho e o que vier.',
+    ],
     'experiencia.vazio': 'Nada aqui ainda.',
 
     'blog.titulo': 'Blog',
@@ -243,7 +246,8 @@ export const UI = {
     'nav.experiencia': 'Experience',
     'experiencia.titulo': 'Experience',
     'experiencia.chamada': [
-      'What I run outside of a finished project: the channel, work, and whatever comes next.',
+      'What runs outside of a finished project.',
+      'A platform, work, and whatever comes next.',
     ],
     'experiencia.vazio': 'Nothing here yet.',
 
@@ -379,7 +383,10 @@ export const UI = {
       'La dirección que abriste no corresponde a nada aquí. Puede ser un enlace viejo o un error de tipeo. Las salidas están abajo.',
     'nav.experiencia': 'Experiencia',
     'experiencia.titulo': 'Experiencia',
-    'experiencia.chamada': ['Lo que llevo fuera de un proyecto cerrado: el canal, trabajo y lo que venga.'],
+    'experiencia.chamada': [
+      'Lo que corre fuera de un proyecto cerrado.',
+      'Plataforma, trabajo y lo que venga.',
+    ],
     'experiencia.vazio': 'Nada aquí todavía.',
 
     'blog.titulo': 'Blog',
