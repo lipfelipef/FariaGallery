@@ -1,5 +1,5 @@
 ---
-import { SITE, REPO, type Locale } from '../consts';
+import { REPO, type Locale } from '../consts';
 import { traduzir } from '../i18n/ui';
 
 interface Props {
@@ -11,28 +11,22 @@ const t = traduzir(lang);
 const ano = new Date().getFullYear();
 ---
 
-<footer class="rodape wall">
-  <div class="hang">
-    <p class="field">{t('campo.colofao')}</p>
-    <div>
-      <p class="colofao">{t('colofao')}</p>
-      <p class="assinatura">{SITE.name}, {ano}</p>
-    </div>
-  </div>
-
-  <!-- Letra miúda. Fica em toda página de propósito: privacidade, licença
-       e direitos são coisas que a pessoa procura no rodapé, não num menu. -->
-  <div class="miudo hang">
-    <span></span>
-    <div>
-      <p>{t('rodape.privacidade')}</p>
-      <p>
-        <a class="quiet-link" href={REPO} rel="noopener noreferrer" target="_blank">
-          {t('rodape.codigo')}
-        </a>
-      </p>
-      <p>{t('rodape.direitos')(ano)}</p>
-    </div>
+<!--
+  Um bloco só. O colofão de museu já é o lugar de dizer como a coisa foi
+  feita e de quem é, então privacidade, licença e direitos entram na mesma
+  nota em vez de virarem um segundo rodapé.
+-->
+<footer class="rodape wall hang">
+  <p class="field">{t('campo.colofao')}</p>
+  <div class="nota">
+    <p>{t('colofao')}</p>
+    <p>{t('rodape.privacidade')}</p>
+    <p>
+      <a class="quiet-link" href={REPO} rel="noopener noreferrer" target="_blank">
+        {t('rodape.codigo')}
+      </a>
+    </p>
+    <p>{t('rodape.direitos')(ano)}</p>
   </div>
 </footer>
 
@@ -42,34 +36,14 @@ const ano = new Date().getFullYear();
     border-top: 1px solid var(--color-rule);
   }
 
-  .colofao {
-    font-size: 0.8125rem;
-    line-height: 1.6;
-    color: var(--color-ink-soft);
-    max-width: 40ch;
-  }
-
-  .assinatura {
-    margin-top: 1.25rem;
-    font-size: 0.8125rem;
-    color: var(--color-ink-soft);
-    font-variant-numeric: tabular-nums;
-  }
-
-  .miudo {
-    margin-top: clamp(2.5rem, 6vh, 4rem);
-    padding-top: 1.75rem;
-    border-top: 1px solid var(--color-rule);
-  }
-
-  .miudo p {
+  .nota p {
     font-size: 0.75rem;
     line-height: 1.65;
     color: var(--color-ink-soft);
     max-width: 62ch;
   }
 
-  .miudo p + p {
+  .nota p + p {
     margin-top: 0.6rem;
   }
 
