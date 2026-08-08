@@ -19,13 +19,13 @@ export const SITE = {
 /** O repositorio do proprio site. Vai no rodape e no README. */
 export const REPO = 'https://github.com/lipfelipef/FariaGallery';
 
-export const CONTACT_EMAIL = 'contato@fariagallery.com';
+export const CONTACT_EMAIL = 'felipe@fariagallery.com';
 
 /**
- * ATENCAO: o endereco acima so recebe de verdade depois de ligar o Email
- * Routing na Cloudflare. Esta em `true` porque a pagina de contato passou a
- * ter o e-mail como unico canal, por decisao do Felipe. Enquanto o Email
- * Routing nao estiver ligado, quem escrever recebe o e-mail de volta.
+ * O endereco acima recebe de verdade: o Email Routing da Cloudflare esta
+ * ligado desde 08/08/2026, com os tres MX `route1/2/3.mx.cloudflare.net`
+ * respondendo no dominio. Se um dia esses MX sumirem, quem escrever passa a
+ * receber o e-mail de volta, e ai este campo precisa voltar para `false`.
  */
 export const EMAIL_ATIVO = true;
 
