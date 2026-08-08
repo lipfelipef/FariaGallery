@@ -34,17 +34,24 @@ const quanto = inicio ? duracao(inicio, fimDaObra(obra), lang) : undefined;
 /**
  * Cada valor da ficha é uma lista de linhas, mesmo quando tem só uma.
  *
- * `medida` marca o campo que é uma enumeração de números, e não texto para
- * ler: ele quer caber numa linha só, e a medida de leitura confortável do
- * `.value` o dobraria no meio.
+ * `medida` é a medida tipográfica: a largura que a linha pode ocupar. Marca o
+ * campo que enumera em vez de narrar, como as dimensões e o papel. Ali a
+ * medida de leitura confortável do `.value` atrapalha, porque dobra a
+ * enumeração no meio e pendura a última palavra sozinha na linha de baixo.
  */
 const ficha = [
   { campo: t('campo.meio'), linhas: [meioDe(obra, lang)] },
   ...(quanto ? [{ campo: t('campo.duracao'), linhas: [quanto] }] : []),
   ...(obra.dimensoes
-    ? [{ campo: t('campo.dimensoes'), linhas: [numeroColado(obra.dimensoes[lang])], medida: true }]
+    ? [
+        {
+          campo: t('campo.dimensoes'),
+          linhas: linhasDe(obra.dimensoes[lang]).map(numeroColado),
+          medida: true,
+        },
+      ]
     : []),
-  { campo: t('campo.papel'), linhas: [obra.papel[lang]] },
+  { campo: t('campo.papel'), linhas: [obra.papel[lang]], medida: true },
   { campo: t('campo.credito'), linhas: linhasDe(obra.credito[lang]) },
   { campo: t('campo.estado'), linhas: [t(`estado.${obra.estado}` as 'estado.publico')] },
 ];
@@ -189,17 +196,26 @@ const textoDoLink = obra.link
     max-width: 80ch;
   }
 
-  /* A linha das dimensões não é texto para ler, é uma enumeração de números,
-     e ela quer caber inteira numa linha só. Os 46ch do `.value` dão 395px, e
-     a frase mais longa dos três idiomas, a espanhola, precisa de 425. Aqui a
-     coluna tem 824px disponíveis, então sobra espaço: o que faltava era só
-     permissão.
+  /* Campo que enumera, e não narra: dimensões e papel. Ali a linha quer caber
+     inteira, e os 46ch do `.value` dão 395px, que dobram todas elas. As que
+     precisam de mais espaço, medidas na tipografia real:
 
-     Só no computador. No celular a coluna tem a largura da tela e a frase
+       papel da BluckerTV        453px  (a maior de todas)
+       dimensões da galeria      425px  em espanhol
+       dimensões da BluckerTV    396px  na primeira linha
+
+     60ch dão 516px, com folga de 63 sobre a maior. A coluna tem 824px, então
+     espaço nunca faltou: faltava permissão.
+
+     Vem depois do `.value-linhas` de propósito. As duas têm a mesma força, e
+     quando um campo enumera em várias linhas, como as dimensões da BluckerTV,
+     quem deve mandar é esta.
+
+     Só no computador. No celular a coluna tem a largura da tela e a linha
      dobra de qualquer jeito, que é como ele quer. */
   @media (min-width: 48rem) {
     .value-medida {
-      max-width: 56ch;
+      max-width: 60ch;
     }
   }
 

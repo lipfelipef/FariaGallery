@@ -131,8 +131,11 @@ export interface Obra {
   /**
    * A medida da obra. Etiqueta de museu tem dimensão em centímetros; em
    * software e vídeo, a medida é alcance, volume e tempo de estrada.
+   *
+   * Aceita lista quando a enumeração é longa e a quebra é escolhida, em vez
+   * de deixar a largura decidir onde cortar.
    */
-  dimensoes?: PorIdioma;
+  dimensoes?: PorIdiomaLinhas;
 }
 
 /**
@@ -248,9 +251,9 @@ export const OBRAS: Obra[] = [
       ],
     },
     dimensoes: {
-      pt: '5 meses no ar, 72 usuários, 270 vídeos, 1,8 TB hospedados, 9 plugins próprios',
-      en: '5 months live, 72 users, 270 videos, 1.8 TB hosted, 9 in-house plugins',
-      es: '5 meses al aire, 72 usuarios, 270 videos, 1,8 TB alojados, 9 complementos propios',
+      pt: ['5 meses no ar, 72 usuários, 270 vídeos, 1,8 TB hospedados,', '9 plugins próprios'],
+      en: ['5 months live, 72 users, 270 videos, 1.8 TB hosted,', '9 in-house plugins'],
+      es: ['5 meses al aire, 72 usuarios, 270 videos, 1,8 TB alojados,', '9 complementos propios'],
     },
     papel: {
       pt: 'Sozinho: desenvolvimento, infraestrutura, produto, jurídico e suporte',
