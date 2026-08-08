@@ -30,6 +30,19 @@ const blog = defineCollection({
     /** Slug de uma obra em src/data/obras.ts, quando o texto é sobre ela. */
     obra: z.string().optional(),
     /**
+     * A posição do texto no percurso do blog, do primeiro ao último. É
+     * curadoria, não cronologia: quem escolhe é o Felipe.
+     *
+     * Existe porque a data não serve para isso. Os textos foram escritos quase
+     * todos na mesma madrugada, então ordenar por data compara diferenças de
+     * minutos, e o texto de abertura, que explica o site inteiro, cairia no
+     * meio da pilha. A data continua sendo a data real de publicação, e é ela
+     * que vai no RSS e no `datePublished` do Schema.org.
+     *
+     * Sem valor, o texto vai para o fim do percurso.
+     */
+    ordem: z.number().optional(),
+    /**
      * Endereço do post na URL. Sem isto, o endereço vem do nome do arquivo,
      * e o mesmo texto em três idiomas geraria três endereços diferentes
      * (`bluckertven`, `bluckertves`). Declarar o mesmo `endereco` nas três

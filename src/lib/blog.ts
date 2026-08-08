@@ -31,6 +31,27 @@ export async function temBlog(idioma: Locale = DEFAULT_LOCALE): Promise<boolean>
 }
 
 /**
+ * Os textos no percurso escolhido pelo Felipe, do primeiro ao último.
+ *
+ * É a ordem da lista do blog, e não a do RSS: feed se ordena por data de
+ * publicação, porque é isso que um leitor de feed espera. Aqui a data não
+ * serviria, já que quase todos os textos saíram na mesma madrugada e a
+ * diferença entre eles é de minutos.
+ *
+ * Texto sem `ordem` cai no fim, e entre os sem ordem vale o mais recente
+ * primeiro, para um texto novo nunca sumir no meio da lista por esquecimento.
+ */
+export async function postsEmPercurso(idioma: Locale = DEFAULT_LOCALE): Promise<Post[]> {
+  const posts = await postsPublicados(idioma);
+  return posts.slice().sort((a, b) => {
+    const oa = a.data.ordem ?? Number.MAX_SAFE_INTEGER;
+    const ob = b.data.ordem ?? Number.MAX_SAFE_INTEGER;
+    if (oa !== ob) return oa - ob;
+    return b.data.data.getTime() - a.data.data.getTime();
+  });
+}
+
+/**
  * O post escrito sobre uma obra, se existir naquele idioma. É o que faz a
  * etiqueta na parede ganhar um "ler o texto" apontando para o blog.
  */

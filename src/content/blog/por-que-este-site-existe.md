@@ -5,6 +5,7 @@ data: 2026-08-07T18:09:00-03:00
 atualizado: 2026-08-07T23:10:00-03:00
 idioma: pt
 endereco: por-que-este-site-existe
+ordem: 1
 assuntos:
   - Faria Gallery
   - Portfólio

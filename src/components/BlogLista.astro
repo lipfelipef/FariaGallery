@@ -5,7 +5,7 @@ import Rodape from './Rodape.astro';
 import type { Locale } from '../consts';
 import { traduzir } from '../i18n/ui';
 import { rota } from '../i18n/utils';
-import { postsPublicados, dataPorExtenso, dataISO, tempoRelativo, slugDoPost } from '../lib/blog';
+import { postsEmPercurso, dataPorExtenso, dataISO, tempoRelativo, slugDoPost } from '../lib/blog';
 
 interface Props {
   lang: Locale;
@@ -14,7 +14,12 @@ interface Props {
 const { lang } = Astro.props;
 const t = traduzir(lang);
 
-const posts = await postsPublicados(lang);
+/**
+ * A lista abre no começo do percurso, e não no texto mais novo.
+ * O primeiro texto é o que explica por que o site existe, então ele é a porta
+ * de entrada certa para quem chega. Ver `postsEmPercurso`.
+ */
+const posts = await postsEmPercurso(lang);
 const vazio = posts.length === 0;
 
 /** Assuntos com contagem, do mais usado para o menos. */
@@ -57,11 +62,11 @@ const assuntos = [...contagem.entries()].sort((a, b) => b[1] - a[1] || a[0].loca
               <p class="field">{t('blog.ordem')}</p>
               <div>
                 <div class="etiquetas">
-                  <button class="etiqueta etiqueta-ativa" type="button" data-ordem="recente" aria-pressed="true">
-                    {t('blog.recente')}
+                  <button class="etiqueta etiqueta-ativa" type="button" data-ordem="comeco" aria-pressed="true">
+                    {t('blog.comeco')}
                   </button>
-                  <button class="etiqueta" type="button" data-ordem="antigo" aria-pressed="false">
-                    {t('blog.antigo')}
+                  <button class="etiqueta" type="button" data-ordem="fim" aria-pressed="false">
+                    {t('blog.fim')}
                   </button>
                 </div>
 
@@ -83,11 +88,12 @@ const assuntos = [...contagem.entries()].sort((a, b) => b[1] - a[1] || a[0].loca
             </div>
 
             <ol class="lista" data-lista>
-              {posts.map((post) => (
+              {posts.map((post, i) => (
                 <li
                   class="hang item"
                   data-tags={post.data.assuntos.join(',')}
                   data-data={dataISO(post.data.data)}
+                  data-pos={i}
                 >
                   <p class="item-data">
                     <time datetime={dataISO(post.data.data)}>
@@ -128,11 +134,14 @@ const assuntos = [...contagem.entries()].sort((a, b) => b[1] - a[1] || a[0].loca
     var total = itens.length;
     var tagAtual = '';
 
+    // `data-pos` ja vem do servidor na ordem do percurso, entao aqui e' so
+    // subir ou descer o numero. Ordenar por data nao serviria: os textos foram
+    // escritos quase todos na mesma madrugada.
     function ordenar(ordem) {
       var ordenados = itens.slice().sort(function (a, b) {
-        var da = a.getAttribute('data-data');
-        var db = b.getAttribute('data-data');
-        return ordem === 'antigo' ? da.localeCompare(db) : db.localeCompare(da);
+        var pa = Number(a.getAttribute('data-pos'));
+        var pb = Number(b.getAttribute('data-pos'));
+        return ordem === 'fim' ? pb - pa : pa - pb;
       });
       ordenados.forEach(function (li) {
         lista.appendChild(li);
