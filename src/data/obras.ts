@@ -56,6 +56,16 @@ export interface Obra {
    */
   destaque?: number;
   /**
+   * Ordem dentro da sala (coleção ou experiência), quando ela não pode sair
+   * da data. Menor vem primeiro, e quem não tem cai para o fim, ordenado por
+   * ano como sempre.
+   *
+   * Existe porque a sala de experiência é curadoria dele: a plataforma
+   * encerrada aparece antes do canal que ainda roda, e nenhuma conta de data
+   * produz isso.
+   */
+  ordemSala?: number;
+  /**
    * Onde a ficha mora. `obra` é projeto fechado, com começo e fim, e vai
    * para a coleção. `experiencia` é o que continua rodando (canal, emprego,
    * estágio) e vai para a página de experiência. Padrão: obra.
@@ -99,7 +109,7 @@ export const OBRAS: Obra[] = [
     estado: 'publico',
     link: { href: 'https://github.com/lipfelipef/PI.2-BluckerEcommerce', tipo: 'codigo' },
     tags: ['Web', 'Angular', 'Node.js'],
-    destaque: 3,
+    destaque: 1,
     resumo: {
       pt: 'Loja de jogos digitais, do catálogo até o carrinho.',
       en: 'A digital game store, from catalogue to checkout.',
@@ -126,8 +136,9 @@ export const OBRAS: Obra[] = [
     fim: '2026-08-04',
     // Empresa aberta, operada e fechada. Isso é experiência, não projeto.
     tipo: 'experiencia',
-    tags: ['Vídeo', 'TypeScript', 'Infraestrutura'],
+    tags: ['Vídeo', 'YouTube', 'TypeScript', 'Infraestrutura'],
     destaque: 2,
+    ordemSala: 1,
     resumo: {
       pt: 'Plataforma brasileira de vídeo sob demanda, construída inteira por uma pessoa e encerrada por decisão de negócio, não por falha técnica.',
       en: 'A Brazilian video on demand platform, built entirely by one person and shut down as a business decision, not a technical failure.',
@@ -164,10 +175,11 @@ export const OBRAS: Obra[] = [
     // LinkedIn mostra.
     fim: '2022-01-01',
     tipo: 'experiencia',
-    meio: 'Vídeo, gameplay comentado e speedrun',
+    meio: 'Vídeo, gameplay comentado e competições online',
     estado: 'noar',
     link: { href: 'https://www.youtube.com/@blucker12', tipo: 'canal' },
-    tags: ['Vídeo', 'Games'],
+    tags: ['Vídeo', 'YouTube', 'Games'],
+    ordemSala: 3,
     resumo: {
       pt: 'O primeiro canal: gameplay comentado, guia, notícia e speedrun, com recordes mundiais em Resident Evil 4.',
       en: 'The first channel: commentated gameplay, guides, news, and speedruns, with world records in Resident Evil 4.',
@@ -202,8 +214,9 @@ export const OBRAS: Obra[] = [
     meio: 'Vídeo, 4K60fps',
     estado: 'noar',
     link: { href: 'https://www.youtube.com/@atezerar', tipo: 'canal' },
-    tags: ['Vídeo', 'Games'],
-    destaque: 1,
+    tags: ['Vídeo', 'YouTube', 'Games'],
+    destaque: 3,
+    ordemSala: 2,
     resumo: {
       pt: 'Jogo inteiro, do início ao fim, sem comentário e em 4K60fps. A ideia é assistir como se fosse filme.',
       en: 'Whole games, start to finish, with no commentary, in 4K60fps. Made to be watched like a film.',

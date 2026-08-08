@@ -31,10 +31,18 @@ const descricao = tipo === 'obra' ? t('meta.colecao') : t('meta.experiencia');
  * O ano na margem vira a espinha cronológica: dá para ler a trajetória
  * descendo a página, sem abrir nada.
  */
-const anos = [...new Set(acervo.map((o) => o.ano))].sort(
-  (a, b) =>
-    ordemDoAno(acervo.find((o) => o.ano === b)!) - ordemDoAno(acervo.find((o) => o.ano === a)!)
-);
+/**
+ * Chave de ordenação do grupo: `ordemSala` manda quando existe, senão vale o
+ * ano. Como o valor de `ordemSala` é pequeno (1, 2, 3) e o do ano é grande
+ * (2026), o sinal negativo é o que faz os dois conviverem na mesma ordenação
+ * decrescente sem um atropelar o outro.
+ */
+const chaveDoGrupo = (ano: string) => {
+  const obra = acervo.find((o) => o.ano === ano)!;
+  return obra.ordemSala !== undefined ? -obra.ordemSala : ordemDoAno(obra) - 100000;
+};
+
+const anos = [...new Set(acervo.map((o) => o.ano))].sort((a, b) => chaveDoGrupo(b) - chaveDoGrupo(a));
 
 /**
  * Cada grupo mostra o ano e, embaixo, há quanto tempo foi. O ano diz quando,
@@ -293,6 +301,20 @@ const destino = (slug: string, href?: string) => {
 
   .grupo {
     padding-block: 2rem 0.5rem;
+  }
+
+  /* O último grupo encostava no fio do rodapé, a 8px, e aquele fio é mais
+     largo e começa mais à esquerda que tudo no catálogo, então destoava.
+     Agora o catálogo fecha com um fio da mesma medida do que o abre, embaixo
+     do filtro, e só depois vem o espaço até o rodapé. */
+  .catalogo {
+    border-bottom: 1px solid var(--color-rule);
+    margin-bottom: clamp(2.5rem, 6vh, 4rem);
+  }
+
+  /* Sem isto seriam dois fios quase colados: o da última obra e o de baixo. */
+  .grupo:last-of-type .linha:last-of-type .linha-link {
+    border-bottom: 0;
   }
 
   .grupo[hidden] {
