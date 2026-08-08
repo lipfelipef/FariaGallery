@@ -173,9 +173,9 @@ export const OBRAS: Obra[] = [
       es: ['El sitio donde está colgada esta ficha.', 'Portafolio en tres idiomas, sin imágenes y sin back-end.'],
     },
     dimensoes: {
-      pt: '40 páginas, 3 idiomas, 1 dia de construção, US$ 10,46 por ano',
-      en: '40 pages, 3 languages, built in one day, US$ 10.46 a year',
-      es: '40 páginas, 3 idiomas, un día de construcción, US$ 10,46 al año',
+      pt: '40 páginas, 3 idiomas, 1 dia de construção, US$ 10,46 por ano.',
+      en: '40 pages, 3 languages, built in one day, US$ 10.46 a year.',
+      es: '40 páginas, 3 idiomas, un día de construcción, US$ 10,46 al año.',
     },
     papel: { pt: 'Sozinho', en: 'Solo', es: 'En solitario' },
     credito: {

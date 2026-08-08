@@ -5,7 +5,7 @@ data: 2026-08-08T01:25:00-03:00
 idioma: en
 obra: blucker
 endereco: blucker
-ordem: 8
+ordem: 7
 assuntos:
   - Angular
   - Node.js

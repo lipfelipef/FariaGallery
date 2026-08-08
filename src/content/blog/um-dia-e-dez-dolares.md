@@ -1,11 +1,12 @@
 ---
-titulo: 'Um dia, dez dólares e nenhum servidor'
+titulo: 'Faria Gallery: um dia, dez dólares e nenhum servidor'
+tituloBusca: 'Faria Gallery: um dia e dez dólares'
 resumo: A BluckerTV custou R$ 8.100 em cinco meses. Este site custou US$ 10,46 por ano e ficou pronto em um dia. A diferença não é economia, é adequação.
 data: 2026-08-08T19:30:00-03:00
 idioma: pt
 obra: fariagallery
 endereco: um-dia-e-dez-dolares
-ordem: 2
+ordem: 9
 assuntos:
   - Astro
   - Cloudflare

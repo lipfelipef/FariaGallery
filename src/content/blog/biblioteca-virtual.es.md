@@ -7,7 +7,7 @@ atualizado: 2026-08-08T00:30:00-03:00
 idioma: es
 obra: biblioteca-virtual
 endereco: biblioteca-virtual
-ordem: 4
+ordem: 3
 assuntos:
   - Python
   - Django

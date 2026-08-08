@@ -31,12 +31,18 @@ const naoPreenchido = (valor: string) =>
 const inicio = inicioDaObra(obra);
 const quanto = inicio ? duracao(inicio, fimDaObra(obra), lang) : undefined;
 
-/** Cada valor da ficha é uma lista de linhas, mesmo quando tem só uma. */
+/**
+ * Cada valor da ficha é uma lista de linhas, mesmo quando tem só uma.
+ *
+ * `medida` marca o campo que é uma enumeração de números, e não texto para
+ * ler: ele quer caber numa linha só, e a medida de leitura confortável do
+ * `.value` o dobraria no meio.
+ */
 const ficha = [
   { campo: t('campo.meio'), linhas: [meioDe(obra, lang)] },
   ...(quanto ? [{ campo: t('campo.duracao'), linhas: [quanto] }] : []),
   ...(obra.dimensoes
-    ? [{ campo: t('campo.dimensoes'), linhas: [numeroColado(obra.dimensoes[lang])] }]
+    ? [{ campo: t('campo.dimensoes'), linhas: [numeroColado(obra.dimensoes[lang])], medida: true }]
     : []),
   { campo: t('campo.papel'), linhas: [obra.papel[lang]] },
   { campo: t('campo.credito'), linhas: linhasDe(obra.credito[lang]) },
@@ -74,7 +80,7 @@ const textoDoLink = obra.link
 
   <dl class="obra-ficha">
     {
-      ficha.map(({ campo, linhas }) => (
+      ficha.map(({ campo, linhas, medida }) => (
         <>
           <dt class="field">{campo}</dt>
           {/* Quem escreveu a quebra quer aquelas linhas, então a medida de
@@ -86,6 +92,7 @@ const textoDoLink = obra.link
               'linhas',
               naoPreenchido(linhas[0]) && 'value-pendente',
               linhas.length > 1 && 'value-linhas',
+              medida && 'value-medida',
             ]}
           >
             {linhas.map((linha, i) => (
@@ -180,6 +187,20 @@ const textoDoLink = obra.link
      senão a coluna dobra a frase e desfaz a quebra. */
   .value-linhas {
     max-width: 80ch;
+  }
+
+  /* A linha das dimensões não é texto para ler, é uma enumeração de números,
+     e ela quer caber inteira numa linha só. Os 46ch do `.value` dão 395px, e
+     a frase mais longa dos três idiomas, a espanhola, precisa de 425. Aqui a
+     coluna tem 824px disponíveis, então sobra espaço: o que faltava era só
+     permissão.
+
+     Só no computador. No celular a coluna tem a largura da tela e a frase
+     dobra de qualquer jeito, que é como ele quer. */
+  @media (min-width: 48rem) {
+    .value-medida {
+      max-width: 56ch;
+    }
   }
 
   /* A ficha repete a mesma grade da obra, então o eixo vertical

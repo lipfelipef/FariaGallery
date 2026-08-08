@@ -5,7 +5,7 @@ data: 2026-08-07T21:27:00-03:00
 idioma: es
 obra: bluckertv
 endereco: bluckertv
-ordem: 7
+ordem: 6
 assuntos:
   - PeerTube
   - Infraestructura
