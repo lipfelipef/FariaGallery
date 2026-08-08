@@ -1,7 +1,7 @@
 ---
 titulo: Why this site exists
 resumo: Who I am, what Faria Gallery is, and why every project here shows up with a museum label instead of a pretty screenshot.
-data: 2026-08-07T22:27:00-03:00
+data: 2026-08-07T18:09:00-03:00
 atualizado: 2026-08-07T23:10:00-03:00
 idioma: en
 endereco: por-que-este-site-existe
