@@ -208,7 +208,7 @@ export const OBRAS: Obra[] = [
   {
     slug: 'estufa-hidroponica',
     titulo: 'Estufa Hidropônica',
-    ano: '2026',
+    ano: '2025',
     meio: 'Lógica combinacional, Logisim 2.7.1',
     estado: 'publico',
     link: { href: 'https://github.com/lipfelipef/EstufaHidroponica', tipo: 'projeto' },
@@ -218,11 +218,11 @@ export const OBRAS: Obra[] = [
       en: 'Lettuce greenhouse control solved with combinational logic.',
       es: 'Control de invernadero de lechuga resuelto con lógica combinacional.',
     },
-    papel: { pt: 'Sozinho', en: 'Solo', es: 'En solitario' },
+    papel: { pt: 'Em grupo', en: 'In a team', es: 'En grupo' },
     credito: {
-      pt: 'Nano projeto de Conceitos de Computação, Senac Santo Amaro. Expressões minimizadas por mapa de Karnaugh, 13 portas de duas entradas, mais gerador e verificador de paridade ímpar.',
-      en: 'Short project for Computing Concepts, Senac Santo Amaro. Expressions minimised with Karnaugh maps, 13 two-input gates, plus an odd parity generator and checker.',
-      es: 'Nano proyecto de Conceptos de Computación, Senac Santo Amaro. Expresiones minimizadas por mapa de Karnaugh, 13 compuertas de dos entradas, más generador y verificador de paridad impar.',
+      pt: 'Nano projeto de Conceitos de Computação, Senac Santo Amaro, em grupo de sete, com Paulo Henrique de Castro Lima, Gabriel Quaresma da Silva, José Victor Souza de Abreu, Vinicius de Castro Marques, Eduardo Almeida Oliveira e Luciano Alves de Andrade Neto. Orientação de Jean Carlo Wagner.',
+      en: 'Short project for Computing Concepts, Senac Santo Amaro, in a team of seven, with Paulo Henrique de Castro Lima, Gabriel Quaresma da Silva, José Victor Souza de Abreu, Vinicius de Castro Marques, Eduardo Almeida Oliveira, and Luciano Alves de Andrade Neto. Advised by Jean Carlo Wagner.',
+      es: 'Nano proyecto de Conceptos de Computación, Senac Santo Amaro, en grupo de siete, con Paulo Henrique de Castro Lima, Gabriel Quaresma da Silva, José Victor Souza de Abreu, Vinicius de Castro Marques, Eduardo Almeida Oliveira y Luciano Alves de Andrade Neto. Orientación de Jean Carlo Wagner.',
     },
   },
   {
