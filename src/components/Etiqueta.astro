@@ -7,13 +7,13 @@ import { rota } from '../i18n/utils';
 interface Props {
   obra: Obra;
   lang: Locale;
-  /** Verdadeiro quando existe estudo de caso escrito nesse idioma. */
-  temEstudo?: boolean;
+  /** Id do post do blog escrito sobre esta obra, quando existir. */
+  post?: string;
 }
 
-const { obra, lang, temEstudo = false } = Astro.props;
+const { obra, lang, post } = Astro.props;
 const t = traduzir(lang);
-const urlEstudo = rota(lang, `/obras/${obra.slug}`);
+const urlTexto = post ? rota(lang, `/blog/${post}`) : undefined;
 
 /** Ponto cheio quer dizer que dá para ir ver agora. Vazado, não há o que visitar. */
 const aoVivo = obra.estado !== 'encerrado';
@@ -43,8 +43,8 @@ const textoDoLink = obra.link
   <div class="obra-cabeca">
     <h3 class="work-title">
       {
-        temEstudo ? (
-          <a class="titulo-link" href={urlEstudo}>
+        urlTexto ? (
+          <a class="titulo-link" href={urlTexto}>
             {obra.titulo}
           </a>
         ) : (
@@ -67,11 +67,11 @@ const textoDoLink = obra.link
   </dl>
 
   {
-    (temEstudo || obra.link) && (
+    (urlTexto || obra.link) && (
       <p class="obra-acao">
-        {temEstudo && (
-          <a class="quiet-link" href={urlEstudo}>
-            {t('link.estudo')} <span aria-hidden="true">&#8594;</span>
+        {urlTexto && (
+          <a class="quiet-link" href={urlTexto}>
+            {t('link.texto')} <span aria-hidden="true">&#8594;</span>
           </a>
         )}
         {obra.link && (

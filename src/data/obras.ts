@@ -18,7 +18,7 @@ export type TipoLink = 'codigo' | 'projeto' | 'canal';
 type PorIdioma = Record<Locale, string>;
 
 export interface Obra {
-  /** Vira a URL do estudo de caso: /obras/blucker */
+  /** Identificador da obra. É por ele que um post do blog se liga a ela. */
   slug: string;
   titulo: string;
   /** Como o ano aparece escrito. Pode ser faixa: "2020 até hoje". */

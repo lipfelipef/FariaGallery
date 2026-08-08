@@ -6,7 +6,7 @@ import { OBRAS, ordemDoAno } from '../data/obras';
 import type { Locale } from '../consts';
 import { traduzir } from '../i18n/ui';
 import { rota } from '../i18n/utils';
-import { obrasComEstudo } from '../lib/estudos';
+import { postsPorObra } from '../lib/blog';
 
 interface Props {
   lang: Locale;
@@ -14,7 +14,7 @@ interface Props {
 
 const { lang } = Astro.props;
 const t = traduzir(lang);
-const comEstudo = await obrasComEstudo(lang);
+const textos = await postsPorObra(lang);
 
 const acervo = OBRAS.filter((o) => !o.pendente);
 
@@ -36,8 +36,11 @@ for (const obra of acervo) {
 }
 const tags = [...contagem.entries()].sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]));
 
-const destino = (slug: string, href?: string) =>
-  comEstudo.has(slug) ? rota(lang, `/obras/${slug}`) : href;
+/** A linha leva ao texto da obra, se houver. Senão, ao repositório dela. */
+const destino = (slug: string, href?: string) => {
+  const post = textos.get(slug);
+  return post ? rota(lang, `/blog/${post}`) : href;
+};
 ---
 
 <Base lang={lang} titulo={t('colecao.titulo')} descricao={t('colecao.chamada')}>

@@ -7,7 +7,7 @@ import { OBRAS } from '../data/obras';
 import { SITE, type Locale } from '../consts';
 import { traduzir } from '../i18n/ui';
 import { rota } from '../i18n/utils';
-import { obrasComEstudo } from '../lib/estudos';
+import { postsPorObra } from '../lib/blog';
 
 interface Props {
   lang: Locale;
@@ -16,8 +16,8 @@ interface Props {
 const { lang } = Astro.props;
 const t = traduzir(lang);
 
-/** Obra só vira link quando existe estudo escrito naquele idioma. */
-const comEstudo = await obrasComEstudo(lang);
+/** Obra só vira link quando existe post escrito sobre ela naquele idioma. */
+const textos = await postsPorObra(lang);
 
 /**
  * Obra sem ficha preenchida não vai pra parede. Some do site inteiro
@@ -59,7 +59,7 @@ const emCartaz = acervo.filter((o) => o.destaque);
       <div class="sala-corpo">
         {
           emCartaz.map((obra) => (
-            <Etiqueta obra={obra} lang={lang} temEstudo={comEstudo.has(obra.slug)} />
+            <Etiqueta obra={obra} lang={lang} post={textos.get(obra.slug)} />
           ))
         }
 

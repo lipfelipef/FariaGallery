@@ -1,8 +1,13 @@
 ---
-obra: bluckertv
+titulo: 'BluckerTV: cinco meses, uma plataforma inteira, um assinante'
+resumo: Post-mortem de uma plataforma brasileira de vídeo sob demanda construída sozinho e encerrada por decisão de negócio, não por falha técnica. O que os números ensinaram e por que parar cedo foi a decisão certa.
+data: 2026-08-07
 idioma: pt
-rascunho: false
-chamada: Cinco meses, uma plataforma de vídeo inteira, um assinante pagante. O que os números ensinaram e por que parar cedo foi a decisão certa.
+obra: bluckertv
+assuntos:
+  - PeerTube
+  - Infraestrutura
+  - Post-mortem
 ---
 
 A BluckerTV era uma plataforma brasileira de vídeo sob demanda, de propósito
@@ -189,7 +194,7 @@ source de porte.
 E um assinante.
 
 As duas metades são verdade ao mesmo tempo, e é justamente por isso que este
-projeto está aqui. A parte técnica ensinou infraestrutura, vídeo, licenciamento
-e regulação. A parte de negócio ensinou uma coisa mais difícil: **construir bem
+texto existe. A parte técnica ensinou infraestrutura, vídeo, licenciamento e
+regulação. A parte de negócio ensinou uma coisa mais difícil: **construir bem
 não é o mesmo que construir algo que alguém quer**, e a hora de descobrir isso é
 antes de assinar o primeiro boleto, não depois do quinto.
