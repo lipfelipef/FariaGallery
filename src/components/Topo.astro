@@ -53,8 +53,13 @@ const idiomas = await destinosPorIdioma(Astro.url);
       }
     </ul>
 
-    <button id="troca-tema" class="tema" type="button" aria-pressed="false">
-      <span class="tema-rotulo">{t('tema.escuro')}</span>
+    <!--
+      O rótulo é a sala para onde o botão leva, não a sala em que se está.
+      Como o site abre escuro, o que o servidor escreve é "sala clara". Se a
+      pessoa tiver escolhido o claro, o script corrige antes de aparecer.
+    -->
+    <button id="troca-tema" class="tema" type="button" aria-pressed="true" aria-label={t('tema.paraClara')}>
+      <span class="tema-rotulo">{t('tema.clara')}</span>
     </button>
   </nav>
 </header>
@@ -71,7 +76,10 @@ const idiomas = await destinosPorIdioma(Astro.url);
       rotulo.textContent = escuro ? rotuloClaro : rotuloEscuro;
       botao.setAttribute('aria-pressed', String(escuro));
       botao.setAttribute('aria-label', escuro ? ariaClaro : ariaEscuro);
-      var meta = document.querySelector('meta[name="theme-color"]:not([media])');
+      // Existe um só, sem `media`. O seletor antes exigia `:not([media])` de
+      // um par que tinha os dois com `media`, então não achava nenhum e a
+      // barra do navegador nunca acompanhava a troca.
+      var meta = document.querySelector('meta[name="theme-color"]');
       if (meta) meta.setAttribute('content', escuro ? '#141416' : '#fbfbf9');
     }
 

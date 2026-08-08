@@ -2,7 +2,7 @@
 import '../styles/global.css';
 import { SITE, PERFIS, type Locale } from '../consts';
 import { traduzir } from '../i18n/ui';
-import { LANG_HTML, rota } from '../i18n/utils';
+import { LANG_HTML, OG_LOCALE, rota } from '../i18n/utils';
 import { destinosPorIdioma } from '../lib/idiomas';
 
 interface Props {
@@ -40,8 +40,13 @@ const cartao = new URL('/card.png', SITE.url).href;
  * Só entra no hreflang o idioma que tem ESTA página de verdade. Anunciar
  * uma tradução que não existe é dizer ao buscador que duas páginas
  * diferentes são a mesma coisa, e ele penaliza por isso.
+ *
+ * Página fora da busca não anuncia alternativa nenhuma. Vale para a de erro,
+ * cujo seletor de idioma leva à entrada de cada idioma: sem esta linha, o
+ * hreflang dela diria que a página de erro é a versão em outro idioma da
+ * home, que é justamente a confusão que o hreflang existe para evitar.
  */
-const idiomas = (await destinosPorIdioma(Astro.url)).filter((alt) => alt.exata);
+const idiomas = semIndexar ? [] : (await destinosPorIdioma(Astro.url)).filter((alt) => alt.exata);
 
 /**
  * Schema.org do artigo. Declara autor, data de publicação, idioma e assunto,
@@ -64,6 +69,19 @@ const artigoSchema = artigo && {
   isPartOf: { '@type': 'Blog', name: `${SITE.name}, blog`, url: new URL(rota(lang, '/blog'), SITE.url).href },
 };
 
+/**
+ * Serializa o Schema.org de um jeito que não pode fechar a própria tag.
+ *
+ * `JSON.stringify` não escapa `<`, então um título de post que contivesse
+ * `</script>` sairia literal no meio do bloco, fechava a tag ali e o resto
+ * virava HTML executável. Hoje todo o conteúdo do site é escrito por ele, em
+ * arquivo, e ninguém de fora escreve nada aqui, então isso não é uma porta
+ * aberta: é uma porta que nunca deve chegar a existir. Trocar o `<` pelo
+ * escape unicode custa nada e fecha a classe inteira do problema, inclusive
+ * no dia em que o texto vier de outro lugar.
+ */
+const emScript = (dados: unknown) => JSON.stringify(dados).replace(/</g, '\\u003c');
+
 const pessoa = {
   '@id': `${SITE.url}#pessoa`,
   '@context': 'https://schema.org',
@@ -84,7 +102,15 @@ const pessoa = {
 ---
 
 <!doctype html>
-<html lang={LANG_HTML[lang]}>
+<!--
+  A galeria abre na sala escura, sempre.
+
+  O atributo ja vem escrito aqui, e nao posto pelo script, para o site nascer
+  escuro tambem para quem esta sem JavaScript e para quem tem o sistema no
+  claro. Quem escolher a sala clara dentro do site tem a escolha guardada, e o
+  script logo abaixo desfaz este atributo antes da pagina pintar.
+-->
+<html lang={LANG_HTML[lang]} data-tema="escuro">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -96,12 +122,15 @@ const pessoa = {
     <link rel="sitemap" href="/sitemap-index.xml" />
 
     {
-      idiomas.length > 1 &&
-        idiomas.map((alt) => (
-          <link rel="alternate" hreflang={alt.hreflang} href={new URL(alt.href, SITE.url).href} />
-        ))
+      idiomas.length > 1 && (
+        <>
+          {idiomas.map((alt) => (
+            <link rel="alternate" hreflang={alt.hreflang} href={new URL(alt.href, SITE.url).href} />
+          ))}
+          <link rel="alternate" hreflang="x-default" href={new URL('/', SITE.url).href} />
+        </>
+      )
     }
-    <link rel="alternate" hreflang="x-default" href={new URL('/', SITE.url).href} />
 
     <link rel="icon" href="/favicon-16.png" sizes="16x16" type="image/png" />
     <link rel="icon" href="/favicon-32.png" sizes="32x32" type="image/png" />
@@ -127,7 +156,7 @@ const pessoa = {
         </>
       )
     }
-    <meta property="og:locale" content={LANG_HTML[lang].replace('-', '_')} />
+    <meta property="og:locale" content={OG_LOCALE[lang]} />
     <meta property="og:title" content={tituloDaAba} />
     <meta property="og:description" content={descricao} />
     <meta property="og:url" content={canonica} />
@@ -138,32 +167,43 @@ const pessoa = {
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:image" content={cartao} />
 
-    <meta name="theme-color" content="#fbfbf9" media="(prefers-color-scheme: light)" />
-    <meta name="theme-color" content="#141416" media="(prefers-color-scheme: dark)" />
+    <!--
+      Um só, sem `media`, e escuro: é a cor da sala em que o site abre. Antes
+      eram dois, escolhidos pelo tema do sistema, e nenhum acompanhava a troca
+      dentro do site, porque o botão do topo procura justamente o meta sem
+      `media` e não achava nenhum. Agora acha, e a barra do navegador vira
+      junto com a parede.
+    -->
+    <meta name="theme-color" content="#141416" />
     <meta name="generator" content={Astro.generator} />
 
     <!--
-      Roda antes da página pintar. Sem isso a sala clara pisca por um
-      instante antes de virar escura, que é o defeito mais comum de
-      site com tema. Guarda a escolha em localStorage, que é preferência
-      de quem visita, não rastreio: não sai do navegador da pessoa.
+      Roda antes da página pintar, e só desfaz.
+
+      A sala escura é o padrão da casa e já vem escrita no `<html>`. Aqui
+      cuidamos do caso contrário: quem trocou para a sala clara tem a escolha
+      guardada e ela precisa valer antes do primeiro quadro, senão o escuro
+      pisca na cara de quem pediu claro.
+
+      `localStorage` é preferência de quem visita, não rastreio: não sai do
+      navegador da pessoa e não vira cookie nem chamada de rede.
     -->
     <script is:inline>
       (function () {
         try {
-          var salvo = localStorage.getItem('tema');
-          var escuro =
-            salvo === 'escuro' ||
-            (!salvo && matchMedia('(prefers-color-scheme: dark)').matches);
-          if (escuro) document.documentElement.setAttribute('data-tema', 'escuro');
+          if (localStorage.getItem('tema') === 'claro') {
+            document.documentElement.removeAttribute('data-tema');
+            var meta = document.querySelector('meta[name="theme-color"]');
+            if (meta) meta.setAttribute('content', '#fbfbf9');
+          }
         } catch (e) {}
       })();
     </script>
 
-    <script type="application/ld+json" is:inline set:html={JSON.stringify(pessoa)} />
+    <script type="application/ld+json" is:inline set:html={emScript(pessoa)} />
     {
       artigoSchema && (
-        <script type="application/ld+json" is:inline set:html={JSON.stringify(artigoSchema)} />
+        <script type="application/ld+json" is:inline set:html={emScript(artigoSchema)} />
       )
     }
   </head>

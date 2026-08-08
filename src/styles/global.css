@@ -51,7 +51,6 @@
     --color-ink-soft: #8f8d87;
     --color-rule: #2e2e32;
     --color-dot: #ef4056;
-    color-scheme: dark;
   }
 }
 
@@ -72,6 +71,15 @@
 
 :root[data-tema='escuro'] {
   --color-code: #232327;
+
+  /* Precisa morar aqui fora, e nao junto das cores dentro de `@layer theme`.
+     Regra escrita fora de layer sempre ganha de regra escrita dentro de um,
+     por mais especifico que o seletor de dentro seja. Estava dentro, entao o
+     `color-scheme: light` do bloco acima vencia e a barra de rolagem e os
+     controles do navegador continuavam claros numa pagina escura. Passava
+     despercebido enquanto o escuro era escolha de poucos; agora e a sala em
+     que todo mundo entra. */
+  color-scheme: dark;
 }
 
 @media (max-width: 47.99rem) {
@@ -397,6 +405,78 @@ body {
     clip-path: inset(50%);
     white-space: nowrap;
     border: 0;
+  }
+}
+
+/* ---------------------------------------------------------------
+   Passagem de uma sala para outra
+
+   Trocar de pagina no site e andar da colecao para a experiencia, do
+   blog para o contato. Numa galeria de verdade a moldura da sala nao
+   se move quando voce muda de parede: o que troca e a obra.
+
+   E isso que o desenho abaixo faz. O topo e o rodape ganham nome
+   proprio de transicao, entao o navegador os trata como o MESMO
+   elemento nas duas paginas e eles ficam parados. O miolo faz a
+   passagem: o antigo se apaga em 200ms, o novo entra subindo um fio.
+
+   Feito em CSS puro, de proposito. A alternativa era o roteador de
+   cliente do Astro, que troca o corpo da pagina sem recarregar, e
+   nesse caminho todo script `is:inline` do site (tema, filtro das
+   etiquetas, tempo que se refaz) precisaria ser reescrito para rodar
+   de novo a cada navegacao. Aqui a navegacao continua sendo navegacao
+   de verdade: cada pagina carrega inteira, os scripts rodam do zero
+   como sempre, e o navegador so cuida da passagem visual entre as
+   duas. Navegador sem suporte simplesmente navega, sem transicao e
+   sem quebrar nada.
+   --------------------------------------------------------------- */
+
+@view-transition {
+  navigation: auto;
+}
+
+/* A moldura da galeria. Mesmo nome nas duas paginas quer dizer "isto
+   aqui e a mesma coisa", e o navegador para de troca-la. */
+.topo {
+  view-transition-name: moldura-topo;
+}
+
+.rodape {
+  view-transition-name: moldura-rodape;
+}
+
+::view-transition-old(root) {
+  animation: sala-sai 200ms cubic-bezier(0.4, 0, 1, 1) both;
+}
+
+::view-transition-new(root) {
+  animation: sala-entra 420ms cubic-bezier(0.16, 0.84, 0.28, 1) both;
+}
+
+@keyframes sala-sai {
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes sala-entra {
+  from {
+    opacity: 0;
+    transform: translateY(0.625rem);
+  }
+}
+
+/* Quem pede menos movimento navega sem transicao nenhuma. A regra da
+   animacao vem junto porque nem todo navegador que entende transicao
+   entende `navigation: none` dentro de media query. */
+@media (prefers-reduced-motion: reduce) {
+  @view-transition {
+    navigation: none;
+  }
+
+  ::view-transition-old(root),
+  ::view-transition-new(root) {
+    animation: none;
   }
 }
 
