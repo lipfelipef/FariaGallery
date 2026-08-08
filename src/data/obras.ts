@@ -104,6 +104,8 @@ export const OBRAS: Obra[] = [
     ano: '2026',
     meio: 'PeerTube, TypeScript, PostgreSQL, nginx, FFmpeg',
     estado: 'encerrado',
+    // Empresa aberta, operada e fechada. Isso é experiência, não projeto.
+    tipo: 'experiencia',
     tags: ['Vídeo', 'TypeScript', 'Infraestrutura'],
     destaque: true,
     resumo: {
