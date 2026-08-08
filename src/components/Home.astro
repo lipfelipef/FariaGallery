@@ -202,9 +202,13 @@ const percurso = [...emCartaz].reverse();
     padding-block: clamp(2rem, 5vh, 3.5rem) clamp(3rem, 8vh, 5rem);
   }
 
-  /* A última sala é curta dos dois lados: em cima, porque a sala anterior já
-     fecha com o próprio respiro, e embaixo porque o rodapé traz o dele. Antes
-     os intervalos se somavam e abriam 117px de vazio. */
+  /* As duas últimas salas fecham curtas. O intervalo entre elas era a soma de
+     três respiros empilhados, o do link, o do fim de uma sala e o do começo da
+     outra, e dava 117px de vazio. Agora eles dividem o mesmo intervalo. */
+  #obras {
+    padding-bottom: clamp(1rem, 2vh, 1.5rem);
+  }
+
   #redes {
     padding-block: clamp(1.5rem, 3vh, 2rem);
   }
