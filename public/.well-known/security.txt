@@ -3,6 +3,9 @@
 # Site estatico, sem back-end, banco, formulario ou login: a superficie e
 # pequena de proposito. Ainda assim, se voce achar algo, fale.
 
+# A ordem abaixo e a ordem de preferencia, como manda o RFC: o e-mail
+# responde direto, a pagina serve de alternativa.
+Contact: mailto:felipe@fariagallery.com
 Contact: https://fariagallery.com/contato/
 Expires: 2027-08-07T00:00:00.000Z
 Preferred-Languages: pt-BR, en, es
