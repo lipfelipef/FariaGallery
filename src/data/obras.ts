@@ -156,6 +156,35 @@ export const anoExibido = (o: Obra, atualmente: string) =>
 
 export const OBRAS: Obra[] = [
   {
+    // A galeria dentro da galeria. A ficha desta obra é a página em que quem
+    // lê está: por isso o link leva ao código, que é a única parte dela que
+    // ainda não está à vista.
+    slug: 'fariagallery',
+    titulo: 'Faria Gallery',
+    ano: '2026',
+    meio: 'Astro, TypeScript, Tailwind, Cloudflare Workers',
+    estado: 'publico',
+    link: { href: 'https://github.com/lipfelipef/FariaGallery', tipo: 'codigo' },
+    tags: ['Web', 'Astro'],
+    destaque: 1,
+    resumo: {
+      pt: ['O site onde esta ficha está pendurada.', 'Portfólio em três idiomas, sem imagem e sem back-end.'],
+      en: ['The site where this very label is hanging.', 'A portfolio in three languages, with no images and no back end.'],
+      es: ['El sitio donde está colgada esta ficha.', 'Portafolio en tres idiomas, sin imágenes y sin back-end.'],
+    },
+    dimensoes: {
+      pt: '40 páginas, 3 idiomas, 1 dia de construção, US$ 10,46 por ano',
+      en: '40 pages, 3 languages, built in one day, US$ 10.46 a year',
+      es: '40 páginas, 3 idiomas, un día de construcción, US$ 10,46 al año',
+    },
+    papel: { pt: 'Sozinho', en: 'Solo', es: 'En solitario' },
+    credito: {
+      pt: 'Projeto pessoal, no ar desde 7 de agosto de 2026. Sem servidor, sem banco e sem formulário: a hospedagem não custa nada e o domínio é a única despesa.',
+      en: 'Personal project, live since 7 August 2026. No server, no database, and no forms: hosting costs nothing and the domain is the only expense.',
+      es: 'Proyecto personal, al aire desde el 7 de agosto de 2026. Sin servidor, sin base de datos y sin formularios: el alojamiento no cuesta nada y el dominio es el único gasto.',
+    },
+  },
+  {
     slug: 'blucker',
     titulo: 'Blucker',
     ano: '2026',
@@ -163,7 +192,6 @@ export const OBRAS: Obra[] = [
     estado: 'publico',
     link: { href: 'https://github.com/lipfelipef/PI.2-BluckerEcommerce', tipo: 'codigo' },
     tags: ['Web', 'Angular', 'Node.js'],
-    destaque: 1,
     resumo: {
       pt: ['Loja de jogos digitais, catálogo', 'até o carrinho.'],
       en: 'A digital game store, from catalogue to checkout.',
