@@ -91,22 +91,30 @@ export const OBRAS: Obra[] = [
   {
     slug: 'bluckertv',
     titulo: 'BluckerTV',
-    ano: 'a definir',
-    meio: 'a definir',
+    ano: '2026',
+    meio: 'PeerTube, TypeScript, PostgreSQL, nginx, FFmpeg',
     estado: 'encerrado',
-    pendente: true,
-    tags: [],
+    tags: ['Vídeo', 'TypeScript', 'Infraestrutura'],
     destaque: true,
     resumo: {
-      pt: 'A definir: o que era, para quem era e onde parou.',
-      en: 'To be defined: what it was, who it was for, and where it stopped.',
-      es: 'A definir: qué era, para quién era y dónde se detuvo.',
+      pt: 'Plataforma brasileira de vídeo sob demanda, construída inteira por uma pessoa e encerrada por decisão de negócio, não por falha técnica.',
+      en: 'A Brazilian video on demand platform, built entirely by one person and shut down as a business decision, not a technical failure.',
+      es: 'Plataforma brasileña de video bajo demanda, construida entera por una persona y cerrada por decisión de negocio, no por falla técnica.',
     },
-    papel: { pt: 'a definir', en: 'to be defined', es: 'a definir' },
+    dimensoes: {
+      pt: '5 meses no ar, 72 usuários, 270 vídeos, 1,8 TB hospedados, 9 plugins próprios',
+      en: '5 months live, 72 users, 270 videos, 1.8 TB hosted, 9 in-house plugins',
+      es: '5 meses al aire, 72 usuarios, 270 videos, 1,8 TB alojados, 9 complementos propios',
+    },
+    papel: {
+      pt: 'Sozinho: desenvolvimento, infraestrutura, produto, jurídico e suporte',
+      en: 'Solo: development, infrastructure, product, legal, and support',
+      es: 'En solitario: desarrollo, infraestructura, producto, legal y soporte',
+    },
     credito: {
-      pt: 'Estudo de caso honesto: o que travou, o que custou e o que ficou de aprendizado de engenharia, produto e negócio.',
-      en: 'An honest case study: what got stuck, what it cost, and what it taught about engineering, product, and business.',
-      es: 'Estudio de caso honesto: qué se trabó, qué costó y qué dejó de aprendizaje de ingeniería, producto y negocio.',
+      pt: 'Projeto pessoal, de março a agosto de 2026. Construída sobre o PeerTube, com plugins próprios, app publicado na Play Store, empresa aberta e marca deferida no INPI.',
+      en: 'Personal project, March to August 2026. Built on PeerTube, with in-house plugins, an app published on the Play Store, a registered company, and a trademark granted by the Brazilian patent office.',
+      es: 'Proyecto personal, de marzo a agosto de 2026. Construida sobre PeerTube, con complementos propios, app publicada en la Play Store, empresa abierta y marca concedida en el INPI.',
     },
   },
   {
@@ -151,7 +159,6 @@ export const OBRAS: Obra[] = [
     estado: 'publico',
     link: { href: 'https://github.com/lipfelipef/SimuladoOnline', tipo: 'codigo' },
     tags: ['Web', 'JavaScript'],
-    destaque: true,
     resumo: {
       pt: 'Monta listas de perguntas e aplica simulado de qualquer assunto.',
       en: 'Builds question lists and runs practice tests on any subject.',
@@ -172,7 +179,6 @@ export const OBRAS: Obra[] = [
     estado: 'publico',
     link: { href: 'https://github.com/lipfelipef/EstufaHidroponica', tipo: 'projeto' },
     tags: ['Hardware', 'Lógica digital'],
-    destaque: true,
     resumo: {
       pt: 'Controle de estufa de alface resolvido em lógica combinacional.',
       en: 'Lettuce greenhouse control solved with combinational logic.',
