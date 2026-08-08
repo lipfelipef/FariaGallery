@@ -346,26 +346,38 @@ body {
     text-decoration-color: var(--color-ink);
   }
 
-  /* Frase por linha, mas so onde cabe -----------------------------------
-     Texto quebrado a mao no conteudo: cada frase ocupa a sua linha.
+  /* Frase por linha ------------------------------------------------------
+     Texto quebrado a mao no conteudo: cada frase comeca na sua linha, em
+     qualquer largura. E o que o autor escolheu, e vale igual no celular.
 
-     No celular a quebra manual faz o contrario do que promete: a frase nao
-     cabe, dobra sozinha e sobra orfa na linha seguinte, tipo "demanda," ou
-     "tecnica." soltas. Entao abaixo do ponto de quebra o texto volta a
-     correr, e o navegador quebra onde couber.
+     No celular a frase costuma nao caber e precisa dobrar. Sem ajuda, ela
+     dobra no pior lugar e pendura uma preposicao no fim, tipo "...para o" com
+     "mais antigo." embaixo. O `balance` reparte a frase em linhas de tamanho
+     parecido, e a preposicao para de ficar solta.
 
-     O espaco que separa as frases quando elas viram texto corrido e escrito no
-     HTML, pelo componente Linhas.astro, e nao aqui: `content: ' '` em pseudo
-     e' colapsado, e `\00a0` resolveria isso mas impediria a quebra no melhor
-     ponto, que e' o fim da frase. */
+     Ja tentei fazer o texto voltar a correr aqui, e e' pior: as frases se
+     misturam e a ficha do artista, que sao tres informacoes distintas, vira
+     um paragrafo so.
+
+     O espaco no fim de cada frase vem do HTML, pelo Linhas.astro. Em bloco
+     ele e' ignorado; existe para o caso de o texto voltar a correr. */
   .linhas > span {
     display: block;
   }
 
   @media (max-width: 47.99rem) {
     .linhas > span {
-      display: inline;
       max-width: none;
+      text-wrap: balance;
+    }
+
+    /* Mesmo tratamento para o valor da ficha, que nao passa pelo Linhas.astro
+       e deixava coisas como "...ingles ou / espanhol" com a ultima palavra
+       sozinha na linha. */
+    .value,
+    .chamada,
+    .item-resumo {
+      text-wrap: pretty;
     }
   }
 
