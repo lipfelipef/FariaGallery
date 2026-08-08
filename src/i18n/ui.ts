@@ -114,7 +114,7 @@ export const UI = {
     'blog.titulo': 'Blog',
     'blog.chamada': [
       'Texto sobre o que eu construo: o que deu certo,',
-      'o que travou e o que eu faria diferente.',
+      'O que travou e o que eu faria diferente.',
     ],
     'blog.vazio.titulo': 'Sala em montagem',
     'blog.vazio.texto':
@@ -254,7 +254,7 @@ export const UI = {
     'blog.titulo': 'Blog',
     'blog.chamada': [
       'Writing about what I build: what worked,',
-      'what got stuck, and what I would do differently.',
+      'What got stuck, and what I would do differently.',
     ],
     'blog.vazio.titulo': 'Room being installed',
     'blog.vazio.texto':
@@ -392,7 +392,7 @@ export const UI = {
     'blog.titulo': 'Blog',
     'blog.chamada': [
       'Textos sobre lo que construyo: lo que funcionó,',
-      'lo que se trabó y lo que haría distinto.',
+      'Lo que se trabó y lo que haría distinto.',
     ],
     'blog.vazio.titulo': 'Sala en montaje',
     'blog.vazio.texto':
