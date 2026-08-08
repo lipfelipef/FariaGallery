@@ -37,6 +37,21 @@ const emCartaz = OBRAS.filter((o) => !o.pendente && o.destaque).sort(
   (a, b) => (a.destaque ?? 99) - (b.destaque ?? 99)
 );
 
+/**
+ * O percurso: as mesmas obras do cartaz, na ordem em que uma levou à outra.
+ *
+ * Fica numa faixa própria, horizontal, acima das etiquetas. Já tentei ligar as
+ * etiquetas com um fio vertical e não funciona: cada uma tem quinhentos a
+ * oitocentos pixels de altura, então o fio nunca alcança o ponto seguinte, ele
+ * só desce sozinho pelo bloco. Aqui os marcos ficam lado a lado, que é a
+ * condição para uma linha de tempo ser lida como linha.
+ *
+ * A ordem é o `destaque` de trás para frente, e não uma conta de data: o
+ * Blucker e a BluckerTV são os dois de 2026, e só a curadoria dele sabe qual
+ * levou a qual.
+ */
+const percurso = [...emCartaz].reverse();
+
 ---
 
 <Base lang={lang} descricao={t('meta.home')}>
@@ -71,8 +86,21 @@ const emCartaz = OBRAS.filter((o) => !o.pendente && o.destaque).sort(
 
     <section id="obras" class="sala wall">
       <h2 class="sala-titulo">{t('sala.emCartaz')}</h2>
-      <!-- A ordem conta a sequência: o canal levou à plataforma de vídeo, que
-           levou ao e-commerce. Ver o campo `destaque` em obras.ts. -->
+
+      <!-- A linha do percurso: uma coisa levou à outra, e isso se lê de uma vez
+           só, da esquerda para a direita. Fica fora das etiquetas de propósito. -->
+      <ol class="percurso" aria-label={t('sala.percurso')}>
+        {
+          percurso.map((obra) => (
+            <li class="marco">
+              <span class="dot dot-on" aria-hidden="true" />
+              <span class="marco-ano">{obra.ano}</span>
+              <span class="marco-nome">{obra.titulo}</span>
+            </li>
+          ))
+        }
+      </ol>
+
       <div class="sala-corpo">
         {
           emCartaz.map((obra) => (
@@ -174,10 +202,80 @@ const emCartaz = OBRAS.filter((o) => !o.pendente && o.destaque).sort(
     padding-block: clamp(2rem, 5vh, 3.5rem) clamp(3rem, 8vh, 5rem);
   }
 
-  /* A última sala fecha mais curta: o rodapé já traz o próprio fio e o próprio
-     respiro logo abaixo, e o espaço cheio aqui somava com o de lá. */
+  /* A última sala é curta dos dois lados: em cima, porque a sala anterior já
+     fecha com o próprio respiro, e embaixo porque o rodapé traz o dele. Antes
+     os intervalos se somavam e abriam 117px de vazio. */
   #redes {
-    padding-bottom: clamp(1.5rem, 3vh, 2rem);
+    padding-block: clamp(1.5rem, 3vh, 2rem);
+  }
+
+  /* A linha do percurso -----------------------------------------------
+     Três marcos numa régua, ligados por um fio que corre atrás dos pontos.
+     O fio é um pseudo-elemento da lista, com um só traço do primeiro ao último
+     ponto, em vez de um pedaço por item: assim ele não depende da altura nem
+     do texto de ninguém, que foi onde a tentativa anterior quebrou. */
+  .percurso {
+    position: relative;
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: 1fr;
+    list-style: none;
+    margin: 0;
+    padding: clamp(1.5rem, 3vw, 2rem) 0 clamp(1.75rem, 3.5vw, 2.5rem);
+  }
+
+  /* O fio nasce no centro do primeiro ponto e morre no centro do último, e não
+     nas bordas da lista: parar no meio do marco é o que faz a régua parecer
+     desenhada, e não cortada. */
+  .percurso::before {
+    content: '';
+    position: absolute;
+    top: calc(clamp(1.5rem, 3vw, 2rem) + 0.21875rem);
+    left: calc(100% / 6);
+    right: calc(100% / 6);
+    height: 1px;
+    background: var(--color-rule);
+  }
+
+  .marco {
+    position: relative;
+    display: grid;
+    justify-items: center;
+    gap: 0.55rem;
+    text-align: center;
+  }
+
+  /* O ponto fica acima do fio, com um halo da cor do fundo, para o traço não
+     atravessar o círculo. */
+  .marco .dot {
+    position: relative;
+    box-shadow: 0 0 0 4px var(--color-wall);
+  }
+
+  .marco-ano {
+    font-size: 0.6875rem;
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    color: var(--color-ink-soft);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .marco-nome {
+    font-family: var(--font-work);
+    font-style: italic;
+    font-size: 1rem;
+    line-height: 1.2;
+    color: var(--color-ink);
+  }
+
+  @media (max-width: 34rem) {
+    .marco-nome {
+      font-size: 0.875rem;
+    }
+
+    .marco-ano {
+      letter-spacing: 0.08em;
+    }
   }
 
   /* O nome da sala é uma plaquinha, não um letreiro. Mesma tipografia
@@ -228,11 +326,14 @@ const emCartaz = OBRAS.filter((o) => !o.pendente && o.destaque).sort(
     }
   }
 
+  /* Pouco embaixo: logo abaixo vem o fim da sala e o começo da próxima, e os
+     três respiros somavam 117px de vazio entre o link e a sala seguinte. */
   .para-colecao {
-    padding-block: clamp(2rem, 4vw, 2.75rem);
+    padding-block: clamp(2rem, 4vw, 2.75rem) clamp(0.5rem, 1vw, 0.75rem);
     border-top: 1px solid var(--color-rule);
     font-size: 0.875rem;
   }
+
 
   /* Sem respiro no topo: a seção já entrega um fio, e um segundo fio logo
      abaixo dele deixava uma faixa vazia entre os dois. A primeira rede começa

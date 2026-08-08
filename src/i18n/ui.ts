@@ -55,6 +55,8 @@ export const UI = {
     'campo.assunto': 'Assunto',
     /** Na ficha do post: a obra de que o texto fala, e o caminho até ela. */
     'campo.obra': 'Obra',
+    /** Nome acessível da linha do tempo em cartaz. */
+    'sala.percurso': 'O percurso, do começo ao mais recente',
     'campo.colofao': 'Colofão',
     'campo.dimensoes': 'Dimensões',
     'campo.duracao': 'Duração',
@@ -196,6 +198,7 @@ export const UI = {
     'campo.atualizado': 'Updated',
     'campo.assunto': 'Subject',
     'campo.obra': 'Work',
+    'sala.percurso': 'The route, from the start to the most recent',
     'campo.colofao': 'Colophon',
     'campo.dimensoes': 'Dimensions',
     'campo.duracao': 'Duration',
@@ -335,6 +338,7 @@ export const UI = {
     'campo.atualizado': 'Actualizado',
     'campo.assunto': 'Tema',
     'campo.obra': 'Obra',
+    'sala.percurso': 'El recorrido, del comienzo al más reciente',
     'campo.colofao': 'Colofón',
     'campo.dimensoes': 'Dimensiones',
     'campo.duracao': 'Duración',
