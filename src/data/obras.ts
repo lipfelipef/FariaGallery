@@ -175,7 +175,7 @@ export const OBRAS: Obra[] = [
     // LinkedIn mostra.
     fim: '2022-01-01',
     tipo: 'experiencia',
-    meio: 'Vídeo, gameplay comentado e competições online',
+    meio: 'Vídeo, gameplay comentado e competições',
     estado: 'noar',
     link: { href: 'https://www.youtube.com/@blucker12', tipo: 'canal' },
     tags: ['Vídeo', 'YouTube', 'Games'],
