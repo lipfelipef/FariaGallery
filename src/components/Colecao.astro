@@ -193,8 +193,11 @@ const destino = (slug: string, href?: string) => {
                   <li class="linha" data-tags={obra.tags.join(',')}>
                     <a class="linha-link" href={destino(obra.slug, obra.link?.href)}>
                       <span class="dot dot-on" aria-hidden="true" />
-                      <span class="linha-titulo">{obra.titulo}</span>
-                      <span class="linha-meio">{meioDe(obra, lang)}</span>
+                      {/* Cada célula é um span e o afastamento vem da grade,
+                          então sem um espaço escrito aqui o texto extraído da
+                          página sai "BluckerAngular 19, Node.js, Express". */}
+                      <span class="linha-titulo">{obra.titulo}</span>{' '}
+                      <span class="linha-meio">{meioDe(obra, lang)}</span>{' '}
                       <span class="linha-seta" aria-hidden="true">
                         &#8594;
                       </span>
