@@ -142,6 +142,21 @@ const idiomas = await destinosPorIdioma(Astro.url);
 
   .menu {
     gap: 1.5rem;
+    /* Sem isto o menu é uma linha só que não encolhe, e o último item (Contato)
+       sai pela direita da tela. Com o espaçamento de 1.5rem, caber em uma linha
+       exigiria 381px em português, 397px em inglês e 406px em espanhol, mais do
+       que a largura da maioria dos celulares. */
+    flex-wrap: wrap;
+  }
+
+  /* Mesmo ponto de quebra da marca. O espaçamento menor faz o menu caber numa
+     linha só a partir de 360px em português, 375px em inglês e 390px em
+     espanhol, em vez de 390/412/412. Quando ainda assim não couber, a quebra
+     acima resolve, e o espaço vertical menor mantém as duas linhas juntas. */
+  @media (max-width: 34rem) {
+    .menu {
+      gap: 0.5rem 1rem;
+    }
   }
 
   /* Os três idiomas ficam sempre visíveis, separados por barra fina.
