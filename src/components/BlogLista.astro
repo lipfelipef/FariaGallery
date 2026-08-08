@@ -2,6 +2,7 @@
 import Base from '../layouts/Base.astro';
 import Topo from './Topo.astro';
 import Rodape from './Rodape.astro';
+import Linhas from './Linhas.astro';
 import type { Locale } from '../consts';
 import { traduzir } from '../i18n/ui';
 import { rota } from '../i18n/utils';
@@ -47,7 +48,7 @@ const assuntos = [...contagem.entries()].sort((a, b) => b[1] - a[1] || a[0].loca
     <section class="abertura wall hang">
       <div class="abertura-corpo">
         <h1 class="titulo-sala">{t('blog.titulo')}</h1>
-        <p class="chamada">{t('blog.chamada').map((linha) => <span>{linha}</span>)}</p>
+        <Linhas linhas={t('blog.chamada')} class="chamada" />
       </div>
     </section>
 
@@ -223,9 +224,8 @@ const assuntos = [...contagem.entries()].sort((a, b) => b[1] - a[1] || a[0].loca
     color: var(--color-ink-soft);
   }
 
-  /* Uma frase por linha, escolhida no texto. Ver o mesmo padrão na coleção. */
+  /* A quebra vem da classe `linhas`; aqui só a medida do desktop. */
   .chamada span {
-    display: block;
     max-width: 50ch;
   }
 

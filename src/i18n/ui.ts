@@ -137,7 +137,7 @@ export const UI = {
 
     'colofao': 'Feito em Astro. Composto em Archivo e EB Garamond.',
     'rodape.privacidade':
-      'Este site não coleta dados pessoais, não usa cookie e não rastreia quem visita. Não há formulário, login nem banco de dados.',
+      'Este site não coleta dados pessoais, não usa cookie e não rastreia quem visita. Não há formulário, nem banco de dados.',
     'rodape.codigo': 'Código aberto no GitHub, sob licença MIT.',
     'rodape.direitos': (ano: number) => [
       `Textos, imagens e identidade visual © Felipe Faria, ${ano}.`,
@@ -277,7 +277,7 @@ export const UI = {
 
     'colofao': 'Built with Astro. Set in Archivo and EB Garamond.',
     'rodape.privacidade':
-      'This site collects no personal data, sets no cookies, and tracks nobody. There are no forms, no login, and no database.',
+      'This site collects no personal data, sets no cookies, and tracks nobody. There are no forms and no database.',
     'rodape.codigo': 'Open source on GitHub, under the MIT licence.',
     'rodape.direitos': (ano: number) => [
       `Text, images, and visual identity © Felipe Faria, ${ano}.`,
@@ -417,7 +417,7 @@ export const UI = {
 
     'colofao': 'Hecho en Astro. Compuesto en Archivo y EB Garamond.',
     'rodape.privacidade':
-      'Este sitio no recoge datos personales, no usa cookies y no rastrea a quien lo visita. No hay formularios, login ni base de datos.',
+      'Este sitio no recoge datos personales, no usa cookies y no rastrea a quien lo visita. No hay formularios ni base de datos.',
     'rodape.codigo': 'Código abierto en GitHub, bajo licencia MIT.',
     'rodape.direitos': (ano: number) => [
       `Textos, imágenes e identidad visual © Felipe Faria, ${ano}.`,

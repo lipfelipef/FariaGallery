@@ -4,6 +4,7 @@ import { join } from 'node:path';
 import Base from '../layouts/Base.astro';
 import Topo from './Topo.astro';
 import Rodape from './Rodape.astro';
+import Linhas from './Linhas.astro';
 import { CONTACT_EMAIL, EMAIL_ATIVO, CURRICULO, type Locale } from '../consts';
 import { traduzir } from '../i18n/ui';
 
@@ -31,9 +32,7 @@ const temCurriculo = existsSync(join(process.cwd(), 'public', CURRICULO));
     <section class="abertura wall hang">
       <div class="abertura-corpo">
         <h1 class="titulo-sala">{t('contato.titulo')}</h1>
-        <p class="chamada">
-          {t('contato.chamada').map((linha) => <span>{linha}</span>)}
-        </p>
+        <Linhas linhas={t('contato.chamada')} class="chamada" />
       </div>
     </section>
 
@@ -61,9 +60,7 @@ const temCurriculo = existsSync(join(process.cwd(), 'public', CURRICULO));
 
         <p class="nota hang">
           <span></span>
-          <span class="nota-texto">
-            {t('contato.nota').map((linha) => <span>{linha}</span>)}
-          </span>
+          <Linhas linhas={t('contato.nota')} como="span" class="nota-texto" />
         </p>
 
         {
@@ -114,10 +111,8 @@ const temCurriculo = existsSync(join(process.cwd(), 'public', CURRICULO));
     color: var(--color-ink-soft);
   }
 
-  /* Uma frase por linha, escolhida no texto. A medida acompanha a linha mais
-     longa dos três idiomas, senão ela dobraria e desfaria a quebra. */
+  /* A quebra vem da classe `linhas`; aqui só a medida do desktop. */
   .chamada span {
-    display: block;
     max-width: 68ch;
   }
 
@@ -158,11 +153,9 @@ const temCurriculo = existsSync(join(process.cwd(), 'public', CURRICULO));
     color: var(--color-ink-soft);
   }
 
-  /* Uma frase por linha, escolhida no texto. A medida comporta a linha mais
-     longa dos três idiomas, que é a do espanhol; menos que isso e ela dobraria,
-     desfazendo a quebra. */
+  /* A quebra vem da classe `linhas`. A medida comporta a linha mais longa dos
+     três idiomas, que é a do espanhol. */
   .nota-texto span {
-    display: block;
     max-width: 92ch;
   }
 

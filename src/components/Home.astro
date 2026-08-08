@@ -3,6 +3,7 @@ import Base from '../layouts/Base.astro';
 import Topo from './Topo.astro';
 import Rodape from './Rodape.astro';
 import Etiqueta from './Etiqueta.astro';
+import Linhas from './Linhas.astro';
 import { OBRAS, doTipo } from '../data/obras';
 import { SITE, SOCIAL, type Locale } from '../consts';
 import { traduzir } from '../i18n/ui';
@@ -62,9 +63,7 @@ const percurso = [...emCartaz].reverse();
     <section class="entrada wall hang">
       <div class="entrada-corpo entrance">
         <h1 class="nome">{SITE.name}</h1>
-        <p class="linha-artista">
-          {t('artista').map((linha) => <span>{linha}</span>)}
-        </p>
+        <Linhas linhas={t('artista')} class="linha-artista" />
 
         <div class="texto-parede">
           <p>{t('parede.1')}</p>
@@ -93,9 +92,11 @@ const percurso = [...emCartaz].reverse();
         {
           percurso.map((obra) => (
             <li class="marco">
-              <span class="dot dot-on" aria-hidden="true" />
-              <span class="marco-ano">{obra.ano}</span>
-              <span class="marco-nome">{obra.titulo}</span>
+              <a class="marco-link" href={`#${obra.slug}`}>
+                <span class="dot dot-on" aria-hidden="true" />
+                <span class="marco-ano">{obra.ano}</span>
+                <span class="marco-nome">{obra.titulo}</span>
+              </a>
             </li>
           ))
         }
@@ -173,11 +174,9 @@ const percurso = [...emCartaz].reverse();
     color: var(--color-ink-soft);
   }
 
-  /* Uma frase por linha. A medida máxima saiu daqui de propósito: ela existia
-     para forçar a quebra, e agora a quebra vem do texto. Mantida só a largura
-     necessária para a linha mais longa não dobrar sozinha. */
+  /* A quebra em si vem da classe `linhas`, no global.css. Aqui fica só a
+     medida, para a linha mais longa não dobrar sozinha no desktop. */
   .linha-artista span {
-    display: block;
     max-width: 48ch;
   }
 
@@ -243,10 +242,31 @@ const percurso = [...emCartaz].reverse();
 
   .marco {
     position: relative;
+  }
+
+  /* O marco inteiro é o alvo do clique, e leva à etiqueta correspondente
+     mais abaixo na página. */
+  .marco-link {
     display: grid;
     justify-items: center;
     gap: 0.55rem;
     text-align: center;
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .marco-link:hover .marco-nome {
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 0.14em;
+  }
+
+  .marco-link:hover .dot {
+    transform: scale(1.35);
+  }
+
+  .marco .dot {
+    transition: transform 160ms ease;
   }
 
   /* O ponto fica acima do fio, com um halo da cor do fundo, para o traço não

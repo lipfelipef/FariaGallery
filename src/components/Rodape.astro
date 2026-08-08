@@ -2,6 +2,7 @@
 import { REPO, type Locale } from '../consts';
 import { traduzir } from '../i18n/ui';
 import { anoAtual } from '../lib/tempo';
+import Linhas from './Linhas.astro';
 
 interface Props {
   lang: Locale;
@@ -28,9 +29,7 @@ const ano = anoAtual();
         {t('rodape.codigo')}
       </a>
     </p>
-    <p class="direitos">
-      {t('rodape.direitos')(ano).map((linha) => <span>{linha}</span>)}
-    </p>
+    <Linhas linhas={t('rodape.direitos')(ano)} class="direitos" />
   </div>
 </footer>
 
@@ -67,10 +66,8 @@ const ano = anoAtual();
     max-width: 62ch;
   }
 
-  /* Uma frase por linha: a autoria numa, a reserva de direitos noutra. */
-  .direitos span {
-    display: block;
-  }
+  /* A autoria numa linha, a reserva de direitos noutra. A quebra vem da
+     classe `linhas`, no global.css. */
 
   .nota p + p {
     margin-top: 0.6rem;

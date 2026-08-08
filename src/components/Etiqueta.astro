@@ -1,6 +1,15 @@
 ---
 import type { Locale } from '../consts';
-import { anoExibido, inicioDaObra, fimDaObra, linhasDe, meioDe, type Obra } from '../data/obras';
+import {
+  anoExibido,
+  inicioDaObra,
+  fimDaObra,
+  linhasDe,
+  meioDe,
+  numeroColado,
+  type Obra,
+} from '../data/obras';
+import Linhas from './Linhas.astro';
 import { traduzir } from '../i18n/ui';
 import { rota } from '../i18n/utils';
 import { duracao } from '../lib/tempo';
@@ -27,7 +36,9 @@ const quanto = inicio ? duracao(inicio, fimDaObra(obra), lang) : undefined;
 const ficha = [
   { campo: t('campo.meio'), linhas: [meioDe(obra, lang)] },
   ...(quanto ? [{ campo: t('campo.duracao'), linhas: [quanto] }] : []),
-  ...(obra.dimensoes ? [{ campo: t('campo.dimensoes'), linhas: [obra.dimensoes[lang]] }] : []),
+  ...(obra.dimensoes
+    ? [{ campo: t('campo.dimensoes'), linhas: [numeroColado(obra.dimensoes[lang])] }]
+    : []),
   { campo: t('campo.papel'), linhas: [obra.papel[lang]] },
   { campo: t('campo.credito'), linhas: linhasDe(obra.credito[lang]) },
   { campo: t('campo.estado'), linhas: [t(`estado.${obra.estado}` as 'estado.publico')] },
@@ -38,7 +49,8 @@ const textoDoLink = obra.link
   : '';
 ---
 
-<article class="obra hang">
+<!-- O id é o alvo dos marcos da linha do percurso, na home. -->
+<article class="obra hang" id={obra.slug}>
   <div class="obra-margem">
     <span class="dot dot-on" aria-hidden="true"></span>
     <span class="obra-ano">{anoExibido(obra, t('tempo.atualmente'))}</span>
@@ -56,9 +68,7 @@ const textoDoLink = obra.link
         )
       }
     </h3>
-    <p class="obra-resumo">
-      {linhasDe(obra.resumo[lang]).map((linha) => <span>{linha}</span>)}
-    </p>
+    <Linhas linhas={linhasDe(obra.resumo[lang])} class="obra-resumo" />
   </div>
 
   <dl class="obra-ficha">
@@ -66,20 +76,20 @@ const textoDoLink = obra.link
       ficha.map(({ campo, linhas }) => (
         <>
           <dt class="field">{campo}</dt>
-          <dd
-            class:list={[
+          {/* Quem escreveu a quebra quer aquelas linhas, então a medida de
+              leitura de 46ch dá lugar a uma que as comporte, senão a frase
+              dobra e a quebra escolhida some no meio. */}
+          <Linhas
+            linhas={linhas}
+            como="dd"
+            class={[
               'value',
-              naoPreenchido(linhas[0]) && 'value-pendente',
-              /* Quem escreveu a quebra quer aquelas linhas, então a medida de
-                 leitura de 46ch dá lugar a uma que as comporte. Sem isto a
-                 frase dobra e a quebra escolhida some no meio. */
-              linhas.length > 1 && 'value-linhas',
-            ]}
-          >
-            {linhas.map((linha) => (
-              <span>{linha}</span>
-            ))}
-          </dd>
+              naoPreenchido(linhas[0]) ? 'value-pendente' : '',
+              linhas.length > 1 ? 'value-linhas' : '',
+            ]
+              .filter(Boolean)
+              .join(' ')}
+          />
         </>
       ))
     }
@@ -109,6 +119,9 @@ const textoDoLink = obra.link
     row-gap: 0.5rem;
     padding-block: clamp(2.5rem, 5vw, 4rem);
     border-top: 1px solid var(--color-rule);
+    /* Vindo de um marco do percurso, a etiqueta para um pouco abaixo do topo
+       da janela, em vez de encostar nela. */
+    scroll-margin-top: clamp(1.5rem, 4vh, 3rem);
   }
 
   .obra:first-child {
@@ -149,12 +162,7 @@ const textoDoLink = obra.link
     color: var(--color-ink);
   }
 
-  /* Uma frase por linha quando a ficha traz o texto quebrado. */
-  .obra-resumo span,
-  .value span {
-    display: block;
-  }
-
+  /* A quebra vem da classe `linhas`, no global.css. */
   .obra-resumo span {
     max-width: 62ch;
   }

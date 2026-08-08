@@ -33,6 +33,15 @@ export const linhasDe = (valor: string | readonly string[]): readonly string[] =
 export const meioDe = (obra: Obra, lang: Locale): string =>
   typeof obra.meio === 'string' ? obra.meio : obra.meio[lang];
 
+/**
+ * Cola o número à palavra que ele mede, com espaço que não quebra.
+ *
+ * Sem isto a linha racha no pior lugar possível e sobra "26,3" no fim de uma
+ * linha com "mil inscritos" na seguinte. Número e unidade são uma informação
+ * só e devem viajar juntos.
+ */
+export const numeroColado = (texto: string) => texto.replace(/(\d) (?=[\p{L}])/gu, '$1\u00A0');
+
 export interface Obra {
   /** Identificador da obra. É por ele que um post do blog se liga a ela. */
   slug: string;
@@ -291,15 +300,15 @@ export const OBRAS: Obra[] = [
     credito: {
       pt: [
         'Projeto pessoal, no ar desde dezembro de 2021, sucedendo o canal Blucker12.',
-        'Organizado em coleções por franquia e por ano.',
+        'Organizado em coleções por franquia.',
       ],
       en: [
         'Personal project, running since December 2021, succeeding the Blucker12 channel.',
-        'Organised into playlists by franchise and by year.',
+        'Organised into playlists by franchise.',
       ],
       es: [
         'Proyecto personal, al aire desde diciembre de 2021, sucediendo al canal Blucker12.',
-        'Organizado en listas por franquicia y por año.',
+        'Organizado en listas por franquicia.',
       ],
     },
     dimensoes: {
