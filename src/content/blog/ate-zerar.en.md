@@ -1,6 +1,6 @@
 ---
 titulo: 'Até Zerar: four years recording whole games'
-resumo: How a gameplay channel with no commentary reached 165 videos and 5.7 million views, and what four years of steady publishing teach about production.
+resumo: How a gameplay channel with no commentary reached 5.7 million views, and what four years of steady publishing teach about production.
 data: 2026-08-07T22:25:00-03:00
 idioma: en
 obra: ate-zerar

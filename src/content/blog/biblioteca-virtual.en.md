@@ -1,6 +1,6 @@
 ---
 titulo: 'Virtual Library: my final project, two years on'
-resumo: A library system in Django, built at technical high school in 2024. Revisited today, it teaches more through the mistakes left in the repository than through what worked.
+resumo: A library system in Django, built at technical high school in 2024. It teaches more through the mistakes left in the repository than through what worked.
 data: 2026-08-07T23:40:00-03:00
 atualizado: 2026-08-08T00:30:00-03:00
 idioma: en

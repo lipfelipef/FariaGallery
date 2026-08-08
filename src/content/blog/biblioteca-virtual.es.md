@@ -1,6 +1,6 @@
 ---
 titulo: 'Biblioteca Virtual: mi trabajo final, dos años después'
-resumo: Un sistema de biblioteca en Django, hecho en la educación media técnica en 2024. Revisitado hoy, enseña más por los errores que quedaron en el repositorio que por lo que funcionaba.
+resumo: Un sistema de biblioteca en Django, hecho en la media técnica en 2024. Enseña más por los errores que quedaron en el repositorio que por lo que funcionaba.
 data: 2026-08-07T23:40:00-03:00
 atualizado: 2026-08-08T00:30:00-03:00
 idioma: es

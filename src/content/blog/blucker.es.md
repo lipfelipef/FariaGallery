@@ -1,6 +1,6 @@
 ---
 titulo: 'Blucker: dinero de mentira, defensas de verdad'
-resumo: Un e-commerce de facultad donde casi todo el trabajo se fue en cosas que nadie ve en la pantalla. Por qué tratar un carrito falso como si el dinero fuera real es el entrenamiento que sirve.
+resumo: Un e-commerce de facultad donde casi todo el trabajo se fue en cosas que nadie ve en pantalla. Tratar dinero falso como real es el entrenamiento que sirve.
 data: 2026-08-08T01:25:00-03:00
 idioma: es
 obra: blucker

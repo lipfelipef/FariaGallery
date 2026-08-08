@@ -1,6 +1,6 @@
 ---
 titulo: 'Biblioteca Virtual: meu TCC, dois anos depois'
-resumo: Um sistema de biblioteca em Django, feito no técnico em 2024. Revisitado hoje, ele ensina mais pelos erros que ficaram no repositório do que pelo que funcionava.
+resumo: Um sistema de biblioteca em Django, feito no técnico em 2024. Ele ensina mais pelos erros que ficaram no repositório do que pelo que funcionava.
 data: 2026-08-07T23:40:00-03:00
 atualizado: 2026-08-08T00:30:00-03:00
 idioma: pt

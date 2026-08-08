@@ -1,6 +1,6 @@
 ---
 titulo: 'Até Zerar: quatro anos gravando jogo inteiro'
-resumo: Como um canal de gameplay sem comentário chegou a 165 vídeos e 5,7 milhões de visualizações, e o que quatro anos de publicação constante ensinam sobre produção.
+resumo: Como um canal de gameplay sem comentário chegou a 5,7 milhões de visualizações, e o que quatro anos publicando ensinam sobre produção.
 data: 2026-08-07T22:25:00-03:00
 idioma: pt
 obra: ate-zerar

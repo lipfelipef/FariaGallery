@@ -1,6 +1,6 @@
 ---
 titulo: 'Blucker: fake money, real defences'
-resumo: A university e-commerce project where almost all the work went into things nobody sees on screen. Why treating a fake cart as if the money were real is the training that counts.
+resumo: A university e-commerce project where almost all the work went into things nobody sees on screen. Treating fake money as real is the training that counts.
 data: 2026-08-08T01:25:00-03:00
 idioma: en
 obra: blucker

@@ -119,7 +119,7 @@ export const UI = {
       `Textos, imagens e identidade visual © Felipe Faria, ${ano}. Todos os direitos reservados.`,
 
     'meta.home':
-      'Felipe Faria, desenvolvedor e estudante de Análise e Desenvolvimento de Sistemas. Projetos e experiências com a ficha inteira, do que são feitos ao estado atual.',
+      'Felipe Faria, desenvolvedor e estudante de Análise e Desenvolvimento de Sistemas. Projetos e experiências com a ficha inteira, do material ao estado atual.',
     'meta.blog':
       'Textos de Felipe Faria sobre desenvolvimento, infraestrutura e o que aprendeu construindo e encerrando projetos, com números e post-mortem honesto.',
     'meta.blogVazio':
@@ -242,7 +242,7 @@ export const UI = {
       `Text, images, and visual identity © Felipe Faria, ${ano}. All rights reserved.`,
 
     'meta.home':
-      'Felipe Faria, developer and Systems Analysis and Development student. Projects and experience with the full label, from what they are made of to their current state.',
+      'Felipe Faria, developer and Systems Analysis and Development student. Projects and experience with the full label, from material to current state.',
     'meta.blog':
       'Writing by Felipe Faria on development, infrastructure, and what he learned building and shutting down projects, with real numbers and honest post-mortems.',
     'meta.blogVazio':
@@ -365,7 +365,7 @@ export const UI = {
       `Textos, imágenes e identidad visual © Felipe Faria, ${ano}. Todos los derechos reservados.`,
 
     'meta.home':
-      'Felipe Faria, desarrollador y estudiante de Análisis y Desarrollo de Sistemas. Proyectos y experiencia con la ficha completa, de qué están hechos a su estado actual.',
+      'Felipe Faria, desarrollador y estudiante de Análisis y Desarrollo de Sistemas. Proyectos y experiencia con la ficha completa, del material al estado actual.',
     'meta.blog':
       'Textos de Felipe Faria sobre desarrollo, infraestructura y lo que aprendió construyendo y cerrando proyectos, con números reales y post-mortem honesto.',
     'meta.blogVazio':

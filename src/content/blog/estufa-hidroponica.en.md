@@ -1,6 +1,6 @@
 ---
 titulo: 'Hydroponic Greenhouse: lettuce run by thirteen logic gates'
-resumo: A system that waters, heats, ventilates, and shades a greenhouse on its own, with no processor and not a single line of code. The whole decision lives in the wire.
+resumo: A system that waters, heats, ventilates, and shades a greenhouse on its own, with no processor and no code. The whole decision lives in the wire.
 data: 2026-08-08T01:05:00-03:00
 idioma: en
 obra: estufa-hidroponica
