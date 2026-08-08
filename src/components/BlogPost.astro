@@ -32,7 +32,7 @@ const textoDoLink = obra?.link ? t(`link.${obra.link.tipo}` as 'link.codigo') : 
 
 <Base
   lang={lang}
-  titulo={post.data.titulo}
+  titulo={post.data.tituloBusca ?? post.data.titulo}
   descricao={post.data.resumo}
   artigo={{
     titulo: post.data.titulo,

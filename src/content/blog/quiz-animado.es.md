@@ -1,5 +1,6 @@
 ---
 titulo: 'Quiz Animado: dos factores para acertar dibujos de los 2000'
+tituloBusca: 'Quiz Animado: dos factores en Java y JavaFX'
 resumo: Un quiz offline de doce preguntas que tiene registro validado, PIN de dos factores, recuperación de contraseña y hash BCrypt. El exceso es el tema del texto.
 data: 2026-08-08T01:40:00-03:00
 idioma: es

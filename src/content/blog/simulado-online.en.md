@@ -1,5 +1,6 @@
 ---
 titulo: 'Simulado Online: built for the classmate with an exam tomorrow'
+tituloBusca: 'Simulado Online: no back end, no build'
 resumo: No framework, no build, no server, no account. Every one of those absences was chosen for the person using it, not the person writing it.
 data: 2026-08-08T01:50:00-03:00
 idioma: en

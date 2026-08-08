@@ -1,5 +1,6 @@
 ---
 titulo: 'Estufa Hidropônica: uma alface controlada por treze portas lógicas'
+tituloBusca: 'Estufa Hidropônica: treze portas lógicas'
 resumo: Um sistema que rega, aquece, ventila e escurece uma estufa sozinho, sem processador e sem uma linha de código. A decisão inteira mora no fio.
 data: 2026-08-08T01:05:00-03:00
 idioma: pt

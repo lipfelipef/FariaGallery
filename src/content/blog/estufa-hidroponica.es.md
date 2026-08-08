@@ -1,5 +1,6 @@
 ---
 titulo: 'Invernadero Hidropónico: una lechuga controlada por trece compuertas lógicas'
+tituloBusca: 'Invernadero Hidropónico: trece compuertas'
 resumo: Un sistema que riega, calienta, ventila y oscurece un invernadero solo, sin procesador y sin una línea de código. La decisión entera vive en el cable.
 data: 2026-08-08T01:05:00-03:00
 idioma: es

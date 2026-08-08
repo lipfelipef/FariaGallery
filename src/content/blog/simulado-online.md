@@ -1,5 +1,6 @@
 ---
 titulo: 'Simulado Online: feito para o colega com prova amanhã'
+tituloBusca: 'Simulado Online: sem back-end e sem build'
 resumo: Sem framework, sem build, sem servidor e sem conta. Cada uma dessas ausências foi escolhida pensando em quem ia usar, e não em quem ia escrever.
 data: 2026-08-08T01:50:00-03:00
 idioma: pt

@@ -1,5 +1,6 @@
 ---
 titulo: 'Quiz Animado: two-factor authentication to name a 2000s cartoon'
+tituloBusca: 'Quiz Animado: two-factor auth in JavaFX'
 resumo: An offline twelve-question quiz with validated signup, a two-factor PIN, password recovery, and BCrypt hashing. The overkill is the point of the text.
 data: 2026-08-08T01:40:00-03:00
 idioma: en

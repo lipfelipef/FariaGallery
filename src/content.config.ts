@@ -20,6 +20,21 @@ const blog = defineCollection({
   loader: glob({ base: './src/content/blog', pattern: '**/*.md' }),
   schema: z.object({
     titulo: z.string(),
+    /**
+     * Versão curta do título, só para a aba do navegador e para o resultado
+     * de busca. O H1, a lista do blog e o texto continuam com o `titulo`
+     * inteiro.
+     *
+     * Existe porque o `<title>` termina sempre em " | Felipe Faria", que são
+     * quinze caracteres, e o buscador corta o título perto de sessenta. Num
+     * título longo o corte comia o próprio assunto do texto: "Invernadero
+     * Hidropónico: una lechuga controlada por trece compuertas lógicas" com o
+     * sufixo dava 91 caracteres, e o que aparecia na busca terminava no meio
+     * da frase.
+     *
+     * Só preencher quando o título passar disso. Sem valor, vale o `titulo`.
+     */
+    tituloBusca: z.string().optional(),
     resumo: z.string(),
     data: z.coerce.date(),
     atualizado: z.coerce.date().optional(),

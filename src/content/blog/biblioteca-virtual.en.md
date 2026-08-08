@@ -1,5 +1,6 @@
 ---
 titulo: 'Virtual Library: my final project, two years on'
+tituloBusca: 'Virtual Library: my final project'
 resumo: A library system in Django, built at technical high school in 2024. It teaches more through the mistakes left in the repository than through what worked.
 data: 2026-08-07T23:40:00-03:00
 atualizado: 2026-08-08T00:30:00-03:00

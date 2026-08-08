@@ -61,3 +61,22 @@ export const LOCALE_DATA: Record<Locale, string> = {
   en: 'en-US',
   es: 'es-ES',
 };
+
+/**
+ * O que vai no `og:locale`, que o Facebook e o LinkedIn leem ao montar o
+ * cartão do link.
+ *
+ * Tem regra própria e não serve reaproveitar o `lang` do HTML: ali `en` e `es`
+ * sozinhos são corretos, e aqui não existem. O Open Graph só aceita o par
+ * idioma_TERRITORIO, de uma lista fechada, então o site vinha declarando dois
+ * valores inválidos que o cartão simplesmente ignorava.
+ *
+ * `en_GB` e não `en_US` porque o inglês do site é britânico de verdade:
+ * "defence", "licence", "colour", "organised" e "catalogue" aparecem nos
+ * textos e nas fichas.
+ */
+export const OG_LOCALE: Record<Locale, string> = {
+  pt: 'pt_BR',
+  en: 'en_GB',
+  es: 'es_ES',
+};

@@ -44,12 +44,24 @@ export default defineConfig({
       // se está vazia, está vazia nos três idiomas.
       filter: (pagina) =>
         !(blogVazio && /^\/(en\/|es\/)?blog$/.test(new URL(pagina).pathname.replace(/\/$/, ''))),
+      /**
+       * Os mesmos códigos que o `<link hreflang>` de cada página escreve, em
+       * `src/i18n/utils.ts`. Precisa ser igual: o buscador lê os dois sinais,
+       * e quando eles discordam ele não sabe qual das duas páginas é a versão
+       * daquele idioma. Aqui dizia `en-US` e `es-ES` enquanto o HTML dizia
+       * `en` e `es`.
+       *
+       * Genérico de propósito, sem região. O português é `pt-BR` porque ele
+       * escreve em português brasileiro de verdade, mas o site não é escrito
+       * para o inglês de um país só, e prometer região que não se cumpre é
+       * pior do que não prometer nenhuma.
+       */
       i18n: {
         defaultLocale: 'pt',
         locales: {
           pt: 'pt-BR',
-          en: 'en-US',
-          es: 'es-ES',
+          en: 'en',
+          es: 'es',
         },
       },
     }),
