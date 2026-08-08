@@ -92,6 +92,18 @@
 html {
   scroll-behavior: smooth;
   -webkit-text-size-adjust: 100%;
+
+  /* A parede também aqui, e não só no `body`.
+
+     Fora de transição isto não muda nada: o navegador já empresta a cor do
+     corpo para o fundo da janela quando a raiz não tem uma. Durante a
+     passagem entre salas muda tudo. Ali o navegador desenha dois retratos da
+     página, o que sai e o que entra, e os dois ficam parcialmente
+     transparentes ao mesmo tempo no meio do caminho. O que aparece por trás
+     deles é o fundo da raiz, e sem esta linha o fundo da raiz é o branco
+     padrão do navegador: dava uma piscada clara a cada clique de menu, e mais
+     visível justamente na sala escura. */
+  background-color: var(--color-wall);
 }
 
 @media (prefers-reduced-motion: reduce) {

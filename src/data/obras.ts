@@ -188,6 +188,30 @@ export const OBRAS: Obra[] = [
     },
   },
   {
+    slug: 'simulado-online',
+    titulo: 'Simulado Online',
+    ano: '2026',
+    meio: {
+      pt: 'HTML, CSS e JavaScript puro',
+      en: 'Plain HTML, CSS, and JavaScript',
+      es: 'HTML, CSS y JavaScript puro',
+    },
+    estado: 'publico',
+    link: { href: 'https://github.com/lipfelipef/SimuladoOnline', tipo: 'codigo' },
+    tags: ['Web', 'JavaScript'],
+    resumo: {
+      pt: 'Monta listas de perguntas e aplica simulado de qualquer assunto.',
+      en: 'Builds question lists and runs practice tests on any subject.',
+      es: 'Arma listas de preguntas y aplica simulacros de cualquier materia.',
+    },
+    papel: { pt: 'Sozinho', en: 'Solo', es: 'En solitario' },
+    credito: {
+      pt: 'Projeto pessoal. Sem back-end e sem etapa de build: as perguntas ficam salvas no próprio navegador de quem usa.',
+      en: 'Personal project. No back end and no build step: the questions live in the visitor own browser.',
+      es: 'Proyecto personal. Sin back-end y sin etapa de build: las preguntas quedan guardadas en el navegador de quien lo usa.',
+    },
+  },
+  {
     slug: 'blucker',
     titulo: 'Blucker',
     ano: '2026',
@@ -368,30 +392,6 @@ export const OBRAS: Obra[] = [
       pt: '165 vídeos, 5,7 milhões de visualizações, 26,3 mil inscritos',
       en: '165 videos, 5.7 million views, 26.3 thousand subscribers',
       es: '165 videos, 5,7 millones de visualizaciones, 26,3 mil suscriptores',
-    },
-  },
-  {
-    slug: 'simulado-online',
-    titulo: 'Simulado Online',
-    ano: '2026',
-    meio: {
-      pt: 'HTML, CSS e JavaScript puro',
-      en: 'Plain HTML, CSS, and JavaScript',
-      es: 'HTML, CSS y JavaScript puro',
-    },
-    estado: 'publico',
-    link: { href: 'https://github.com/lipfelipef/SimuladoOnline', tipo: 'codigo' },
-    tags: ['Web', 'JavaScript'],
-    resumo: {
-      pt: 'Monta listas de perguntas e aplica simulado de qualquer assunto.',
-      en: 'Builds question lists and runs practice tests on any subject.',
-      es: 'Arma listas de preguntas y aplica simulacros de cualquier materia.',
-    },
-    papel: { pt: 'Sozinho', en: 'Solo', es: 'En solitario' },
-    credito: {
-      pt: 'Projeto pessoal. Sem back-end e sem etapa de build: as perguntas ficam salvas no próprio navegador de quem usa.',
-      en: 'Personal project. No back end and no build step: the questions live in the visitor own browser.',
-      es: 'Proyecto personal. Sin back-end y sin etapa de build: las preguntas quedan guardadas en el navegador de quien lo usa.',
     },
   },
   {
