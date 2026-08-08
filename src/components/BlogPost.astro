@@ -56,7 +56,7 @@ const textoDoLink = obra?.link ? t(`link.${obra.link.tipo}` as 'link.codigo') : 
           <dd class="value">
             <time datetime={dataISO(post.data.data)}>
               {dataComHora(post.data.data, lang)}
-            </time>
+            </time>{' '}
             <span class="relativo">{tempoRelativo(post.data.data, lang)}</span>
           </dd>
 
@@ -67,7 +67,7 @@ const textoDoLink = obra?.link ? t(`link.${obra.link.tipo}` as 'link.codigo') : 
                 <dd class="value">
                   <time datetime={dataISO(post.data.atualizado)}>
                     {dataComHora(post.data.atualizado, lang)}
-                  </time>
+                  </time>{' '}
                   <span class="relativo">{tempoRelativo(post.data.atualizado, lang)}</span>
                 </dd>
               </>
