@@ -4,6 +4,14 @@
   // servidor, só a pasta que o `astro build` gera.
   "name": "fariagallery",
   "compatibility_date": "2026-08-07",
+
+  // O site atende só em fariagallery.com. Sem isto, a Cloudflare também publica
+  // em fariagallery.<subdominio>.workers.dev, um endereço que expõe o nome de
+  // usuário da conta e serve uma cópia do site inteira fora do domínio próprio.
+  "workers_dev": false,
+  // Mesma razão, para as URLs geradas a cada versão publicada.
+  "preview_urls": false,
+
   "assets": {
     "directory": "./dist"
   }
