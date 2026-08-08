@@ -4,6 +4,7 @@ resumo: Copie este arquivo, troque o nome e escreva. Com rascunho true ele nunca
 data: 2026-08-07
 idioma: pt
 rascunho: true
+endereco: modelo-de-post
 assuntos:
   - Astro
 ---

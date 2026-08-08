@@ -4,6 +4,19 @@ import { LOCALE_DATA } from '../i18n/utils';
 
 export type Post = CollectionEntry<'blog'>;
 
+/**
+ * O endereço do post.
+ *
+ * Vem do campo `endereco` do arquivo, e cai no nome do arquivo quando ele não
+ * existe. As três traduções do mesmo texto declaram o mesmo `endereco`, e é
+ * isso que faz `/blog/bluckertv`, `/en/blog/bluckertv` e `/es/blog/bluckertv`
+ * serem a mesma página em idiomas diferentes.
+ *
+ * Não dá para deduzir do nome do arquivo: o Astro come o ponto ao gerar o id,
+ * então `bluckertv.en.md` vira `bluckertven`, e não `bluckertv.en`.
+ */
+export const slugDoPost = (post: Post) => post.data.endereco ?? post.id;
+
 /** Rascunho nunca sai daqui: fica no repositório e fora do site e do RSS. */
 export async function postsPublicados(idioma: Locale = DEFAULT_LOCALE): Promise<Post[]> {
   const todos = await getCollection('blog', ({ data }) => !data.rascunho);
@@ -24,11 +37,11 @@ export async function postDaObra(slug: string, lang: Locale): Promise<Post | und
   return (await postsPublicados(lang)).find((p) => p.data.obra === slug);
 }
 
-/** Mapa slug da obra -> id do post, para a home não consultar um por um. */
+/** Mapa slug da obra -> endereço do post, para a home não consultar um por um. */
 export async function postsPorObra(lang: Locale): Promise<Map<string, string>> {
   const mapa = new Map<string, string>();
   for (const post of await postsPublicados(lang)) {
-    if (post.data.obra) mapa.set(post.data.obra, post.id);
+    if (post.data.obra) mapa.set(post.data.obra, slugDoPost(post));
   }
   return mapa;
 }

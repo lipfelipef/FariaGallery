@@ -32,7 +32,8 @@ export async function destinosPorIdioma(url: URL): Promise<DestinoIdioma[]> {
   const posts = slug ? await getCollection('blog', ({ data }) => !data.rascunho) : [];
 
   return LOCALES.map((lang) => {
-    const exata = !slug || posts.some((p) => p.id === slug && p.data.idioma === lang);
+    const exata =
+      !slug || posts.some((p) => (p.data.endereco ?? p.id) === slug && p.data.idioma === lang);
     return {
       lang,
       hreflang: HREFLANG[lang],

@@ -5,7 +5,7 @@ import Rodape from './Rodape.astro';
 import type { Locale } from '../consts';
 import { traduzir } from '../i18n/ui';
 import { rota } from '../i18n/utils';
-import { postsPublicados, dataPorExtenso, dataISO } from '../lib/blog';
+import { postsPublicados, dataPorExtenso, dataISO, slugDoPost } from '../lib/blog';
 
 interface Props {
   lang: Locale;
@@ -53,7 +53,7 @@ const vazio = posts.length === 0;
                 </time>
                 <div>
                   <h2 class="work-title">
-                    <a class="item-link" href={rota(lang, `/blog/${post.id}`)}>
+                    <a class="item-link" href={rota(lang, `/blog/${slugDoPost(post)}`)}>
                       {post.data.titulo}
                     </a>
                   </h2>

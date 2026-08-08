@@ -1,10 +1,10 @@
 ---
 import BlogPost from '../../../components/BlogPost.astro';
-import { postsPublicados, type Post } from '../../../lib/blog';
+import { postsPublicados, slugDoPost, type Post } from '../../../lib/blog';
 
 export async function getStaticPaths() {
   const posts = await postsPublicados('en');
-  return posts.map((post) => ({ params: { slug: post.id }, props: { post } }));
+  return posts.map((post) => ({ params: { slug: slugDoPost(post) }, props: { post } }));
 }
 
 interface Props {

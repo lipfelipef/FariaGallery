@@ -3,7 +3,7 @@ import type { APIContext } from 'astro';
 import { SITE, type Locale } from '../consts';
 import { traduzir } from '../i18n/ui';
 import { rota, HREFLANG } from '../i18n/utils';
-import { postsPublicados } from './blog';
+import { postsPublicados, slugDoPost } from './blog';
 
 /** Um feed por idioma. Quem assina em inglês não recebe post em português. */
 export async function feed(context: APIContext, lang: Locale) {
@@ -19,7 +19,7 @@ export async function feed(context: APIContext, lang: Locale) {
       title: post.data.titulo,
       description: post.data.resumo,
       pubDate: post.data.data,
-      link: rota(lang, `/blog/${post.id}`),
+      link: rota(lang, `/blog/${slugDoPost(post)}`),
       categories: post.data.assuntos,
     })),
     customData: `<language>${HREFLANG[lang]}</language>`,

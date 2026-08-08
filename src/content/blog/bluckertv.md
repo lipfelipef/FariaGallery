@@ -4,6 +4,7 @@ resumo: Post-mortem de uma plataforma brasileira de vídeo sob demanda construí
 data: 2026-08-07
 idioma: pt
 obra: bluckertv
+endereco: bluckertv
 assuntos:
   - PeerTube
   - Infraestrutura

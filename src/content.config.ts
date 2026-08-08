@@ -29,6 +29,17 @@ const blog = defineCollection({
     assuntos: z.array(z.string()).default([]),
     /** Slug de uma obra em src/data/obras.ts, quando o texto é sobre ela. */
     obra: z.string().optional(),
+    /**
+     * Endereço do post na URL. Sem isto, o endereço vem do nome do arquivo,
+     * e o mesmo texto em três idiomas geraria três endereços diferentes
+     * (`bluckertven`, `bluckertves`). Declarar o mesmo `endereco` nas três
+     * traduções é o que faz o seletor de idioma achar o par.
+     *
+     * NÃO chamar de `slug`: esse nome é reservado pelo glob loader do Astro,
+     * que o usa como id da entrada. Com ele, as três traduções virariam a
+     * mesma entrada e duas seriam descartadas em silêncio.
+     */
+    endereco: z.string().optional(),
   }),
 });
 
