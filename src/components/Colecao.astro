@@ -2,8 +2,8 @@
 import Base from '../layouts/Base.astro';
 import Topo from './Topo.astro';
 import Rodape from './Rodape.astro';
-import { doTipo, ordemDoAno, anoExibido, inicioDaObra } from '../data/obras';
-import { tempoRelativo } from '../lib/tempo';
+import { doTipo, ordemDoAno, anoExibido, inicioDaObra, fimDaObra } from '../data/obras';
+import { anosAtras, duracao } from '../lib/tempo';
 import type { Locale } from '../consts';
 import { traduzir } from '../i18n/ui';
 import { rota } from '../i18n/utils';
@@ -44,14 +44,27 @@ const anos = [...new Set(acervo.map((o) => o.ano))].sort(
 const porAno = anos.map((ano) => {
   const obras = acervo.filter((o) => o.ano === ano);
   const primeira = obras[0];
-  const inicio = inicioDaObra(primeira) ?? new Date(`${ano}-01-01T12:00:00Z`);
   return {
     ano,
     rotulo: anoExibido(primeira, t('tempo.atualmente')),
-    relativo: primeira.ativa ? undefined : tempoRelativo(inicio, lang),
+    /** Distância em ano de calendário. Ver `anosAtras` sobre por que não é duração. */
+    relativo: primeira.ativa ? undefined : anosAtras(Number.parseInt(ano, 10), lang),
     obras,
   };
 });
+
+/**
+ * Quanto tempo a experiência durou, ou dura até hoje.
+ *
+ * Só aparece na sala de experiência: numa obra o que importa é o ano em que
+ * ficou pronta, e num emprego ou num canal o que importa é o tempo de estrada.
+ * Sem `inicio` na ficha não há o que contar, e a linha simplesmente não sai.
+ */
+const quantoDurou = (obra: (typeof acervo)[number]) => {
+  if (tipo !== 'experiencia') return undefined;
+  const inicio = inicioDaObra(obra);
+  return inicio ? duracao(inicio, fimDaObra(obra), lang) : undefined;
+};
 
 /** Etiquetas com contagem, da mais usada para a menos. Só aparece quem tem 1+. */
 const contagem = new Map<string, number>();
@@ -110,12 +123,12 @@ const destino = (slug: string, href?: string) => {
                 {obras.map((obra) => (
                   <li class="linha" data-tags={obra.tags.join(',')}>
                     <a class="linha-link" href={destino(obra.slug, obra.link?.href)}>
-                      <span
-                        class:list={['dot', obra.estado !== 'encerrado' ? 'dot-on' : 'dot-off']}
-                        aria-hidden="true"
-                      />
+                      <span class="dot dot-on" aria-hidden="true" />
                       <span class="linha-titulo">{obra.titulo}</span>
-                      <span class="linha-meio">{obra.meio}</span>
+                      <span class="linha-meio">
+                        {obra.meio}
+                        {quantoDurou(obra) && <span class="linha-tempo">{quantoDurou(obra)}</span>}
+                      </span>
                       <span class="linha-seta" aria-hidden="true">
                         &#8594;
                       </span>
@@ -338,6 +351,18 @@ const destino = (slug: string, href?: string) => {
     font-size: 0.8125rem;
     color: var(--color-ink-soft);
     text-align: right;
+  }
+
+  /* Tempo de estrada da experiência. Vem abaixo do meio, na voz da ficha, em
+     caixa alta miúda, para informar sem competir com o título da obra. */
+  .linha-tempo {
+    display: block;
+    margin-top: 0.25rem;
+    font-size: 0.6875rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    opacity: 0.75;
   }
 
   .linha-seta {

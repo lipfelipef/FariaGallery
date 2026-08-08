@@ -69,6 +69,24 @@ export function tempoRelativo(d: Date, lang: Locale, agora = new Date()): string
 }
 
 /**
+ * "este ano", "ano passado", "há 2 anos", contando ANO DE CALENDÁRIO.
+ *
+ * O `tempoRelativo` não serve para rótulo de ano, e o erro é visível: ele mede
+ * a distância em milissegundos desde 1º de janeiro e arredonda, então em agosto
+ * de 2026 o ano de 2025 ficava a 19 meses e virava "há 2 anos", e 2024 virava
+ * "há 3 anos". Quem lê "2025, há 2 anos" no ano seguinte estranha, com razão.
+ *
+ * Aqui a conta é só uma subtração de anos, que é o que a pessoa faz de cabeça.
+ */
+export function anosAtras(ano: number, lang: Locale, agora = new Date()): string {
+  const atual = Number(
+    new Intl.DateTimeFormat('en-CA', { year: 'numeric', timeZone: FUSO }).format(agora)
+  );
+  const fmt = new Intl.RelativeTimeFormat(LOCALE_DATA[lang], { numeric: 'auto' });
+  return fmt.format(ano - atual, 'year');
+}
+
+/**
  * Quanto tempo durou, de um início até um fim (ou até hoje, se ainda roda).
  * Devolve a unidade que comunica: "5 meses", "6 anos", "1 ano e 3 meses".
  */

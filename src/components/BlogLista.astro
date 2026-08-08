@@ -15,11 +15,16 @@ const { lang } = Astro.props;
 const t = traduzir(lang);
 
 /**
- * A lista abre no começo do percurso, e não no texto mais novo.
- * O primeiro texto é o que explica por que o site existe, então ele é a porta
- * de entrada certa para quem chega. Ver `postsEmPercurso`.
+ * A lista abre pelo texto mais novo e desce até o mais antigo, que é o que se
+ * espera de um blog: quem volta ao site vê primeiro o que ainda não leu.
+ * O botão "do começo" inverte e mostra o percurso na ordem da curadoria.
+ *
+ * `postsEmPercurso` devolve do primeiro ao último, então aqui é ao contrário.
  */
-const posts = await postsEmPercurso(lang);
+const percurso = await postsEmPercurso(lang);
+/** Posição de cada texto no percurso, guardada antes de inverter a exibição. */
+const posicao = new Map(percurso.map((post, i) => [post.id, i]));
+const posts = [...percurso].reverse();
 const vazio = posts.length === 0;
 
 /** Assuntos com contagem, do mais usado para o menos. */
@@ -62,11 +67,11 @@ const assuntos = [...contagem.entries()].sort((a, b) => b[1] - a[1] || a[0].loca
               <p class="field">{t('blog.ordem')}</p>
               <div>
                 <div class="etiquetas">
-                  <button class="etiqueta etiqueta-ativa" type="button" data-ordem="comeco" aria-pressed="true">
-                    {t('blog.comeco')}
-                  </button>
-                  <button class="etiqueta" type="button" data-ordem="fim" aria-pressed="false">
+                  <button class="etiqueta etiqueta-ativa" type="button" data-ordem="fim" aria-pressed="true">
                     {t('blog.fim')}
+                  </button>
+                  <button class="etiqueta" type="button" data-ordem="comeco" aria-pressed="false">
+                    {t('blog.comeco')}
                   </button>
                 </div>
 
@@ -88,12 +93,12 @@ const assuntos = [...contagem.entries()].sort((a, b) => b[1] - a[1] || a[0].loca
             </div>
 
             <ol class="lista" data-lista>
-              {posts.map((post, i) => (
+              {posts.map((post) => (
                 <li
                   class="hang item"
                   data-tags={post.data.assuntos.join(',')}
                   data-data={dataISO(post.data.data)}
-                  data-pos={i}
+                  data-pos={posicao.get(post.id)}
                 >
                   <p class="item-data">
                     <time datetime={dataISO(post.data.data)}>
