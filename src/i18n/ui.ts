@@ -90,6 +90,14 @@ export const UI = {
     'blog.vazio.texto':
       'Ainda não há texto pendurado aqui. O primeiro sai quando tiver algo que valha ser lido, não antes.',
     'blog.voltar': 'Voltar para o blog',
+    'blog.ordem': 'Ordem',
+    'blog.recente': 'Mais recente',
+    'blog.antigo': 'Mais antigo',
+    'blog.contagem': (mostrando: number, total: number) =>
+      mostrando === total
+        ? `${total} ${total === 1 ? 'texto' : 'textos'}`
+        : `${mostrando} de ${total} textos`,
+    'blog.nada': 'Nenhum texto com esse assunto.',
 
     'colofao':
       'Feito em Astro. Composto em Archivo e EB Garamond. Sem cookie, sem rastreio e sem formulário.',
@@ -191,6 +199,14 @@ export const UI = {
     'blog.vazio.texto':
       'Nothing is hanging here yet. The first piece goes up when there is something worth reading, not before.',
     'blog.voltar': 'Back to the blog',
+    'blog.ordem': 'Order',
+    'blog.recente': 'Newest first',
+    'blog.antigo': 'Oldest first',
+    'blog.contagem': (mostrando: number, total: number) =>
+      mostrando === total
+        ? `${total} ${total === 1 ? 'piece' : 'pieces'}`
+        : `${mostrando} of ${total} pieces`,
+    'blog.nada': 'No piece on that subject.',
 
     'colofao':
       'Built with Astro. Set in Archivo and EB Garamond. No cookies, no tracking, no forms.',
@@ -292,6 +308,14 @@ export const UI = {
     'blog.vazio.texto':
       'Todavía no hay nada colgado aquí. El primero sale cuando haya algo que valga la pena leer, no antes.',
     'blog.voltar': 'Volver al blog',
+    'blog.ordem': 'Orden',
+    'blog.recente': 'Más reciente',
+    'blog.antigo': 'Más antiguo',
+    'blog.contagem': (mostrando: number, total: number) =>
+      mostrando === total
+        ? `${total} ${total === 1 ? 'texto' : 'textos'}`
+        : `${mostrando} de ${total} textos`,
+    'blog.nada': 'Ningún texto sobre ese tema.',
 
     'colofao':
       'Hecho en Astro. Compuesto en Archivo y EB Garamond. Sin cookies, sin rastreo y sin formularios.',

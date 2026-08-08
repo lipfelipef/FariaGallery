@@ -16,6 +16,13 @@ const t = traduzir(lang);
 
 const posts = await postsPublicados(lang);
 const vazio = posts.length === 0;
+
+/** Assuntos com contagem, do mais usado para o menos. */
+const contagem = new Map<string, number>();
+for (const post of posts) {
+  for (const a of post.data.assuntos) contagem.set(a, (contagem.get(a) ?? 0) + 1);
+}
+const assuntos = [...contagem.entries()].sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]));
 ---
 
 <Base
@@ -45,23 +52,59 @@ const vazio = posts.length === 0;
             </div>
           </div>
         ) : (
-          <ol class="lista">
-            {posts.map((post) => (
-              <li class="hang item">
-                <time class="item-data" datetime={dataISO(post.data.data)}>
-                  {dataPorExtenso(post.data.data, lang)}
-                </time>
-                <div>
-                  <h2 class="work-title">
-                    <a class="item-link" href={rota(lang, `/blog/${slugDoPost(post)}`)}>
-                      {post.data.titulo}
-                    </a>
-                  </h2>
-                  <p class="item-resumo">{post.data.resumo}</p>
+          <>
+            <div class="filtro hang" data-filtro>
+              <p class="field">{t('blog.ordem')}</p>
+              <div>
+                <div class="etiquetas">
+                  <button class="etiqueta etiqueta-ativa" type="button" data-ordem="recente" aria-pressed="true">
+                    {t('blog.recente')}
+                  </button>
+                  <button class="etiqueta" type="button" data-ordem="antigo" aria-pressed="false">
+                    {t('blog.antigo')}
+                  </button>
                 </div>
-              </li>
-            ))}
-          </ol>
+
+                {assuntos.length > 0 && (
+                  <div class="etiquetas etiquetas-assunto">
+                    <button class="etiqueta etiqueta-ativa" type="button" data-tag="" aria-pressed="true">
+                      {t('colecao.todas')} <span class="etiqueta-n">{posts.length}</span>
+                    </button>
+                    {assuntos.map(([a, n]) => (
+                      <button class="etiqueta" type="button" data-tag={a} aria-pressed="false">
+                        {a} <span class="etiqueta-n">{n}</span>
+                      </button>
+                    ))}
+                  </div>
+                )}
+
+                <p class="contagem" data-contagem>{t('blog.contagem')(posts.length, posts.length)}</p>
+              </div>
+            </div>
+
+            <ol class="lista" data-lista>
+              {posts.map((post) => (
+                <li
+                  class="hang item"
+                  data-tags={post.data.assuntos.join(',')}
+                  data-data={dataISO(post.data.data)}
+                >
+                  <time class="item-data" datetime={dataISO(post.data.data)}>
+                    {dataPorExtenso(post.data.data, lang)}
+                  </time>
+                  <div>
+                    <h2 class="work-title">
+                      <a class="item-link" href={rota(lang, `/blog/${slugDoPost(post)}`)}>
+                        {post.data.titulo}
+                      </a>
+                    </h2>
+                    <p class="item-resumo">{post.data.resumo}</p>
+                  </div>
+                </li>
+              ))}
+            </ol>
+            <p class="nada" data-nada hidden>{t('blog.nada')}</p>
+          </>
         )
       }
     </section>
@@ -69,6 +112,71 @@ const vazio = posts.length === 0;
 
   <Rodape lang={lang} />
 </Base>
+
+<script is:inline>
+  (function () {
+    var filtro = document.querySelector('[data-filtro]');
+    if (!filtro) return;
+    var lista = document.querySelector('[data-lista]');
+    var itens = Array.prototype.slice.call(lista.querySelectorAll('.item'));
+    var contagem = document.querySelector('[data-contagem]');
+    var nada = document.querySelector('[data-nada]');
+    var molde = contagem ? contagem.textContent : '';
+    var total = itens.length;
+    var tagAtual = '';
+
+    function ordenar(ordem) {
+      var ordenados = itens.slice().sort(function (a, b) {
+        var da = a.getAttribute('data-data');
+        var db = b.getAttribute('data-data');
+        return ordem === 'antigo' ? da.localeCompare(db) : db.localeCompare(da);
+      });
+      ordenados.forEach(function (li) {
+        lista.appendChild(li);
+      });
+    }
+
+    function filtrar() {
+      var visiveis = 0;
+      itens.forEach(function (li) {
+        var tags = (li.getAttribute('data-tags') || '').split(',');
+        var mostra = !tagAtual || tags.indexOf(tagAtual) !== -1;
+        li.hidden = !mostra;
+        if (mostra) visiveis++;
+      });
+      if (contagem) {
+        contagem.textContent =
+          visiveis === total ? molde : molde.replace(String(total), visiveis + ' / ' + total);
+      }
+      if (nada) nada.hidden = visiveis > 0;
+    }
+
+    filtro.addEventListener('click', function (e) {
+      var b = e.target.closest('.etiqueta');
+      if (!b) return;
+
+      if (b.hasAttribute('data-ordem')) {
+        ordenar(b.getAttribute('data-ordem'));
+        filtro.querySelectorAll('[data-ordem]').forEach(function (o) {
+          var ativo = o === b;
+          o.classList.toggle('etiqueta-ativa', ativo);
+          o.setAttribute('aria-pressed', String(ativo));
+        });
+        return;
+      }
+
+      // Clicar de novo no assunto ativo desliga o filtro.
+      var tag = b.getAttribute('data-tag') || '';
+      tagAtual = b.classList.contains('etiqueta-ativa') ? '' : tag;
+      filtro.querySelectorAll('[data-tag]').forEach(function (o) {
+        var ativo = (o.getAttribute('data-tag') || '') === tagAtual;
+        o.classList.toggle('etiqueta-ativa', ativo);
+        o.setAttribute('aria-pressed', String(ativo));
+      });
+      filtrar();
+    });
+  })();
+</script>
 
 <style>
   .abertura {
@@ -99,16 +207,78 @@ const vazio = posts.length === 0;
     color: var(--color-ink-soft);
   }
 
+  .filtro {
+    padding-block: 0 1.75rem;
+    border-bottom: 1px solid var(--color-rule);
+    row-gap: 0.75rem;
+  }
+
+  .etiquetas {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .etiquetas-assunto {
+    margin-top: 0.75rem;
+    padding-top: 0.75rem;
+    border-top: 1px solid var(--color-rule);
+  }
+
+  .etiqueta {
+    display: inline-flex;
+    align-items: baseline;
+    gap: 0.4rem;
+    background: none;
+    border: 1px solid var(--color-rule);
+    padding: 0.4rem 0.7rem;
+    cursor: pointer;
+    font-family: inherit;
+    font-size: 0.75rem;
+    color: var(--color-ink-soft);
+    transition:
+      border-color 180ms ease,
+      color 180ms ease,
+      background-color 180ms ease;
+  }
+
+  .etiqueta:hover {
+    border-color: var(--color-ink-soft);
+    color: var(--color-ink);
+  }
+
+  .etiqueta-ativa {
+    background-color: var(--color-ink);
+    border-color: var(--color-ink);
+    color: var(--color-wall);
+  }
+
+  .etiqueta-n {
+    font-variant-numeric: tabular-nums;
+    opacity: 0.6;
+  }
+
+  .contagem {
+    margin-top: 1rem;
+    font-size: 0.75rem;
+    letter-spacing: 0.02em;
+    color: var(--color-ink-soft);
+    font-variant-numeric: tabular-nums;
+  }
+
   .lista {
     list-style: none;
     margin: 0;
     padding: 0;
-    border-top: 1px solid var(--color-rule);
   }
 
   .item {
     padding-block: clamp(2rem, 4vw, 3rem);
     border-bottom: 1px solid var(--color-rule);
+  }
+
+  .item[hidden] {
+    display: none;
   }
 
   .item-data {
@@ -139,6 +309,12 @@ const vazio = posts.length === 0;
     max-width: 46ch;
     font-size: 1rem;
     line-height: 1.6;
+  }
+
+  .nada {
+    padding-block: 3rem;
+    color: var(--color-ink-soft);
+    font-size: 1rem;
   }
 
   .vazio {
