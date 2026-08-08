@@ -107,6 +107,9 @@ const pessoa = {
     <link rel="icon" href="/favicon-32.png" sizes="32x32" type="image/png" />
     <link rel="icon" href="/favicon-48.png" sizes="48x48" type="image/png" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+    <!-- /favicon.ico existe na raiz como reserva. Navegador antigo e alguns
+         robôs pedem esse caminho direto, sem ler as declarações acima. -->
 
     <meta name="author" content={SITE.name} />
     <meta property="og:type" content={artigo ? 'article' : 'website'} />

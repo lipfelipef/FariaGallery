@@ -1,0 +1,15 @@
+{
+  "name": "Felipe Faria",
+  "short_name": "fariagallery",
+  "description": "Projetos e experiências de Felipe Faria, com a ficha inteira de cada um.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "minimal-ui",
+  "background_color": "#fbfbf9",
+  "theme_color": "#fbfbf9",
+  "lang": "pt-BR",
+  "icons": [
+    { "src": "/favicon-48.png", "sizes": "48x48", "type": "image/png" },
+    { "src": "/apple-touch-icon.png", "sizes": "180x180", "type": "image/png" }
+  ]
+}

@@ -1,0 +1,9 @@
+# RFC 9116
+# Como reportar um problema de seguranca neste site.
+# Site estatico, sem back-end, banco, formulario ou login: a superficie e
+# pequena de proposito. Ainda assim, se voce achar algo, fale.
+
+Contact: https://fariagallery.com/contato/
+Expires: 2027-08-07T00:00:00.000Z
+Preferred-Languages: pt-BR, en, es
+Canonical: https://fariagallery.com/.well-known/security.txt
