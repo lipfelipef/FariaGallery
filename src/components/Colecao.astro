@@ -3,7 +3,8 @@ import Base from '../layouts/Base.astro';
 import Topo from './Topo.astro';
 import Rodape from './Rodape.astro';
 import { doTipo, ordemDoAno, anoExibido, inicioDaObra, fimDaObra } from '../data/obras';
-import { anosAtras, duracao } from '../lib/tempo';
+import { anosAtras, duracao, ROTULOS_DURACAO } from '../lib/tempo';
+import { LOCALE_DATA } from '../i18n/utils';
 import type { Locale } from '../consts';
 import { traduzir } from '../i18n/ui';
 import { rota } from '../i18n/utils';
@@ -49,38 +50,45 @@ const anos = [...new Set(acervo.map((o) => o.ano))].sort((a, b) => chaveDoGrupo(
  * o relativo diz o quão longe: "2024" não conta nada sozinho para quem lê
  * daqui a cinco anos, "há 2 anos" conta.
  */
+/**
+ * A linha embaixo do ano.
+ *
+ * Na coleção ela responde "há quanto tempo foi": este ano, ano passado, há 2
+ * anos. Na experiência responde "quanto tempo durou": 3 anos e 3 meses. Mesmo
+ * lugar e mesma tipografia, porque nos dois casos é a mesma pergunta do
+ * visitante, a distância no tempo.
+ *
+ * Na experiência cada grupo é um período próprio, então a duração é a da
+ * primeira obra dele.
+ */
 const porAno = anos.map((ano) => {
   const obras = acervo.filter((o) => o.ano === ano);
   const primeira = obras[0];
+  const inicio = inicioDaObra(primeira);
+  const fim = fimDaObra(primeira);
+
+  const abaixoDoAno =
+    tipo === 'experiencia'
+      ? inicio && duracao(inicio, fim, lang)
+      : primeira.ativa
+        ? undefined
+        : anosAtras(Number.parseInt(ano, 10), lang);
+
   return {
     ano,
     rotulo: anoExibido(primeira, t('tempo.atualmente')),
+    relativo: abaixoDoAno,
     /**
-     * "há 2 anos" só na coleção. Numa experiência a pergunta é quanto tempo a
-     * pessoa ficou, não há quanto tempo o ano foi, e a duração de cada linha
-     * já responde isso. Dizer "2018, há 8 anos" ao lado de "3 anos e 3 meses"
-     * só confunde as duas contas.
+     * O que o navegador precisa para refazer a conta sozinho. Sem isto o texto
+     * envelhece: o site é estático, então o número é o do último build, e um
+     * canal que continua rodando ficaria parado no tempo até o próximo deploy.
+     * Só entra em quem ainda corre; período fechado não muda mais.
      */
-    relativo:
-      tipo === 'experiencia' || primeira.ativa
-        ? undefined
-        : anosAtras(Number.parseInt(ano, 10), lang),
+    vivo: tipo === 'experiencia' && !fim && inicio ? inicio.toISOString() : undefined,
+    anoNumero: tipo === 'experiencia' || primeira.ativa ? undefined : Number.parseInt(ano, 10),
     obras,
   };
 });
-
-/**
- * Quanto tempo a experiência durou, ou dura até hoje.
- *
- * Só aparece na sala de experiência: numa obra o que importa é o ano em que
- * ficou pronta, e num emprego ou num canal o que importa é o tempo de estrada.
- * Sem `inicio` na ficha não há o que contar, e a linha simplesmente não sai.
- */
-const quantoDurou = (obra: (typeof acervo)[number]) => {
-  if (tipo !== 'experiencia') return undefined;
-  const inicio = inicioDaObra(obra);
-  return inicio ? duracao(inicio, fimDaObra(obra), lang) : undefined;
-};
 
 /** Etiquetas com contagem, da mais usada para a menos. Só aparece quem tem 1+. */
 const contagem = new Map<string, number>();
@@ -129,11 +137,15 @@ const destino = (slug: string, href?: string) => {
 
       <div class="catalogo">
         {
-          porAno.map(({ rotulo, relativo, obras }) => (
+          porAno.map(({ rotulo, relativo, obras, vivo, anoNumero }) => (
             <section class="grupo hang" data-grupo>
               <p class="ano">
                 {rotulo}
-                {relativo && <span class="ano-relativo">{relativo}</span>}
+                {relativo && (
+                  <span class="ano-relativo" data-vivo={vivo} data-ano={anoNumero}>
+                    {relativo}
+                  </span>
+                )}
               </p>
               <ul class="linhas">
                 {obras.map((obra) => (
@@ -141,10 +153,7 @@ const destino = (slug: string, href?: string) => {
                     <a class="linha-link" href={destino(obra.slug, obra.link?.href)}>
                       <span class="dot dot-on" aria-hidden="true" />
                       <span class="linha-titulo">{obra.titulo}</span>
-                      <span class="linha-meio">
-                        {obra.meio}
-                        {quantoDurou(obra) && <span class="linha-tempo">{quantoDurou(obra)}</span>}
-                      </span>
+                      <span class="linha-meio">{obra.meio}</span>
                       <span class="linha-seta" aria-hidden="true">
                         &#8594;
                       </span>
@@ -162,6 +171,74 @@ const destino = (slug: string, href?: string) => {
 
   <Rodape lang={lang} />
 </Base>
+
+<!--
+  O tempo se refaz no navegador.
+
+  O site é estático: o que o build escreve é o número daquele dia. Sem isto,
+  um canal que continua rodando ficaria parado em "4 anos e 8 meses" até o
+  próximo deploy, e em 1º de janeiro a coleção ainda diria que o ano anterior
+  é "este ano". O servidor entrega o texto certo para quem chega sem
+  JavaScript e para o buscador; o navegador só corrige se o tempo passou.
+
+  A conta usa o relógio de São Paulo, o mesmo fuso do resto do site.
+-->
+<script
+  is:inline
+  define:vars={{
+    fuso: 'America/Sao_Paulo',
+    localeData: LOCALE_DATA[lang],
+    rotulos: ROTULOS_DURACAO[lang],
+  }}
+>
+  (function () {
+    var MS_DIA = 86400000;
+    var MS_MES = 30.436875 * MS_DIA;
+    var MS_ANO = 365.2425 * MS_DIA;
+
+    function plural(n, um, muitos) {
+      return n + ' ' + (n === 1 ? um : muitos);
+    }
+
+    /** Mesma regra do `duracao` em src/lib/tempo.ts. As duas precisam bater. */
+    function duracao(inicio, agora) {
+      var ms = Math.max(0, agora - inicio);
+      var anos = Math.floor(ms / MS_ANO);
+      var meses = Math.floor((ms - anos * MS_ANO) / MS_MES);
+      if (anos >= 1) {
+        var parte = plural(anos, rotulos.ano, rotulos.anos);
+        return meses === 0 ? parte : parte + ' ' + rotulos.e + ' ' + plural(meses, rotulos.mes, rotulos.meses);
+      }
+      var m = Math.floor(ms / MS_MES);
+      if (m >= 1) return plural(m, rotulos.mes, rotulos.meses);
+      return plural(Math.max(1, Math.floor(ms / MS_DIA)), rotulos.dia, rotulos.dias);
+    }
+
+    /** O ano corrente em São Paulo, não o do relógio de quem visita. */
+    function anoAqui() {
+      return Number(
+        new Intl.DateTimeFormat('en-CA', { year: 'numeric', timeZone: fuso }).format(new Date())
+      );
+    }
+
+    var agora = Date.now();
+
+    document.querySelectorAll('.ano-relativo').forEach(function (el) {
+      var vivo = el.getAttribute('data-vivo');
+      if (vivo) {
+        el.textContent = duracao(new Date(vivo).getTime(), agora);
+        return;
+      }
+      var ano = el.getAttribute('data-ano');
+      if (ano) {
+        try {
+          var fmt = new Intl.RelativeTimeFormat(localeData, { numeric: 'auto' });
+          el.textContent = fmt.format(Number(ano) - anoAqui(), 'year');
+        } catch (e) {}
+      }
+    });
+  })();
+</script>
 
 <script is:inline define:vars={{ textoContagem: { um: t('colecao.contagem')(1, 2).replace(/\d+/g, '#') } }}>
   (function () {
@@ -383,17 +460,6 @@ const destino = (slug: string, href?: string) => {
     text-align: right;
   }
 
-  /* Tempo de estrada da experiência. Vem abaixo do meio, na voz da ficha, em
-     caixa alta miúda, para informar sem competir com o título da obra. */
-  .linha-tempo {
-    display: block;
-    margin-top: 0.25rem;
-    font-size: 0.6875rem;
-    font-weight: 600;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    opacity: 0.75;
-  }
 
   .linha-seta {
     font-size: 0.875rem;

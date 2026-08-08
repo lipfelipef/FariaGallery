@@ -87,6 +87,19 @@ export function anosAtras(ano: number, lang: Locale, agora = new Date()): string
 }
 
 /**
+ * As palavras da duração, exportadas porque o navegador refaz essa conta.
+ *
+ * Numa experiência que continua rodando o número precisa andar sozinho, e o
+ * site é estático: o build congela o texto. O script da sala usa exatamente
+ * estes rótulos, então eles moram aqui e não em dois lugares.
+ */
+export const ROTULOS_DURACAO: Record<Locale, Record<string, string>> = {
+  pt: { ano: 'ano', anos: 'anos', mes: 'mês', meses: 'meses', dia: 'dia', dias: 'dias', e: 'e' },
+  en: { ano: 'year', anos: 'years', mes: 'month', meses: 'months', dia: 'day', dias: 'days', e: 'and' },
+  es: { ano: 'año', anos: 'años', mes: 'mes', meses: 'meses', dia: 'día', dias: 'días', e: 'y' },
+};
+
+/**
  * Quanto tempo durou, de um início até um fim (ou até hoje, se ainda roda).
  * Devolve a unidade que comunica: "5 meses", "6 anos", "1 ano e 3 meses".
  */
@@ -104,11 +117,7 @@ export function duracao(
 
   const plural = (n: number, um: string, muitos: string) => `${n} ${n === 1 ? um : muitos}`;
 
-  const rotulos = {
-    pt: { ano: 'ano', anos: 'anos', mes: 'mês', meses: 'meses', dia: 'dia', dias: 'dias', e: 'e' },
-    en: { ano: 'year', anos: 'years', mes: 'month', meses: 'months', dia: 'day', dias: 'days', e: 'and' },
-    es: { ano: 'año', anos: 'años', mes: 'mes', meses: 'meses', dia: 'día', dias: 'días', e: 'y' },
-  }[lang];
+  const rotulos = ROTULOS_DURACAO[lang];
 
   if (anos >= 1) {
     const parteAnos = plural(anos, rotulos.ano, rotulos.anos);
