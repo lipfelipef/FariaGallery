@@ -7,6 +7,7 @@ import type { Locale } from '../consts';
 import { traduzir } from '../i18n/ui';
 import { rota } from '../i18n/utils';
 import { dataComHora, dataISO, tempoRelativo, type Post } from '../lib/blog';
+import { obraPorSlug } from '../data/obras';
 
 interface Props {
   post: Post;
@@ -16,6 +17,17 @@ interface Props {
 const { post, lang } = Astro.props;
 const t = traduzir(lang);
 const { Content } = await render(post);
+
+/**
+ * A obra de que o texto fala, quando o post declara uma.
+ *
+ * Existe porque a linha da coleção passou a levar sempre ao texto, agora que
+ * toda obra tem um. Antes ela ia direto ao repositório quando não havia texto,
+ * e sem isto o caminho até o código deixaria de existir para quem entra pela
+ * coleção. O texto é a sala; daqui se chega à obra.
+ */
+const obra = post.data.obra ? obraPorSlug(post.data.obra) : undefined;
+const textoDoLink = obra?.link ? t(`link.${obra.link.tipo}` as 'link.codigo') : '';
 ---
 
 <Base
@@ -67,6 +79,25 @@ const { Content } = await render(post);
               <>
                 <dt class="field">{t('campo.assunto')}</dt>
                 <dd class="value">{post.data.assuntos.join(', ')}</dd>
+              </>
+            )
+          }
+
+          {
+            obra?.link && (
+              <>
+                <dt class="field">{t('campo.obra')}</dt>
+                <dd class="value">
+                  <a
+                    class="quiet-link"
+                    href={obra.link.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    {textoDoLink} <span aria-hidden="true">&#8599;</span>
+                    <span class="sr-only">{t('link.novaAba')}</span>
+                  </a>
+                </dd>
               </>
             )
           }
