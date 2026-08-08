@@ -432,42 +432,4 @@ const percurso = [...emCartaz].reverse();
       margin-top: 0;
     }
   }
-
-  .curriculo {
-    padding-block: 1.75rem clamp(2rem, 4vw, 3rem);
-  }
-
-  /* Botão de verdade, não link de texto: currículo é a ação que o
-     recrutador procura, e precisa de alvo grande e contorno visível.
-     Inverte no hover em vez de acender uma cor que não existe no site. */
-  .botao {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.9rem;
-    border: 1px solid var(--color-ink);
-    padding: 0.85rem 1.35rem;
-    font-size: 0.6875rem;
-    font-weight: 600;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    color: var(--color-ink);
-    text-decoration: none;
-    transition:
-      background-color 180ms ease,
-      color 180ms ease;
-  }
-
-  .botao:hover {
-    background-color: var(--color-ink);
-    color: var(--color-wall);
-  }
-
-  .botao-seta {
-    font-size: 0.875rem;
-    transition: transform 180ms ease;
-  }
-
-  .botao:hover .botao-seta {
-    transform: translateY(2px);
-  }
 </style>

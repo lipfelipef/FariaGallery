@@ -29,8 +29,8 @@ carpeta con treinta archivos y ninguna pista de qué fue difícil, qué casi sal
 mal, o por qué la cosa terminó así. Es la parte menos interesante del trabajo,
 presentada como si fuera la única.
 
-**Faria Gallery** es el lugar único. Proyectos, experiencia, currículum y
-textos, todo en la misma dirección, con el mismo formato.
+**Faria Gallery** es el lugar único. Proyectos, experiencia y textos,
+todo en la misma dirección, con el mismo formato.
 
 ## Por qué ficha de museo
 

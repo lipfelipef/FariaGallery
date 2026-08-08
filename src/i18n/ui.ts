@@ -92,7 +92,6 @@ export const UI = {
     'link.projeto': 'Ver o projeto',
     'link.canal': 'Ver o canal',
     'link.novaAba': '(abre em nova aba)',
-    'link.curriculo': 'Baixar o currículo em PDF',
 
     'contato.titulo': 'Contato',
     'contato.email': 'E-mail',
@@ -163,7 +162,7 @@ export const UI = {
     'meta.experiencia':
       'A experiência de Felipe Faria: o canal Até Zerar, com 5,7 milhões de visualizações, e a BluckerTV, plataforma de vídeo aberta e encerrada em 2026.',
     'meta.contato':
-      'Fale com Felipe Faria, desenvolvedor e estudante de Análise e Desenvolvimento de Sistemas em São Paulo. Contato direto por e-mail e currículo em PDF.',
+      'Fale com Felipe Faria, desenvolvedor e estudante de Análise e Desenvolvimento de Sistemas em São Paulo. Contato direto por e-mail, sem formulário.',
   },
 
   en: {
@@ -241,7 +240,6 @@ export const UI = {
     'link.projeto': 'View the project',
     'link.canal': 'View the channel',
     'link.novaAba': '(opens in a new tab)',
-    'link.curriculo': 'Download the résumé as PDF',
 
     'contato.titulo': 'Contact',
     'contato.email': 'Email',
@@ -310,7 +308,7 @@ export const UI = {
     'meta.experiencia':
       'Felipe Faria experience: the Até Zerar channel, with 5.7 million views, and BluckerTV, a video platform opened and shut down in 2026.',
     'meta.contato':
-      'Get in touch with Felipe Faria, developer and Systems Analysis and Development student in São Paulo. Direct email contact and a résumé in PDF.',
+      'Get in touch with Felipe Faria, developer and Systems Analysis and Development student in São Paulo. Direct contact by email, with no form to fill in.',
   },
 
   es: {
@@ -388,7 +386,6 @@ export const UI = {
     'link.projeto': 'Ver el proyecto',
     'link.canal': 'Ver el canal',
     'link.novaAba': '(se abre en una pestaña nueva)',
-    'link.curriculo': 'Descargar el currículum en PDF',
 
     'contato.titulo': 'Contacto',
     'contato.email': 'Correo',
@@ -457,7 +454,7 @@ export const UI = {
     'meta.experiencia':
       'La experiencia de Felipe Faria: el canal Até Zerar, con 5,7 millones de visualizaciones, y BluckerTV, plataforma de video abierta y cerrada en 2026.',
     'meta.contato':
-      'Habla con Felipe Faria, desarrollador y estudiante de Análisis y Desarrollo de Sistemas en São Paulo. Contacto directo por correo y currículum en PDF.',
+      'Habla con Felipe Faria, desarrollador y estudiante de Análisis y Desarrollo de Sistemas en São Paulo. Contacto directo por correo, sin formulario.',
   },
 } as const;
 

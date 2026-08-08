@@ -29,7 +29,7 @@ pasta com trinta arquivos e nenhuma pista do que foi difícil, do que quase deu
 errado, ou do porquê de a coisa ser daquele jeito. É a parte menos interessante
 do trabalho, apresentada como se fosse a única.
 
-A **Faria Gallery** é o lugar único. Projeto, experiência, currículo e texto,
+A **Faria Gallery** é o lugar único. Projeto, experiência e texto,
 tudo no mesmo endereço, com o mesmo formato.
 
 ## Por que etiqueta de museu

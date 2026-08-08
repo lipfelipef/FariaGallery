@@ -1,10 +1,8 @@
 ---
-import { existsSync } from 'node:fs';
-import { join } from 'node:path';
 import Base from '../layouts/Base.astro';
 import Topo from './Topo.astro';
 import Rodape from './Rodape.astro';
-import { CONTACT_EMAIL, EMAIL_ATIVO, CURRICULO, type Locale } from '../consts';
+import { CONTACT_EMAIL, EMAIL_ATIVO, type Locale } from '../consts';
 import { traduzir } from '../i18n/ui';
 
 interface Props {
@@ -13,15 +11,6 @@ interface Props {
 
 const { lang } = Astro.props;
 const t = traduzir(lang);
-
-/**
- * O botão do currículo só aparece se o PDF existir mesmo em public/.
- *
- * Usa `process.cwd()` e não `import.meta.url`: no build o componente vira
- * um pedaço empacotado e a URL do módulo deixa de apontar para o arquivo
- * original, então o teste dava sempre falso.
- */
-const temCurriculo = existsSync(join(process.cwd(), 'public', CURRICULO));
 ---
 
 <Base lang={lang} titulo={t('contato.titulo')} descricao={t('meta.contato')}>
@@ -65,20 +54,6 @@ const temCurriculo = existsSync(join(process.cwd(), 'public', CURRICULO));
             {t('contato.nota').map((linha) => <span>{linha}</span>)}
           </span>
         </p>
-
-        {
-          temCurriculo && (
-            <div class="curriculo hang">
-              <span />
-              <a class="botao" href={CURRICULO} download>
-                <span>{t('link.curriculo')}</span>
-                <span class="botao-seta" aria-hidden="true">
-                  &#8595;
-                </span>
-              </a>
-            </div>
-          )
-        }
       </div>
     </section>
   </main>
@@ -146,10 +121,15 @@ const temCurriculo = existsSync(join(process.cwd(), 'public', CURRICULO));
     }
   }
 
-  /* A nota fica separada por um fio: é orientação, não dado da ficha. */
+  /* A nota fica separada por um fio: é orientação, não dado da ficha.
+
+     Ela também fecha a página, e o espaço de baixo é o que impede o texto de
+     encostar no fio do rodapé: sem ele o de cima ficava com 41px e o de baixo
+     com nenhum, e era isso que fazia o texto parecer grudado na linha. */
   .nota {
     margin-top: clamp(2rem, 4vw, 2.5rem);
     padding-top: clamp(2rem, 4vw, 2.5rem);
+    padding-bottom: clamp(3rem, 8vh, 5rem);
     border-top: 1px solid var(--color-rule);
     font-size: 0.9375rem;
     line-height: 1.6;
@@ -160,50 +140,5 @@ const temCurriculo = existsSync(join(process.cwd(), 'public', CURRICULO));
      três idiomas, que é a do espanhol. */
   .nota-texto span {
     max-width: 92ch;
-  }
-
-  /* Sem currículo publicado, a nota é o último bloco da página e encostava no
-     fio do rodapé, com zero de respiro. O de cima tinha 41px e o de baixo
-     nenhum, e era isso que fazia o texto parecer grudado na linha. */
-  .nota:last-child {
-    padding-bottom: clamp(3rem, 8vh, 5rem);
-  }
-
-  .curriculo {
-    padding-block: 2.5rem clamp(3rem, 8vh, 5rem);
-  }
-
-  /* Botão de verdade, não link de texto: currículo é a ação que o
-     recrutador procura, e precisa de alvo grande e contorno visível.
-     Inverte no hover em vez de acender uma cor que não existe no site. */
-  .botao {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.9rem;
-    border: 1px solid var(--color-ink);
-    padding: 0.85rem 1.35rem;
-    font-size: 0.6875rem;
-    font-weight: 600;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    color: var(--color-ink);
-    text-decoration: none;
-    transition:
-      background-color 180ms ease,
-      color 180ms ease;
-  }
-
-  .botao:hover {
-    background-color: var(--color-ink);
-    color: var(--color-wall);
-  }
-
-  .botao-seta {
-    font-size: 0.875rem;
-    transition: transform 180ms ease;
-  }
-
-  .botao:hover .botao-seta {
-    transform: translateY(2px);
   }
 </style>

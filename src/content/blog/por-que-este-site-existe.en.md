@@ -29,7 +29,7 @@ with thirty files and no hint of what was hard, what nearly went wrong, or why
 the thing ended up that way. It is the least interesting part of the work,
 presented as if it were the only part.
 
-**Faria Gallery** is the single place. Projects, experience, résumé, and writing,
+**Faria Gallery** is the single place. Projects, experience, and writing,
 all at one address, in one format.
 
 ## Why a museum label
