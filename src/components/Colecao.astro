@@ -2,7 +2,7 @@
 import Base from '../layouts/Base.astro';
 import Topo from './Topo.astro';
 import Rodape from './Rodape.astro';
-import { doTipo, ordemDoAno, anoExibido, inicioDaObra, fimDaObra } from '../data/obras';
+import { doTipo, ordemDoAno, anoExibido, inicioDaObra, fimDaObra, meioDe } from '../data/obras';
 import { anosAtras, duracao, ROTULOS_DURACAO } from '../lib/tempo';
 import { LOCALE_DATA } from '../i18n/utils';
 import type { Locale } from '../consts';
@@ -153,7 +153,7 @@ const destino = (slug: string, href?: string) => {
                     <a class="linha-link" href={destino(obra.slug, obra.link?.href)}>
                       <span class="dot dot-on" aria-hidden="true" />
                       <span class="linha-titulo">{obra.titulo}</span>
-                      <span class="linha-meio">{obra.meio}</span>
+                      <span class="linha-meio">{meioDe(obra, lang)}</span>
                       <span class="linha-seta" aria-hidden="true">
                         &#8594;
                       </span>

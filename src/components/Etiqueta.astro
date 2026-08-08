@@ -1,6 +1,6 @@
 ---
 import type { Locale } from '../consts';
-import { anoExibido, inicioDaObra, fimDaObra, linhasDe, type Obra } from '../data/obras';
+import { anoExibido, inicioDaObra, fimDaObra, linhasDe, meioDe, type Obra } from '../data/obras';
 import { traduzir } from '../i18n/ui';
 import { rota } from '../i18n/utils';
 import { duracao } from '../lib/tempo';
@@ -25,7 +25,7 @@ const quanto = inicio ? duracao(inicio, fimDaObra(obra), lang) : undefined;
 
 /** Cada valor da ficha é uma lista de linhas, mesmo quando tem só uma. */
 const ficha = [
-  { campo: t('campo.meio'), linhas: [obra.meio] },
+  { campo: t('campo.meio'), linhas: [meioDe(obra, lang)] },
   ...(quanto ? [{ campo: t('campo.duracao'), linhas: [quanto] }] : []),
   ...(obra.dimensoes ? [{ campo: t('campo.dimensoes'), linhas: [obra.dimensoes[lang]] }] : []),
   { campo: t('campo.papel'), linhas: [obra.papel[lang]] },

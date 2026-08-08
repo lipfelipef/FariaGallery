@@ -29,6 +29,10 @@ type PorIdiomaLinhas = Record<Locale, string | readonly string[]>;
 export const linhasDe = (valor: string | readonly string[]): readonly string[] =>
   typeof valor === 'string' ? [valor] : valor;
 
+/** O meio no idioma da página, seja ele traduzido ou só nome de tecnologia. */
+export const meioDe = (obra: Obra, lang: Locale): string =>
+  typeof obra.meio === 'string' ? obra.meio : obra.meio[lang];
+
 export interface Obra {
   /** Identificador da obra. É por ele que um post do blog se liga a ela. */
   slug: string;
@@ -50,8 +54,15 @@ export interface Obra {
    */
   inicio?: string;
   fim?: string;
-  /** A stack, tipografada como linha de meio: separada por vírgula. */
-  meio: string;
+  /**
+   * A stack, tipografada como linha de meio: separada por vírgula.
+   *
+   * String quando é só nome de tecnologia, que não se traduz: "Angular 19,
+   * Node.js, Express" é igual nos três idiomas. Vira `PorIdioma` quando a
+   * linha descreve o meio com palavras, como "gameplay sem comentários" ou
+   * "lógica combinacional", que em página inglesa precisam sair em inglês.
+   */
+  meio: string | PorIdioma;
   estado: Estado;
   link?: { href: string; tipo: TipoLink };
   /** Marca obra cuja ficha ainda está incompleta. Não vai pra parede. */
@@ -208,7 +219,11 @@ export const OBRAS: Obra[] = [
     // LinkedIn mostra.
     fim: '2022-01-01',
     tipo: 'experiencia',
-    meio: 'Vídeo, gameplay comentado e competições',
+    meio: {
+      pt: 'Vídeo, gameplay comentado e competições',
+      en: 'Video, commentated gameplay and competition',
+      es: 'Video, gameplay comentado y competiciones',
+    },
     estado: 'noar',
     link: { href: 'https://www.youtube.com/@blucker12', tipo: 'canal' },
     tags: ['Vídeo', 'YouTube', 'Games'],
@@ -244,7 +259,11 @@ export const OBRAS: Obra[] = [
     ativa: true,
     inicio: '2021-12-01',
     tipo: 'experiencia',
-    meio: 'Vídeo, gameplay sem comentários em 4K60fps',
+    meio: {
+      pt: 'Vídeo, gameplay sem comentários em 4K60fps',
+      en: 'Video, gameplay with no commentary in 4K60fps',
+      es: 'Video, gameplay sin comentarios en 4K60fps',
+    },
     estado: 'noar',
     link: { href: 'https://www.youtube.com/@atezerar', tipo: 'canal' },
     tags: ['Vídeo', 'YouTube', 'Games'],
@@ -293,7 +312,11 @@ export const OBRAS: Obra[] = [
     slug: 'simulado-online',
     titulo: 'Simulado Online',
     ano: '2026',
-    meio: 'HTML, CSS e JavaScript puro',
+    meio: {
+      pt: 'HTML, CSS e JavaScript puro',
+      en: 'Plain HTML, CSS, and JavaScript',
+      es: 'HTML, CSS y JavaScript puro',
+    },
     estado: 'publico',
     link: { href: 'https://github.com/lipfelipef/SimuladoOnline', tipo: 'codigo' },
     tags: ['Web', 'JavaScript'],
@@ -313,7 +336,11 @@ export const OBRAS: Obra[] = [
     slug: 'estufa-hidroponica',
     titulo: 'Estufa Hidropônica',
     ano: '2025',
-    meio: 'Lógica combinacional, Logisim 2.7.1',
+    meio: {
+      pt: 'Lógica combinacional, Logisim 2.7.1',
+      en: 'Combinational logic, Logisim 2.7.1',
+      es: 'Lógica combinacional, Logisim 2.7.1',
+    },
     estado: 'publico',
     link: { href: 'https://github.com/lipfelipef/EstufaHidroponica', tipo: 'projeto' },
     tags: ['Hardware', 'Lógica digital'],
