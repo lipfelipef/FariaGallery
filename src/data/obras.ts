@@ -211,7 +211,7 @@ export const OBRAS: Obra[] = [
     ativa: true,
     inicio: '2021-12-01',
     tipo: 'experiencia',
-    meio: 'Vídeo, 4K60fps',
+    meio: 'Vídeo, gameplay sem comentários em 4K60fps',
     estado: 'noar',
     link: { href: 'https://www.youtube.com/@atezerar', tipo: 'canal' },
     tags: ['Vídeo', 'YouTube', 'Games'],
