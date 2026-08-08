@@ -41,9 +41,9 @@ export const CURRICULO = '/curriculo-felipe-faria.pdf';
  * abre, depois o resto.
  */
 export const SOCIAL = [
+  { rede: 'Instagram', usuario: 'Felipe Faria', href: 'https://www.instagram.com/lipfelipef' },
   { rede: 'LinkedIn', usuario: 'Felipe Faria', href: 'https://www.linkedin.com/in/felipefariaf/' },
-  { rede: 'GitHub', usuario: 'lipfelipef', href: 'https://github.com/lipfelipef' },
-  { rede: 'Instagram', usuario: 'lipfelipef', href: 'https://www.instagram.com/lipfelipef' },
+  { rede: 'GitHub', usuario: 'Felipe Faria', href: 'https://github.com/lipfelipef' },
 ] as const;
 
 /**

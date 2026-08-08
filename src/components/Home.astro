@@ -174,6 +174,12 @@ const emCartaz = OBRAS.filter((o) => !o.pendente && o.destaque).sort(
     padding-block: clamp(2rem, 5vh, 3.5rem) clamp(3rem, 8vh, 5rem);
   }
 
+  /* A última sala fecha mais curta: o rodapé já traz o próprio fio e o próprio
+     respiro logo abaixo, e o espaço cheio aqui somava com o de lá. */
+  #redes {
+    padding-bottom: clamp(1.5rem, 3vh, 2rem);
+  }
+
   /* O nome da sala é uma plaquinha, não um letreiro. Mesma tipografia
      dos campos da etiqueta, porque cumpre a mesma função. */
   .sala-titulo {
@@ -228,14 +234,13 @@ const emCartaz = OBRAS.filter((o) => !o.pendente && o.destaque).sort(
     font-size: 0.875rem;
   }
 
+  /* Sem respiro no topo: a seção já entrega um fio, e um segundo fio logo
+     abaixo dele deixava uma faixa vazia entre os dois. A primeira rede começa
+     colada nesse fio, como as linhas do catálogo fazem. */
   .redes {
     list-style: none;
     margin: 0;
     padding: 0;
-    /* Pouco embaixo de propósito: a última linha já fecha com o próprio fio, e
-       o rodapé traz o dele logo em seguida. Espaço demais aqui abria um buraco
-       entre os dois. */
-    padding-block: clamp(1.25rem, 2.5vw, 1.75rem) 0;
   }
 
   .redes li:last-child .rede {
@@ -259,9 +264,6 @@ const emCartaz = OBRAS.filter((o) => !o.pendente && o.destaque).sort(
     transition: background-color 160ms ease;
   }
 
-  .redes li:first-child .rede {
-    border-top: 1px solid var(--color-rule);
-  }
 
   .rede:hover {
     background-color: var(--color-paper);

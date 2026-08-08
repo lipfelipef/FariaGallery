@@ -17,6 +17,18 @@ export type TipoLink = 'codigo' | 'projeto' | 'canal';
 
 type PorIdioma = Record<Locale, string>;
 
+/**
+ * Texto de ficha que pode vir quebrado em linhas.
+ *
+ * Uma frase por linha, escolhida aqui, em vez de quebrar onde a largura
+ * mandar. Quem tem uma frase só continua sendo uma string.
+ */
+type PorIdiomaLinhas = Record<Locale, string | readonly string[]>;
+
+/** Normaliza para lista, para o componente tratar os dois casos igual. */
+export const linhasDe = (valor: string | readonly string[]): readonly string[] =>
+  typeof valor === 'string' ? [valor] : valor;
+
 export interface Obra {
   /** Identificador da obra. É por ele que um post do blog se liga a ela. */
   slug: string;
@@ -71,9 +83,9 @@ export interface Obra {
    * estágio) e vai para a página de experiência. Padrão: obra.
    */
   tipo?: 'obra' | 'experiencia';
-  resumo: PorIdioma;
+  resumo: PorIdiomaLinhas;
   papel: PorIdioma;
-  credito: PorIdioma;
+  credito: PorIdiomaLinhas;
   /**
    * A medida da obra. Etiqueta de museu tem dimensão em centímetros; em
    * software e vídeo, a medida é alcance, volume e tempo de estrada.
@@ -121,9 +133,18 @@ export const OBRAS: Obra[] = [
       es: 'Full-stack, en pareja',
     },
     credito: {
-      pt: 'Projeto Integrador II, Senac Santo Amaro. Com José Victor Souza. Orientação de Evandro Carlos Teruel.',
-      en: 'Capstone project II, Senac Santo Amaro. With José Victor Souza. Advised by Evandro Carlos Teruel.',
-      es: 'Proyecto Integrador II, Senac Santo Amaro. Con José Victor Souza. Orientación de Evandro Carlos Teruel.',
+      pt: [
+        'Projeto Integrador II, Senac Santo Amaro.',
+        'Com José Victor Souza. Orientação de Evandro Carlos Teruel.',
+      ],
+      en: [
+        'Capstone project II, Senac Santo Amaro.',
+        'With José Victor Souza. Advised by Evandro Carlos Teruel.',
+      ],
+      es: [
+        'Proyecto Integrador II, Senac Santo Amaro.',
+        'Con José Victor Souza. Orientación de Evandro Carlos Teruel.',
+      ],
     },
   },
   {
@@ -140,9 +161,21 @@ export const OBRAS: Obra[] = [
     destaque: 2,
     ordemSala: 1,
     resumo: {
-      pt: 'Plataforma brasileira de vídeo sob demanda, construída inteira por uma pessoa e encerrada por decisão de negócio, não por falha técnica.',
-      en: 'A Brazilian video on demand platform, built entirely by one person and shut down as a business decision, not a technical failure.',
-      es: 'Plataforma brasileña de video bajo demanda, construida entera por una persona y cerrada por decisión de negocio, no por falla técnica.',
+      pt: [
+        'Plataforma brasileira de vídeo sob demanda,',
+        'construída inteira por uma pessoa e encerrada',
+        'por decisão de negócio, não por falha técnica.',
+      ],
+      en: [
+        'A Brazilian video on demand platform,',
+        'built entirely by one person and shut down',
+        'as a business decision, not a technical failure.',
+      ],
+      es: [
+        'Plataforma brasileña de video bajo demanda,',
+        'construida entera por una persona y cerrada',
+        'por decisión de negocio, no por falla técnica.',
+      ],
     },
     dimensoes: {
       pt: '5 meses no ar, 72 usuários, 270 vídeos, 1,8 TB hospedados, 9 plugins próprios',
@@ -218,9 +251,18 @@ export const OBRAS: Obra[] = [
     destaque: 3,
     ordemSala: 2,
     resumo: {
-      pt: 'Jogo inteiro, do início ao fim, sem comentário e em 4K60fps. A ideia é assistir como se fosse filme.',
-      en: 'Whole games, start to finish, with no commentary, in 4K60fps. Made to be watched like a film.',
-      es: 'El juego entero, de principio a fin, sin comentarios y en 4K60fps. Pensado para verse como una película.',
+      pt: [
+        'Jogo inteiro, do início ao fim, sem comentário e em 4K60fps.',
+        'A ideia é assistir como se fosse filme.',
+      ],
+      en: [
+        'Whole games, start to finish, with no commentary, in 4K60fps.',
+        'Made to be watched like a film.',
+      ],
+      es: [
+        'El juego entero, de principio a fin, sin comentarios y en 4K60fps.',
+        'Pensado para verse como una película.',
+      ],
     },
     papel: {
       pt: 'Sozinho: gravação, edição e publicação',
@@ -228,9 +270,18 @@ export const OBRAS: Obra[] = [
       es: 'En solitario: grabación, edición y publicación',
     },
     credito: {
-      pt: 'Projeto pessoal, no ar desde dezembro de 2021, sucedendo o canal Blucker12. Do PlayStation 1 ao PlayStation 5 Pro, mais Xbox, Nintendo e PC, organizado em coleções por franquia e por ano.',
-      en: 'Personal project, running since December 2021, succeeding the Blucker12 channel. From PlayStation 1 to PlayStation 5 Pro, plus Xbox, Nintendo, and PC, organised into playlists by franchise and by year.',
-      es: 'Proyecto personal, al aire desde diciembre de 2021, sucediendo al canal Blucker12. Del PlayStation 1 al PlayStation 5 Pro, más Xbox, Nintendo y PC, organizado en listas por franquicia y por año.',
+      pt: [
+        'Projeto pessoal, no ar desde dezembro de 2021, sucedendo o canal Blucker12.',
+        'Organizado em coleções por franquia e por ano.',
+      ],
+      en: [
+        'Personal project, running since December 2021, succeeding the Blucker12 channel.',
+        'Organised into playlists by franchise and by year.',
+      ],
+      es: [
+        'Proyecto personal, al aire desde diciembre de 2021, sucediendo al canal Blucker12.',
+        'Organizado en listas por franquicia y por año.',
+      ],
     },
     dimensoes: {
       pt: '165 vídeos, 5,7 milhões de visualizações, 26,3 mil inscritos',

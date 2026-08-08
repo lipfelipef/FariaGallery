@@ -1,6 +1,6 @@
 ---
 import type { Locale } from '../consts';
-import { anoExibido, inicioDaObra, fimDaObra, type Obra } from '../data/obras';
+import { anoExibido, inicioDaObra, fimDaObra, linhasDe, type Obra } from '../data/obras';
 import { traduzir } from '../i18n/ui';
 import { rota } from '../i18n/utils';
 import { duracao } from '../lib/tempo';
@@ -23,13 +23,14 @@ const naoPreenchido = (valor: string) =>
 const inicio = inicioDaObra(obra);
 const quanto = inicio ? duracao(inicio, fimDaObra(obra), lang) : undefined;
 
+/** Cada valor da ficha é uma lista de linhas, mesmo quando tem só uma. */
 const ficha = [
-  { campo: t('campo.meio'), valor: obra.meio },
-  ...(quanto ? [{ campo: t('campo.duracao'), valor: quanto }] : []),
-  ...(obra.dimensoes ? [{ campo: t('campo.dimensoes'), valor: obra.dimensoes[lang] }] : []),
-  { campo: t('campo.papel'), valor: obra.papel[lang] },
-  { campo: t('campo.credito'), valor: obra.credito[lang] },
-  { campo: t('campo.estado'), valor: t(`estado.${obra.estado}` as 'estado.publico') },
+  { campo: t('campo.meio'), linhas: [obra.meio] },
+  ...(quanto ? [{ campo: t('campo.duracao'), linhas: [quanto] }] : []),
+  ...(obra.dimensoes ? [{ campo: t('campo.dimensoes'), linhas: [obra.dimensoes[lang]] }] : []),
+  { campo: t('campo.papel'), linhas: [obra.papel[lang]] },
+  { campo: t('campo.credito'), linhas: linhasDe(obra.credito[lang]) },
+  { campo: t('campo.estado'), linhas: [t(`estado.${obra.estado}` as 'estado.publico')] },
 ];
 
 const textoDoLink = obra.link
@@ -55,15 +56,30 @@ const textoDoLink = obra.link
         )
       }
     </h3>
-    <p class="obra-resumo">{obra.resumo[lang]}</p>
+    <p class="obra-resumo">
+      {linhasDe(obra.resumo[lang]).map((linha) => <span>{linha}</span>)}
+    </p>
   </div>
 
   <dl class="obra-ficha">
     {
-      ficha.map(({ campo, valor }) => (
+      ficha.map(({ campo, linhas }) => (
         <>
           <dt class="field">{campo}</dt>
-          <dd class:list={['value', naoPreenchido(valor) && 'value-pendente']}>{valor}</dd>
+          <dd
+            class:list={[
+              'value',
+              naoPreenchido(linhas[0]) && 'value-pendente',
+              /* Quem escreveu a quebra quer aquelas linhas, então a medida de
+                 leitura de 46ch dá lugar a uma que as comporte. Sem isto a
+                 frase dobra e a quebra escolhida some no meio. */
+              linhas.length > 1 && 'value-linhas',
+            ]}
+          >
+            {linhas.map((linha) => (
+              <span>{linha}</span>
+            ))}
+          </dd>
         </>
       ))
     }
@@ -130,8 +146,24 @@ const textoDoLink = obra.link
     margin-top: 0.75rem;
     font-size: 1.0625rem;
     line-height: 1.55;
-    max-width: 42ch;
     color: var(--color-ink);
+  }
+
+  /* Uma frase por linha quando a ficha traz o texto quebrado. */
+  .obra-resumo span,
+  .value span {
+    display: block;
+  }
+
+  .obra-resumo span {
+    max-width: 62ch;
+  }
+
+  /* O `.value` global limita a 46ch, medida de leitura para texto corrido.
+     Onde o texto foi quebrado à mão, a medida acompanha a linha mais longa,
+     senão a coluna dobra a frase e desfaz a quebra. */
+  .value-linhas {
+    max-width: 80ch;
   }
 
   /* A ficha repete a mesma grade da obra, então o eixo vertical
