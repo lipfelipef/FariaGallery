@@ -114,6 +114,25 @@ const pessoa = {
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <!--
+      A cor da parede, escrita aqui dentro e antes de tudo.
+
+      A folha de estilo do site é um arquivo à parte, e arquivo à parte chega
+      pela rede. Se o navegador desistir de segurar a página anterior antes
+      dele chegar, ele pinta o que tem, e o que ele tem sem folha de estilo é
+      branco. É o clarão de um instante ao trocar de aba.
+
+      Estas quatro linhas viajam dentro do próprio HTML, então valem no
+      primeiro quadro, sempre. As duas cores estão repetidas do `global.css`
+      de propósito: é o preço de não depender de nada externo para acertar o
+      fundo. Se um dia a parede mudar de cor, muda nos dois lugares.
+    -->
+    <style is:inline>
+      html { background-color: #141416; }
+      html:not([data-tema='escuro']) { background-color: #fbfbf9; }
+    </style>
+
     <title>{tituloDaAba}</title>
     <meta name="description" content={descricao} />
     {semIndexar && <meta name="robots" content="noindex, follow" />}
