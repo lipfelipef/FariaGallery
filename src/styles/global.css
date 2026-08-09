@@ -115,6 +115,19 @@ html {
 body {
   background-color: var(--color-wall);
   color: var(--color-ink);
+
+  /* A parede cobre a tela inteira, mesmo em pagina curta.
+
+     Sem isto o corpo termina onde o conteudo termina, e numa tela alta com
+     pouco texto, como a de contato, sobra area abaixo dele. Essa area e
+     pintada pelo canvas do navegador, por propagacao, e o retrato que a
+     passagem entre salas tira captura o ELEMENTO, nao o canvas: a faixa que
+     sobra podia sair sem cor no retrato e aparecer clara no meio da
+     transicao.
+
+     `dvh` e nao `vh` por causa do celular: `vh` ignora a barra do navegador
+     que aparece e some ao rolar, e com ela a conta erra por uns 60 pixels. */
+  min-height: 100dvh;
   font-family: var(--font-wall);
   font-optical-sizing: auto;
   font-synthesis-weight: none;

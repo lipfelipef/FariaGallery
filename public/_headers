@@ -92,5 +92,25 @@
 /card.png
   Cache-Control: public, max-age=86400
 
-# O HTML continua sendo revalidado a cada visita, de proposito: e nele que o
-# conteudo novo chega, e publicar tem que aparecer na hora.
+# O HTML: entrega na hora, confere depois --------------------------------
+#
+# Antes ele saia com `max-age=0, must-revalidate`, que obriga o navegador a
+# esperar a resposta da rede ANTES de pintar qualquer coisa. Enquanto espera,
+# ele segura a pagina anterior; se a espera passar do limite que ele aguenta
+# segurar, ele desiste e pinta o que tem, que sem conteudo e branco. Era o
+# clarao que sobrava depois de acertar o fundo e o esquema de cor.
+#
+# `stale-while-revalidate` troca a ordem: o navegador serve o que ja tem, na
+# hora, e vai buscar a versao nova por tras, sem ninguem esperando. A pagina
+# aparece no primeiro quadro.
+#
+# O preco e conhecido e pequeno: quem acabou de visitar pode ver a versao da
+# ultima hora antes da atualizacao chegar. Uma hora, e nao um dia, porque
+# publicar aqui precisa aparecer rapido. `max-age=0` continua junto para o
+# conteudo nunca ser considerado fresco sem conferir.
+/*.html
+  Cache-Control: public, max-age=0, stale-while-revalidate=3600
+/
+  Cache-Control: public, max-age=0, stale-while-revalidate=3600
+/*/
+  Cache-Control: public, max-age=0, stale-while-revalidate=3600
