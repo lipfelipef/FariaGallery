@@ -193,6 +193,36 @@ body {
     color: var(--color-ink);
   }
 
+  /* Os dois ajustes de medida do valor da ficha.
+
+     Moram aqui, e nao num componente, porque a ficha aparece em dois lugares:
+     a etiqueta da home e o catalogo da colecao. Classe usada por dois
+     componentes nao pode ficar escopada em um deles, senao ela vale so la.
+     Ja quebrou o site uma vez, e por isso `.linhas` e `.sr-only` tambem estao
+     neste arquivo.
+
+     `.value-linhas`: onde o texto foi quebrado a mao, a medida acompanha a
+     linha mais longa, senao a coluna dobra a frase e desfaz a quebra. */
+  .value-linhas {
+    max-width: 80ch;
+  }
+
+  /* `.value-medida`: campo que enumera, e nao narra, como dimensoes e papel.
+     Ali a linha quer caber inteira, e os 46ch do `.value` dao 395px, que
+     dobram todas elas. Medido na tipografia real: o papel da BluckerTV precisa
+     de 453px, as dimensoes da galeria de 425 em espanhol. 60ch dao 516px.
+
+     Vem depois do `.value-linhas` de proposito: as duas tem a mesma forca, e
+     quando um campo enumera em varias linhas quem deve mandar e esta.
+
+     So no computador. No celular a coluna tem a largura da tela e a linha
+     dobra de qualquer jeito, que e como ele quer. */
+  @media (min-width: 48rem) {
+    .value-medida {
+      max-width: 60ch;
+    }
+  }
+
   /* Titulo de obra: a unica coisa em serifa, e sempre em italico. */
   .work-title {
     font-family: var(--font-work);

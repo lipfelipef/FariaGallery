@@ -3,6 +3,7 @@ import Base from '../layouts/Base.astro';
 import Topo from './Topo.astro';
 import Rodape from './Rodape.astro';
 import { doTipo, ordemDoAno, anoExibido, inicioDaObra, fimDaObra, meioDe, tagDe } from '../data/obras';
+import { fichaDaObra } from '../lib/ficha';
 import { anosAtras, duracao, ROTULOS_DURACAO } from '../lib/tempo';
 import { LOCALE_DATA } from '../i18n/utils';
 import { LIMITE_FILTROS, FOLGA_FILTROS, type Locale } from '../consts';
@@ -202,6 +203,48 @@ const destino = (slug: string, href?: string) => {
                         &#8594;
                       </span>
                     </a>
+
+                    {/*
+                      A ficha inteira, recolhida.
+
+                      Até aqui, papel e crédito só existiam na etiqueta da
+                      home, e a home mostra três obras. Quem é dessas três
+                      tinha ficha; o resto tinha o nome e a stack, e o que
+                      estava escrito sobre elas não aparecia em lugar nenhum
+                      do site. O Blucker12 chegava a ter três milhões de
+                      visualizações num campo que ninguém lia.
+
+                      É `details` do próprio HTML, e não um botão com script:
+                      abre sem JavaScript, já vem com o estado certo para o
+                      leitor de tela e o navegador cuida de tudo. O link da
+                      linha continua onde estava, levando ao texto: quem quer
+                      ler clica no título, quem quer a ficha abre aqui.
+                    */}
+                    <details class="ficha-recolhida">
+                      <summary class="ficha-abre">{t('colecao.ficha')}</summary>
+                      <dl class="ficha">
+                        {fichaDaObra(obra, lang).map(({ campo, linhas, medida }) => (
+                          <>
+                            <dt class="field">{campo}</dt>
+                            <dd
+                              class:list={[
+                                'value',
+                                'linhas',
+                                linhas.length > 1 && 'value-linhas',
+                                medida && 'value-medida',
+                              ]}
+                            >
+                              {linhas.map((linha, i) => (
+                                <>
+                                  {i > 0 && ' '}
+                                  <span>{linha}</span>
+                                </>
+                              ))}
+                            </dd>
+                          </>
+                        ))}
+                      </dl>
+                    </details>
                   </li>
                 ))}
               </ul>
@@ -486,7 +529,7 @@ const destino = (slug: string, href?: string) => {
   }
 
   /* Sem isto seriam dois fios quase colados: o da última obra e o de baixo. */
-  .grupo:last-of-type .linha:last-of-type .linha-link {
+  .grupo:last-of-type .linha:last-of-type {
     border-bottom: 0;
   }
 
@@ -521,6 +564,12 @@ const destino = (slug: string, href?: string) => {
     display: none;
   }
 
+  /* O fio agora fecha a linha inteira, e não só o link: abaixo dele vem a
+     ficha recolhida, e o fio no meio cortaria a obra ao meio quando aberta. */
+  .linha {
+    border-bottom: 1px solid var(--color-rule);
+  }
+
   /* A linha inteira é clicável: alvo grande, sem caça ao link. */
   .linha-link {
     display: grid;
@@ -528,10 +577,78 @@ const destino = (slug: string, href?: string) => {
     align-items: baseline;
     gap: 0 1rem;
     padding-block: 0.85rem;
-    border-bottom: 1px solid var(--color-rule);
     color: inherit;
     text-decoration: none;
     transition: background-color 160ms ease;
+  }
+
+  /* A ficha recolhida ------------------------------------------------- */
+
+  /* O gesto de abrir, na mesma tipografia miúda dos campos da etiqueta: é
+     rótulo de sala, não botão de aplicativo. Fica alinhado com o título, na
+     segunda coluna, e some de vista até alguém procurar por ele. */
+  .ficha-abre {
+    display: inline-block;
+    margin-left: 1.75rem;
+    margin-bottom: 0.85rem;
+    padding: 0.15rem 0;
+    cursor: pointer;
+    list-style: none;
+    font-size: 0.6875rem;
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--color-ink-soft);
+    transition: color 200ms ease;
+  }
+
+  /* O triângulo padrão do navegador sai; entra um sinal que segue a
+     tipografia do resto. `::-webkit-details-marker` cobre os navegadores
+     antigos que ignoram `list-style: none` no summary. */
+  .ficha-abre::-webkit-details-marker {
+    display: none;
+  }
+
+  .ficha-abre::before {
+    content: '+';
+    display: inline-block;
+    width: 0.9rem;
+    font-weight: 400;
+  }
+
+  .ficha-recolhida[open] .ficha-abre::before {
+    content: '\2212'; /* menos de verdade, não hífen: o mesmo peso do + */
+  }
+
+  .ficha-abre:hover {
+    color: var(--color-ink);
+  }
+
+  .ficha-recolhida[open] .ficha-abre {
+    color: var(--color-ink);
+  }
+
+  /* A ficha em si, recuada até a altura do título, com o campo na margem
+     como em toda etiqueta do site. */
+  .ficha {
+    display: grid;
+    grid-template-columns: 7rem minmax(0, 1fr);
+    column-gap: var(--gutter);
+    row-gap: 0.4rem;
+    margin-left: 1.75rem;
+    padding-bottom: 1.5rem;
+  }
+
+  @media (max-width: 47.99rem) {
+    .ficha {
+      grid-template-columns: minmax(0, 1fr);
+      row-gap: 0.125rem;
+      margin-left: 0;
+    }
+
+    .ficha-abre {
+      margin-left: 0;
+    }
   }
 
   .linha-link:hover {

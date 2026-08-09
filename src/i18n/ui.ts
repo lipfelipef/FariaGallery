@@ -79,6 +79,8 @@ export const UI = {
     'colecao.contagem': (mostrando: number, total: number) =>
       mostrando === total ? `${total} obras` : `${mostrando} de ${total} obras`,
     'colecao.nada': 'Nenhuma obra com esse filtro.',
+    /** Abre a ficha inteira da obra, no catálogo. */
+    'colecao.ficha': 'Ficha',
     /** Abre o resto das etiquetas de filtro, que ficam recolhidas. */
     'filtro.mais': (n: number) => `Mais ${n}`,
     'filtro.menos': 'Recolher',
@@ -237,6 +239,7 @@ export const UI = {
     'colecao.contagem': (mostrando: number, total: number) =>
       mostrando === total ? `${total} works` : `${mostrando} of ${total} works`,
     'colecao.nada': 'No work matches that filter.',
+    'colecao.ficha': 'Label',
     'filtro.mais': (n: number) => `${n} more`,
     'filtro.menos': 'Collapse',
 
@@ -385,6 +388,7 @@ export const UI = {
     'colecao.contagem': (mostrando: number, total: number) =>
       mostrando === total ? `${total} obras` : `${mostrando} de ${total} obras`,
     'colecao.nada': 'Ninguna obra con ese filtro.',
+    'colecao.ficha': 'Ficha',
     'filtro.mais': (n: number) => `${n} más`,
     'filtro.menos': 'Recoger',
 

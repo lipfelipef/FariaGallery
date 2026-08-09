@@ -1,17 +1,9 @@
 ---
 import type { Locale } from '../consts';
-import {
-  anoExibido,
-  inicioDaObra,
-  fimDaObra,
-  linhasDe,
-  meioDe,
-  numeroColado,
-  type Obra,
-} from '../data/obras';
+import { anoExibido, type Obra } from '../data/obras';
 import { traduzir } from '../i18n/ui';
 import { rota } from '../i18n/utils';
-import { duracao } from '../lib/tempo';
+import { fichaDaObra } from '../lib/ficha';
 
 interface Props {
   obra: Obra;
@@ -27,34 +19,8 @@ const urlTexto = post ? rota(lang, `/blog/${post}`) : undefined;
 const naoPreenchido = (valor: string) =>
   obra.pendente && /^(a definir|to be defined)$/i.test(valor);
 
-/** Calculada da data, não escrita à mão: assim ela não envelhece sozinha. */
-const inicio = inicioDaObra(obra);
-const quanto = inicio ? duracao(inicio, fimDaObra(obra), lang) : undefined;
-
-/**
- * Cada valor da ficha é uma lista de linhas, mesmo quando tem só uma.
- *
- * `medida` é a medida tipográfica: a largura que a linha pode ocupar. Marca o
- * campo que enumera em vez de narrar, como as dimensões e o papel. Ali a
- * medida de leitura confortável do `.value` atrapalha, porque dobra a
- * enumeração no meio e pendura a última palavra sozinha na linha de baixo.
- */
-const ficha = [
-  { campo: t('campo.meio'), linhas: [meioDe(obra, lang)] },
-  ...(quanto ? [{ campo: t('campo.duracao'), linhas: [quanto] }] : []),
-  ...(obra.dimensoes
-    ? [
-        {
-          campo: t('campo.dimensoes'),
-          linhas: linhasDe(obra.dimensoes[lang]).map(numeroColado),
-          medida: true,
-        },
-      ]
-    : []),
-  { campo: t('campo.papel'), linhas: [obra.papel[lang]], medida: true },
-  { campo: t('campo.credito'), linhas: linhasDe(obra.credito[lang]) },
-  { campo: t('campo.estado'), linhas: [t(`estado.${obra.estado}` as 'estado.publico')] },
-];
+/** A lista de campos mora em `lib/ficha.ts`: a coleção mostra a mesma. */
+const ficha = fichaDaObra(obra, lang);
 
 const textoDoLink = obra.link
   ? t(`link.${obra.link.tipo}` as 'link.codigo')
@@ -189,35 +155,9 @@ const textoDoLink = obra.link
     max-width: 62ch;
   }
 
-  /* O `.value` global limita a 46ch, medida de leitura para texto corrido.
-     Onde o texto foi quebrado à mão, a medida acompanha a linha mais longa,
-     senão a coluna dobra a frase e desfaz a quebra. */
-  .value-linhas {
-    max-width: 80ch;
-  }
-
-  /* Campo que enumera, e não narra: dimensões e papel. Ali a linha quer caber
-     inteira, e os 46ch do `.value` dão 395px, que dobram todas elas. As que
-     precisam de mais espaço, medidas na tipografia real:
-
-       papel da BluckerTV        453px  (a maior de todas)
-       dimensões da galeria      425px  em espanhol
-       dimensões da BluckerTV    396px  na primeira linha
-
-     60ch dão 516px, com folga de 63 sobre a maior. A coluna tem 824px, então
-     espaço nunca faltou: faltava permissão.
-
-     Vem depois do `.value-linhas` de propósito. As duas têm a mesma força, e
-     quando um campo enumera em várias linhas, como as dimensões da BluckerTV,
-     quem deve mandar é esta.
-
-     Só no computador. No celular a coluna tem a largura da tela e a linha
-     dobra de qualquer jeito, que é como ele quer. */
-  @media (min-width: 48rem) {
-    .value-medida {
-      max-width: 60ch;
-    }
-  }
+  /* `.value-linhas` e `.value-medida` moram no `global.css`: a ficha aparece
+     em dois lugares agora, aqui e no catálogo da coleção, e classe usada por
+     dois componentes não pode ficar escopada em um deles. */
 
   /* A ficha repete a mesma grade da obra, então o eixo vertical
      da página inteira continua sendo um só. */
