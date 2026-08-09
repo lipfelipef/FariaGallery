@@ -82,6 +82,24 @@ const artigoSchema = artigo && {
  */
 const emScript = (dados: unknown) => JSON.stringify(dados).replace(/</g, '\\u003c');
 
+/**
+ * O caminho até o texto, para o buscador desenhar
+ * `fariagallery.com › Blog › Título` no lugar do endereço cru.
+ *
+ * Só em post: nas páginas fixas o caminho teria um degrau só e não diria
+ * nada. O último item não leva endereço de propósito, porque ele é a página
+ * em que a pessoa já está.
+ */
+const caminhoSchema = artigo && {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: SITE.domain, item: new URL(rota(lang, '/'), SITE.url).href },
+    { '@type': 'ListItem', position: 2, name: t('blog.titulo'), item: new URL(rota(lang, '/blog'), SITE.url).href },
+    { '@type': 'ListItem', position: 3, name: artigo.titulo },
+  ],
+};
+
 const pessoa = {
   '@id': `${SITE.url}#pessoa`,
   '@context': 'https://schema.org',
@@ -116,21 +134,28 @@ const pessoa = {
     <meta name="viewport" content="width=device-width, initial-scale=1" />
 
     <!--
-      A cor da parede, escrita aqui dentro e antes de tudo.
+      A cor da parede e o esquema de cor, escritos aqui dentro e antes de tudo.
 
       A folha de estilo do site é um arquivo à parte, e arquivo à parte chega
       pela rede. Se o navegador desistir de segurar a página anterior antes
-      dele chegar, ele pinta o que tem, e o que ele tem sem folha de estilo é
-      branco. É o clarão de um instante ao trocar de aba.
+      dele chegar, ele pinta o que tem. É o clarão de um instante ao trocar
+      de aba.
 
-      Estas quatro linhas viajam dentro do próprio HTML, então valem no
-      primeiro quadro, sempre. As duas cores estão repetidas do `global.css`
-      de propósito: é o preço de não depender de nada externo para acertar o
-      fundo. Se um dia a parede mudar de cor, muda nos dois lugares.
+      `background-color` sozinho não resolvia, e a razão é a diferença entre
+      duas coisas parecidas. Ele pinta o fundo do documento; quem pinta a
+      **tela do navegador**, a superfície que aparece antes do documento
+      existir e além dele quando a rolagem passa do fim, é o `color-scheme`.
+      Sem declaração, o navegador assume `light`, e `light` é branco. O
+      esquema escuro estava só no arquivo externo, então até ele chegar a
+      tela era branca por baixo de tudo.
+
+      Estas linhas viajam dentro do próprio HTML, então valem no primeiro
+      quadro, sempre. As cores estão repetidas do `global.css` de propósito:
+      é o preço de não depender de nada externo. Mudou a parede, muda aqui.
     -->
     <style is:inline>
-      html { background-color: #141416; }
-      html:not([data-tema='escuro']) { background-color: #fbfbf9; }
+      html { background-color: #141416; color-scheme: dark; }
+      html:not([data-tema='escuro']) { background-color: #fbfbf9; color-scheme: light; }
     </style>
 
     <title>{tituloDaAba}</title>
@@ -227,6 +252,11 @@ const pessoa = {
     {
       artigoSchema && (
         <script type="application/ld+json" is:inline set:html={emScript(artigoSchema)} />
+      )
+    }
+    {
+      caminhoSchema && (
+        <script type="application/ld+json" is:inline set:html={emScript(caminhoSchema)} />
       )
     }
   </head>
