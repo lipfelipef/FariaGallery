@@ -114,6 +114,36 @@ const idiomas = await destinosPorIdioma(Astro.url);
     gap: 0.75rem 1.75rem;
   }
 
+  /* Alvo de toque -----------------------------------------------------
+
+     A tipografia do topo é miúda de propósito, e por isso as letras davam
+     alvos de 12 pixels de altura: "PT" tinha 17 por 12, "Blog" tinha 38 por
+     12. No dedo isso erra. O mínimo recomendado é 24 por 24.
+
+     Cresce por dentro, com uma camada invisível que se estica além da letra,
+     em vez de espaçamento de verdade. É a diferença entre aumentar o alvo e
+     aumentar o desenho: assim o topo não muda de altura, o espaço entre os
+     itens continua o mesmo, e nenhuma letra sai do lugar. Só o dedo ganha
+     terreno.
+
+     Na horizontal a folga é menor que o vão entre os itens, que é de 21
+     pixels entre os idiomas: as áreas crescem sem encostar uma na outra. */
+  .marca::after,
+  .menu a::after,
+  .idioma::after,
+  .tema::after {
+    content: '';
+    position: absolute;
+    inset: -6px -5px;
+  }
+
+  .marca,
+  .menu a,
+  .idioma,
+  .tema {
+    position: relative;
+  }
+
   /* Minúsculo, sem caixa alta. O espaçamento largo que funciona em
      versalete atrapalha a leitura de minúscula, então fica bem menor. */
   .marca {
