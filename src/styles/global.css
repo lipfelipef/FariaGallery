@@ -487,11 +487,43 @@ body {
   view-transition-name: moldura-rodape;
 }
 
+/* Aqui estava a piscada branca, e a causa e' pouco obvia.
+
+   O navegador desenha os dois retratos, o que sai e o que entra, com
+   `mix-blend-mode: plus-lighter`. Isso nao e' enfeite: naquele modo as
+   cores se SOMAM, e o desaparecimento padrao dele e' feito de duas
+   curvas complementares, uma caindo de 1 a 0 enquanto a outra sobe de
+   0 a 1. Somando, da sempre exatamente 1, e a passagem sai lisa.
+
+   Assim que se escreve animacao propria, a soma deixa de fechar em 1.
+   As duas daqui tinham duracoes diferentes, 200ms e 420ms, e curvas
+   diferentes: no meio do caminho a soma passava de 1 e as cores
+   estouravam para o claro. Era esse o clarao, e ele aparecia mais na
+   aba de contato, que e' a pagina mais curta e onde a area de fundo
+   pesa mais na tela.
+
+   Duas correcoes, e as duas ficam:
+
+   1. `mix-blend-mode: normal` desliga a soma. Retrato sobre retrato,
+      sem cor se somando a cor.
+   2. O que entra nao desaparece mais: ele so sobe. Fica opaco do
+      primeiro quadro ao ultimo, entao nao existe instante nenhum em
+      que de para ver atraves dele. O que sai continua se apagando,
+      por cima. */
+::view-transition-old(root),
+::view-transition-new(root) {
+  mix-blend-mode: normal;
+}
+
+/* O que sai fica por cima; o que entra, por baixo. Sem isto a ordem e' a
+   inversa, e um retrato opaco em cima esconderia a saida do outro. */
 ::view-transition-old(root) {
-  animation: sala-sai 200ms cubic-bezier(0.4, 0, 1, 1) both;
+  z-index: 1;
+  animation: sala-sai 260ms cubic-bezier(0.4, 0, 1, 1) both;
 }
 
 ::view-transition-new(root) {
+  z-index: 0;
   animation: sala-entra 420ms cubic-bezier(0.16, 0.84, 0.28, 1) both;
 }
 
@@ -501,9 +533,12 @@ body {
   }
 }
 
+/* Sem `opacity` de proposito: a sala que entra fica opaca do primeiro ao
+   ultimo quadro, e so sobe. E' ela que garante que sempre haja uma camada
+   inteira cobrindo a tela, entao nunca da para ver o que esta atras. Quem
+   desaparece e' a que sai, por cima. */
 @keyframes sala-entra {
   from {
-    opacity: 0;
     transform: translateY(0.625rem);
   }
 }
