@@ -1,6 +1,8 @@
 ---
 import type { Locale } from '../consts';
-import { anoExibido, type Obra } from '../data/obras';
+/* `linhasDe` continua sendo usado pelo resumo, logo abaixo do título: ele não
+   faz parte da ficha e não saiu junto com ela para o `lib/ficha.ts`. */
+import { anoExibido, linhasDe, type Obra } from '../data/obras';
 import { traduzir } from '../i18n/ui';
 import { rota } from '../i18n/utils';
 import { fichaDaObra } from '../lib/ficha';
