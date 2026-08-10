@@ -9,16 +9,17 @@ separados.
 
 Projeto de software não tem imagem que valha uma parede, então o site trata a
 **etiqueta de museu como sendo a própria obra**. Cada projeto aparece com a
-ficha completa, na mesma ordem que um museu usa: título, ano, meio, papel,
-crédito e estado.
+ficha inteira, na ordem que um museu usa: título, ano, meio, duração,
+dimensões, papel, crédito e estado.
 
 O campo "meio" é a stack. Um quadro é feito de óleo sobre tela, o Blucker é
 feito de Angular e Express, e as duas coisas são a mesma informação, então são
-compostas do mesmo jeito.
+compostas do mesmo jeito. "Dimensões" segue a mesma ideia: etiqueta de museu
+mede em centímetros, e em software e vídeo a medida é alcance e volume.
 
 O ponto vermelho ao lado do ano é o mesmo das galerias, e aqui ele é sempre
-cheio, inclusive no que já encerrou: quem carrega o que ainda dá para visitar é
-o campo "estado" da ficha, não o ponto. É a única cor da página inteira.
+cheio, mesmo no que já encerrou: quem carrega o que ainda dá para visitar é o
+campo "estado" da ficha, não o ponto. É a única cor da página inteira.
 
 Duas vozes tipográficas, cada uma com um papel só: Archivo é a voz da
 instituição (nome, navegação, campos da ficha) e EB Garamond aparece apenas em
@@ -37,10 +38,14 @@ escolha é guardada no navegador de quem visita e vale antes da página pintar.
   [Fontsource](https://fontsource.org)
 - Hospedagem na Cloudflare Workers, com deploy automático a cada push na `main`
 
-Sem back-end, sem banco, sem formulário e sem login. Não existe **arquivo** de
-JavaScript: o que roda no navegador são poucos scripts curtos escritos direto na
-página, para a troca de tema, o filtro das etiquetas e os textos de tempo, que
-se refazem sozinhos para não envelhecerem entre um build e outro.
+Sem back-end, sem banco, sem formulário e sem login. Também sem markdown e sem
+coleção de conteúdo: todo texto do site mora em TypeScript, em `data/obras.ts`
+e `i18n/ui.ts`. São quatro dependências de produção ao todo: o Astro, o plugin
+de sitemap e as duas fontes.
+
+Não existe **arquivo** de JavaScript. O que roda no navegador são poucos
+scripts curtos escritos direto na página, para a troca de tema, o filtro das
+etiquetas e os textos de tempo.
 
 Fonte e imagem saem todas do próprio domínio. O único recurso de fora é o
 script de medição de visitas do Cloudflare Web Analytics, injetado pela própria
@@ -55,6 +60,9 @@ Precisa de Node 22.12 ou mais novo (a versão usada aqui está no `.nvmrc`).
 
 ```bash
 npm install
+```
+
+```bash
 npm run dev
 ```
 
@@ -67,6 +75,23 @@ Abre em `http://localhost:4321`.
 | `npm run preview` | serve o `dist/` para conferir antes de publicar|
 | `npm run check`   | verifica os tipos dos arquivos `.astro`        |
 
+## As salas
+
+Quatro páginas por idioma, mais a de erro, que é uma só:
+
+| Endereço       | O que tem                                                     |
+| -------------- | ------------------------------------------------------------- |
+| `/`            | a entrada, o percurso, as obras em cartaz e as redes           |
+| `/obras`       | a Coleção: catálogo por ano, com filtro por etiqueta           |
+| `/experiencia` | a mesma página montada com o outro tipo de ficha               |
+| `/contato`     | só o e-mail, sem formulário                                    |
+| `/404`         | um arquivo só, servido pela Cloudflare para todo endereço morto|
+
+A página de erro sai em português, porque não dá para saber o idioma de um
+endereço que não existe. O que ela faz é olhar no navegador o caminho que a
+pessoa tentou abrir: quem errou dentro de `/en/` ou `/es/` recebe o texto
+naquele idioma. Endereço solto, como `/4324`, fica em português.
+
 ## Como o conteúdo é organizado
 
 ```
@@ -78,6 +103,7 @@ src/
 ├─ i18n/                ui.ts é todo texto de interface nos três idiomas
 ├─ lib/                 as regras: a ficha, as datas e os idiomas
 ├─ pages/               as rotas de cada idioma, mais a /404
+├─ assets/felipe.jpg    a foto de origem do favicon e do card, que não vai ao ar
 └─ styles/global.css    cores, fontes, a grade da parede e a sala escura
 
 public/
@@ -90,20 +116,45 @@ public/
 
 ### Para acrescentar um projeto
 
-Uma entrada em `src/data/obras.ts`. Os campos que mais decidem coisa:
+Uma entrada em `src/data/obras.ts`. Só `slug`, `titulo`, `ano`, `meio`,
+`estado`, `tags`, `resumo`, `papel` e `credito` são obrigatórios. Os campos que
+mais decidem coisa:
 
-| Campo       | Para que serve                                                     |
-| ----------- | ------------------------------------------------------------------ |
-| `tipo`      | ausente vai para a coleção; `'experiencia'` vai para a outra sala   |
-| `destaque`  | número: a ordem em cartaz na home. Sem ele, o projeto não vai à home|
-| `ordemSala` | ordem dentro da sala quando ela não pode sair da data               |
-| `tags`      | as etiquetas do filtro                                              |
-| `pendente`  | `true` deixa o projeto fora do site até a ficha estar completa       |
+| Campo           | Para que serve                                                   |
+| --------------- | ---------------------------------------------------------------- |
+| `tipo`          | ausente vai para a coleção; `'experiencia'` vai para a outra sala |
+| `destaque`      | número: a ordem em cartaz na home. Sem ele, não vai à home        |
+| `ordemSala`     | ordem dentro da sala quando ela não pode sair da data             |
+| `tags`          | as etiquetas do filtro                                            |
+| `inicio` e `fim`| em ISO. Deles sai a duração, calculada e nunca escrita à mão      |
+| `ativa`         | ainda em andamento: empata com o ano corrente e fica acima dele   |
+| `dimensoes`     | a medida da obra: alcance, volume, tempo de estrada               |
+| `pendente`      | `true` deixa o projeto fora do site até a ficha estar completa    |
+
+Dentro de um mesmo ano a ordem é a ordem do array: não há campo para isso, e
+mover a entrada de lugar é o mecanismo.
 
 O campo `link` é o destino da obra, e é para lá que a linha da coleção e a ficha
-apontam. São quatro tipos, e cada um decide o rótulo do link nos três idiomas:
-`codigo` leva ao repositório, `site` ao endereço no ar, `canal` ao canal de
-vídeo e `projeto` a qualquer outra coisa publicada.
+apontam, em aba nova. São quatro tipos, e cada um decide o rótulo do link nos
+três idiomas: `codigo` leva ao repositório, `site` ao endereço no ar, `canal` ao
+canal de vídeo e `projeto` a qualquer outra coisa publicada. Obra sem `link` sai
+como texto, e não como link vazio.
+
+O `meio` é uma string só quando é nome de tecnologia, que é igual nos três
+idiomas ("Django, Python"). Quando descreve com palavras, como "gameplay sem
+comentários", vira um objeto com `pt`, `en` e `es`.
+
+### O tempo se refaz sozinho
+
+O site é estático, então todo número de tempo que o build escreve envelheceria
+até o próximo deploy: um canal que continua rodando ficaria parado em "4 anos e
+8 meses", e em 1º de janeiro a coleção ainda diria que o ano anterior é "este
+ano".
+
+O servidor escreve o texto certo, para quem chega sem JavaScript e para o
+buscador, e o `TempoVivo.astro` corrige no navegador se o tempo passou. **A
+conta usa o relógio de São Paulo, nunca o de quem visita.** Só recalcula o que
+não terminou: período com `fim` fica parado, porque ele não muda mais.
 
 ## Idiomas
 

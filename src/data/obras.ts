@@ -268,9 +268,9 @@ export const OBRAS: Obra[] = [
       es: ['Plataforma independiente de videos.', 'Construida sobre PeerTube, software libre.'],
     },
     dimensoes: {
-      pt: ['72 usuários, 270 vídeos, 1,8 TB hospedados, 9 plugins próprios'],
-      en: ['72 users, 270 videos, 1.8 TB hosted, 9 in-house plugins'],
-      es: ['72 usuarios, 270 videos, 1,8 TB alojados, 9 complementos propios'],
+      pt: ['70 usuários, 150 vídeos, 1 TB de vídeos hospedados.'],
+      en: ['70 users, 150 videos, 1 TB of video hosted.'],
+      es: ['70 usuarios, 150 videos, 1 TB de video alojado.'],
     },
     papel: {
       pt: 'Sozinho: Infraestrutura, produto, jurídico e suporte.',
@@ -279,17 +279,17 @@ export const OBRAS: Obra[] = [
     },
     credito: {
       pt: [
-        'Projeto pessoal, no ar desde 7 de agosto de 2026.',
+        'Projeto pessoal, no ar desde 19 de março de 2026.',
         'Construída sobre o PeerTube, com app publicado na Play Store',
         'E marca deferida no INPI.',
       ],
       en: [
-        'Personal project, online since 7 August 2026.',
+        'Personal project, online since 19 March 2026.',
         'Built on PeerTube, with an app published on the Play Store',
         'And a trademark granted by the Brazilian patent office.',
       ],
       es: [
-        'Proyecto personal, al aire desde el 7 de agosto de 2026.',
+        'Proyecto personal, al aire desde el 19 de marzo de 2026.',
         'Construida sobre PeerTube, con app publicada en la Play Store',
         'Y marca concedida en el INPI.',
       ],
