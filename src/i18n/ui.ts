@@ -15,7 +15,13 @@ export const UI = {
 
     'pular': 'Pular para o conteúdo',
 
-    'nav.obras': 'Obras',
+    /**
+     * O nome da região de navegação do topo, para quem usa leitor de tela.
+     * Ela cobre o menu, o seletor de idioma e o botão de tema, então precisa
+     * nomear o conjunto. Dizia "Obras", que é o nome de uma sala de dentro:
+     * o leitor anunciava "navegação Obras" e listava Contato ali dentro.
+     */
+    'nav.rotulo': 'Navegação',
 
     'nav.contato': 'Contato',
 
@@ -154,7 +160,7 @@ export const UI = {
 
     'pular': 'Skip to content',
 
-    'nav.obras': 'Works',
+    'nav.rotulo': 'Navigation',
 
     'nav.contato': 'Contact',
 
@@ -277,7 +283,7 @@ export const UI = {
 
     'pular': 'Saltar al contenido',
 
-    'nav.obras': 'Obras',
+    'nav.rotulo': 'Navegación',
 
     'nav.contato': 'Contacto',
 
