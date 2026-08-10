@@ -21,6 +21,15 @@ export interface CampoDaFicha {
    * a última palavra sozinha na linha de baixo.
    */
   medida?: boolean;
+  /**
+   * O começo em ISO, quando o valor deste campo é uma conta de tempo que ainda
+   * está correndo. Vira `data-vivo` na marcação, e é por ele que o navegador
+   * refaz o número no relógio de São Paulo.
+   *
+   * Só existe no que não terminou. Período fechado não recalcula: os 3 anos e
+   * 3 meses do Blucker12 serão 3 anos e 3 meses para sempre.
+   */
+  vivo?: string;
 }
 
 /**
@@ -37,11 +46,23 @@ export function fichaDaObra(obra: Obra, lang: Locale): CampoDaFicha[] {
 
   /** Calculada da data, não escrita à mão: assim ela não envelhece sozinha. */
   const inicio = inicioDaObra(obra);
-  const quanto = inicio ? duracao(inicio, fimDaObra(obra), lang) : undefined;
+  const fim = fimDaObra(obra);
+  const quanto = inicio ? duracao(inicio, fim, lang) : undefined;
 
   return [
     { campo: t('campo.meio'), linhas: [meioDe(obra, lang)] },
-    ...(quanto ? [{ campo: t('campo.duracao'), linhas: [quanto] }] : []),
+    ...(quanto
+      ? [
+          {
+            campo: t('campo.duracao'),
+            linhas: [quanto],
+            /* Sem `fim`, a conta continua correndo, e o número que o build
+               escreveu envelhece a cada dia que passa sem deploy. Marcado
+               assim, o navegador o refaz. */
+            vivo: fim ? undefined : inicio!.toISOString(),
+          },
+        ]
+      : []),
     ...(obra.dimensoes
       ? [
           {

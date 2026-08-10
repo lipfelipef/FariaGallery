@@ -49,13 +49,17 @@ const textoDoLink = obra.link
 
   <dl class="obra-ficha">
     {
-      ficha.map(({ campo, linhas, medida }) => (
+      ficha.map(({ campo, linhas, medida, vivo }) => (
         <>
           <dt class="field">{campo}</dt>
           {/* Quem escreveu a quebra quer aquelas linhas, então a medida de
               leitura de 46ch dá lugar a uma que as comporte, senão a frase
-              dobra e a quebra escolhida some no meio. */}
+              dobra e a quebra escolhida some no meio.
+
+              `data-vivo` marca a conta de tempo que ainda corre, para o
+              `TempoVivo` refazer o número no relógio de São Paulo. */}
           <dd
+            data-vivo={vivo}
             class:list={[
               'value',
               'linhas',

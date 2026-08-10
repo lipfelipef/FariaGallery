@@ -3,6 +3,7 @@ import Base from '../layouts/Base.astro';
 import Topo from './Topo.astro';
 import Rodape from './Rodape.astro';
 import Etiqueta from './Etiqueta.astro';
+import TempoVivo from './TempoVivo.astro';
 import { OBRAS, doTipo } from '../data/obras';
 import { SITE, SOCIAL, type Locale } from '../consts';
 import { traduzir } from '../i18n/ui';
@@ -151,6 +152,10 @@ const percurso = [...emCartaz].reverse();
 
   <Rodape lang={lang} />
 </Base>
+
+{/* A ficha das etiquetas do cartaz também tem conta de tempo, e ela ficava
+    parada no número do build: o script só existia no catálogo. */}
+<TempoVivo lang={lang} />
 
 <style>
   .entrada {

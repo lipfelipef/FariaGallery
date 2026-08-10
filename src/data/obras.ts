@@ -260,9 +260,12 @@ export const OBRAS: Obra[] = [
     tags: ['Vídeo', 'YouTube', 'TypeScript', 'Infraestrutura'],
     destaque: 2,
     resumo: {
-      pt: ['Plataforma independente de vídeos,', 'Construída sobre o PeerTube, software livre.'],
-      en: ['Independent video platform,', 'Built on PeerTube, free software.'],
-      es: ['Plataforma independiente de videos,', 'Construida sobre PeerTube, software libre.'],
+      /* Duas frases fechadas, e não uma frase quebrada no meio: por isso a
+         primeira termina em ponto e a segunda abre em maiúscula. Ele trocou a
+         vírgula pelo ponto em 10/08/2026. */
+      pt: ['Plataforma independente de vídeos.', 'Construída sobre o PeerTube, software livre.'],
+      en: ['Independent video platform.', 'Built on PeerTube, free software.'],
+      es: ['Plataforma independiente de videos.', 'Construida sobre PeerTube, software libre.'],
     },
     dimensoes: {
       pt: ['72 usuários, 270 vídeos, 1,8 TB hospedados, 9 plugins próprios'],
@@ -444,7 +447,7 @@ export const OBRAS: Obra[] = [
     slug: 'biblioteca-virtual',
     titulo: 'Biblioteca Virtual',
     ano: '2024',
-    meio: 'Python',
+    meio: 'Django, Python',
     estado: 'publico',
     link: { href: 'https://github.com/lipfelipef/BibliotecaTCC', tipo: 'codigo' },
     tags: ['Python', 'Web'],

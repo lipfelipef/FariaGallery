@@ -2,10 +2,10 @@
 import Base from '../layouts/Base.astro';
 import Topo from './Topo.astro';
 import Rodape from './Rodape.astro';
+import TempoVivo from './TempoVivo.astro';
 import { doTipo, ordemDoAno, anoExibido, inicioDaObra, fimDaObra, meioDe, tagDe } from '../data/obras';
 import { fichaDaObra } from '../lib/ficha';
-import { anosAtras, duracao, ROTULOS_DURACAO } from '../lib/tempo';
-import { LOCALE_DATA } from '../i18n/utils';
+import { anosAtras, duracao } from '../lib/tempo';
 import { LIMITE_FILTROS, FOLGA_FILTROS, type Locale } from '../consts';
 import { traduzir } from '../i18n/ui';
 
@@ -259,10 +259,13 @@ const moldeFiltrado = t('colecao.contagem')(N, T)
                     <details class="ficha-recolhida">
                       <summary class="ficha-abre">{t('colecao.ficha')}</summary>
                       <dl class="ficha">
-                        {fichaDaObra(obra, lang).map(({ campo, linhas, medida }) => (
+                        {fichaDaObra(obra, lang).map(({ campo, linhas, medida, vivo }) => (
                           <>
                             <dt class="field">{campo}</dt>
+                            {/* `data-vivo` marca a conta de tempo que ainda
+                                corre, para o `TempoVivo` refazer o número. */}
                             <dd
+                              data-vivo={vivo}
                               class:list={[
                                 'value',
                                 'linhas',
@@ -295,73 +298,7 @@ const moldeFiltrado = t('colecao.contagem')(N, T)
   <Rodape lang={lang} />
 </Base>
 
-<!--
-  O tempo se refaz no navegador.
-
-  O site é estático: o que o build escreve é o número daquele dia. Sem isto,
-  um canal que continua rodando ficaria parado em "4 anos e 8 meses" até o
-  próximo deploy, e em 1º de janeiro a coleção ainda diria que o ano anterior
-  é "este ano". O servidor entrega o texto certo para quem chega sem
-  JavaScript e para o buscador; o navegador só corrige se o tempo passou.
-
-  A conta usa o relógio de São Paulo, o mesmo fuso do resto do site.
--->
-<script
-  is:inline
-  define:vars={{
-    fuso: 'America/Sao_Paulo',
-    localeData: LOCALE_DATA[lang],
-    rotulos: ROTULOS_DURACAO[lang],
-  }}
->
-  (function () {
-    var MS_DIA = 86400000;
-    var MS_MES = 30.436875 * MS_DIA;
-    var MS_ANO = 365.2425 * MS_DIA;
-
-    function plural(n, um, muitos) {
-      return n + ' ' + (n === 1 ? um : muitos);
-    }
-
-    /** Mesma regra do `duracao` em src/lib/tempo.ts. As duas precisam bater. */
-    function duracao(inicio, agora) {
-      var ms = Math.max(0, agora - inicio);
-      var anos = Math.floor(ms / MS_ANO);
-      var meses = Math.floor((ms - anos * MS_ANO) / MS_MES);
-      if (anos >= 1) {
-        var parte = plural(anos, rotulos.ano, rotulos.anos);
-        return meses === 0 ? parte : parte + ' ' + rotulos.e + ' ' + plural(meses, rotulos.mes, rotulos.meses);
-      }
-      var m = Math.floor(ms / MS_MES);
-      if (m >= 1) return plural(m, rotulos.mes, rotulos.meses);
-      return plural(Math.max(1, Math.floor(ms / MS_DIA)), rotulos.dia, rotulos.dias);
-    }
-
-    /** O ano corrente em São Paulo, não o do relógio de quem visita. */
-    function anoAqui() {
-      return Number(
-        new Intl.DateTimeFormat('en-CA', { year: 'numeric', timeZone: fuso }).format(new Date())
-      );
-    }
-
-    var agora = Date.now();
-
-    document.querySelectorAll('.ano-relativo').forEach(function (el) {
-      var vivo = el.getAttribute('data-vivo');
-      if (vivo) {
-        el.textContent = duracao(new Date(vivo).getTime(), agora);
-        return;
-      }
-      var ano = el.getAttribute('data-ano');
-      if (ano) {
-        try {
-          var fmt = new Intl.RelativeTimeFormat(localeData, { numeric: 'auto' });
-          el.textContent = fmt.format(Number(ano) - anoAqui(), 'year');
-        } catch (e) {}
-      }
-    });
-  })();
-</script>
+<TempoVivo lang={lang} />
 
 <script
   is:inline

@@ -1,0 +1,102 @@
+---
+import type { Locale } from '../consts';
+import { LOCALE_DATA } from '../i18n/utils';
+import { ROTULOS_DURACAO } from '../lib/tempo';
+
+interface Props {
+  lang: Locale;
+}
+
+const { lang } = Astro.props;
+---
+
+{/*
+  O tempo se refaz no navegador.
+
+  O site é estático: o que o build escreve é o número daquele dia, e ele
+  envelhece a cada dia que passa sem deploy. Um canal que continua rodando
+  ficaria parado em "4 anos e 8 meses", e em 1º de janeiro a coleção ainda
+  diria que o ano anterior é "este ano".
+
+  O servidor entrega o texto certo para quem chega sem JavaScript e para o
+  buscador; o navegador só corrige se o tempo passou.
+
+  Este componente é só o script, sem marcação e sem estilo. É por isso que ele
+  pode ser componente: o CSS do Astro é escopado por atributo, e marcação
+  criada dentro de um componente deixa de casar com o estilo escrito em quem o
+  usa. Sem marcação, não há o que descasar.
+
+  Dois lugares o usam, a home e o catálogo, e antes o script morava só no
+  catálogo. A ficha da home ficava de fora, e ali também tem conta de tempo.
+*/}
+<script
+  is:inline
+  define:vars={{
+    fuso: 'America/Sao_Paulo',
+    localeData: LOCALE_DATA[lang],
+    rotulos: ROTULOS_DURACAO[lang],
+  }}
+>
+  (function () {
+    var MS_DIA = 86400000;
+    var MS_MES = 30.436875 * MS_DIA;
+    var MS_ANO = 365.2425 * MS_DIA;
+
+    function plural(n, um, muitos) {
+      return n + ' ' + (n === 1 ? um : muitos);
+    }
+
+    /** Mesma regra do `duracao` em src/lib/tempo.ts. As duas precisam bater. */
+    function duracao(inicio, agora) {
+      var ms = Math.max(0, agora - inicio);
+      var anos = Math.floor(ms / MS_ANO);
+      var meses = Math.floor((ms - anos * MS_ANO) / MS_MES);
+      if (anos >= 1) {
+        var parte = plural(anos, rotulos.ano, rotulos.anos);
+        return meses === 0 ? parte : parte + ' ' + rotulos.e + ' ' + plural(meses, rotulos.mes, rotulos.meses);
+      }
+      var m = Math.floor(ms / MS_MES);
+      if (m >= 1) return plural(m, rotulos.mes, rotulos.meses);
+      return plural(Math.max(1, Math.floor(ms / MS_DIA)), rotulos.dia, rotulos.dias);
+    }
+
+    /** O ano corrente em São Paulo, não o do relógio de quem visita. */
+    function anoAqui() {
+      return Number(
+        new Intl.DateTimeFormat('en-CA', { year: 'numeric', timeZone: fuso }).format(new Date())
+      );
+    }
+
+    var agora = Date.now();
+
+    /*
+      Qualquer elemento com `data-vivo`, e não só o rótulo do ano: o campo
+      DURAÇÃO da ficha também carrega uma conta que continua correndo, na home
+      e no catálogo. Enquanto isto olhava só `.ano-relativo`, o rótulo do grupo
+      se refazia e a duração da ficha logo abaixo dele não, e as duas se
+      contradiziam na mesma tela.
+
+      Escreve no `span` de dentro quando existe um, porque na ficha é ele que
+      tem o `display: block` da classe `.linhas`; trocar o texto do `dd` inteiro
+      apagaria o span junto.
+    */
+    document.querySelectorAll('[data-vivo]').forEach(function (el) {
+      var quando = el.getAttribute('data-vivo');
+      if (!quando) return;
+      var alvo = el.querySelector('span') || el;
+      alvo.textContent = duracao(new Date(quando).getTime(), agora);
+    });
+
+    /* "este ano", "ano passado", "há 2 anos": o rótulo relativo do grupo do
+       catálogo, que vira sozinho na virada do ano. */
+    document.querySelectorAll('[data-ano]').forEach(function (el) {
+      if (el.hasAttribute('data-vivo')) return;
+      var ano = el.getAttribute('data-ano');
+      if (!ano) return;
+      try {
+        var fmt = new Intl.RelativeTimeFormat(localeData, { numeric: 'auto' });
+        el.textContent = fmt.format(Number(ano) - anoAqui(), 'year');
+      } catch (e) {}
+    });
+  })();
+</script>
