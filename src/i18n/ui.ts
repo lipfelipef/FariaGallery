@@ -145,9 +145,9 @@ export const UI = {
       'Felipe Faria, desenvolvedor e estudante de Análise e Desenvolvimento de Sistemas. Projetos e experiências com a ficha inteira, do material ao estado atual.',
 
     'meta.colecao':
-      'Todos os projetos de Felipe Faria, do mais novo ao mais antigo: web, Java, Python e lógica digital, com a stack, o papel dele e o estado de cada um.',
+      'Todos os projetos de Felipe Faria, do mais novo ao mais antigo: a BluckerTV, web, Java, Python e lógica digital, com a stack, o papel dele e o estado de cada um.',
     'meta.experiencia':
-      'A experiência de Felipe Faria: o canal Até Zerar, com 5,7 milhões de visualizações, e a BluckerTV, plataforma brasileira de vídeo construída e operada por ele.',
+      'A experiência de Felipe Faria: os canais Até Zerar, com 5,7 milhões de visualizações, e Blucker12, com 3,2 milhões, sete anos produzindo vídeo.',
     'meta.contato':
       'Fale com Felipe Faria, desenvolvedor e estudante de Análise e Desenvolvimento de Sistemas em São Paulo. Contato direto por e-mail, sem formulário.',
   },
@@ -268,9 +268,9 @@ export const UI = {
       'Felipe Faria, developer and Systems Analysis and Development student. Projects and experience with the full label, from material to current state.',
 
     'meta.colecao':
-      'Every project by Felipe Faria, newest first: web, Java, Python, and digital logic, with the stack, his role, and the current state of each one.',
+      'Every project by Felipe Faria, newest first: BluckerTV, web, Java, Python, and digital logic, with the stack, his role, and the current state of each one.',
     'meta.experiencia':
-      'Felipe Faria experience: the Até Zerar channel, with 5.7 million views, and BluckerTV, a Brazilian video platform he built and runs.',
+      'Felipe Faria experience: the Até Zerar channel, with 5.7 million views, and Blucker12, with 3.2 million, seven years making video.',
     'meta.contato':
       'Get in touch with Felipe Faria, developer and Systems Analysis and Development student in São Paulo. Direct contact by email, with no form to fill in.',
   },
@@ -391,9 +391,9 @@ export const UI = {
       'Felipe Faria, desarrollador y estudiante de Análisis y Desarrollo de Sistemas. Proyectos y experiencia con la ficha completa, del material al estado actual.',
 
     'meta.colecao':
-      'Todos los proyectos de Felipe Faria, del más nuevo al más antiguo: web, Java, Python y lógica digital, con la stack, su papel y el estado de cada uno.',
+      'Todos los proyectos de Felipe Faria, del más nuevo al más antiguo: BluckerTV, web, Java, Python y lógica digital, con la stack, su papel y el estado de cada uno.',
     'meta.experiencia':
-      'La experiencia de Felipe Faria: el canal Até Zerar, con 5,7 millones de visualizaciones, y BluckerTV, plataforma brasileña de video construida y operada por él.',
+      'La experiencia de Felipe Faria: los canales Até Zerar, con 5,7 millones de visualizaciones, y Blucker12, con 3,2 millones, siete años produciendo video.',
     'meta.contato':
       'Habla con Felipe Faria, desarrollador y estudiante de Análisis y Desarrollo de Sistemas en São Paulo. Contacto directo por correo, sin formulario.',
   },

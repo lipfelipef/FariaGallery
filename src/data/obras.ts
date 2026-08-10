@@ -115,9 +115,8 @@ export interface Obra {
    * da data. Menor vem primeiro, e quem não tem cai para o fim, ordenado por
    * ano como sempre.
    *
-   * Existe porque a sala de experiência é curadoria dele: a plataforma vem
-   * antes dos canais, mesmo com todos rodando ao mesmo tempo, e nenhuma conta
-   * de data produz isso.
+   * Existe porque a sala de experiência é curadoria dele: o canal que ainda
+   * corre vem antes do que encerrou, e ordem por data faria o contrário.
    */
   ordemSala?: number;
   /**
@@ -252,50 +251,45 @@ export const OBRAS: Obra[] = [
     meio: 'PeerTube, TypeScript, PostgreSQL, nginx, FFmpeg',
     estado: 'noar',
     link: { href: 'https://blucker.tv', tipo: 'site' },
-    inicio: '2026-03-01',
-    // Fechou em agosto de 2026 e voltou. Sem `fim` e com `ativa`, a duração
-    // volta a contar até hoje e o ano sai como "2026 - atualmente", em vez de
-    // congelar num período que deixou de ser verdade.
-    ativa: true,
-    // Empresa aberta e operada por ele. Isso é experiência, não projeto.
-    tipo: 'experiencia',
+    /* Sem `tipo`, ou seja: obra de coleção, e não experiência. Ele mudou de
+       sala em 10/08/2026. Por isso saíram junto o `ordemSala`, que só ordenava
+       dentro da sala de experiência, e o `inicio`, que fazia aparecer um campo
+       DURAÇÃO que nenhuma outra obra da coleção tem. A data de estreia agora
+       está escrita no crédito, e data escrita não envelhece: o que envelhece é
+       duração. */
     tags: ['Vídeo', 'YouTube', 'TypeScript', 'Infraestrutura'],
     destaque: 2,
-    ordemSala: 1,
     resumo: {
-      pt: [
-        'Plataforma brasileira de vídeo sob demanda,',
-        'construída inteira por uma pessoa. Fechou em',
-        'agosto de 2026, e depois voltou ao ar.',
-      ],
-      en: [
-        'A Brazilian video on demand platform,',
-        'built entirely by one person. It shut down in',
-        'August 2026, and then came back online.',
-      ],
-      es: [
-        'Plataforma brasileña de video bajo demanda,',
-        'construida entera por una persona. Cerró en',
-        'agosto de 2026, y después volvió al aire.',
-      ],
+      pt: ['Plataforma independente de vídeos,', 'Construída sobre o PeerTube, software livre.'],
+      en: ['Independent video platform,', 'Built on PeerTube, free software.'],
+      es: ['Plataforma independiente de videos,', 'Construida sobre PeerTube, software libre.'],
     },
-    /* Uma linha só agora: "5 meses no ar" saiu daqui porque a duração é campo
-       próprio da ficha e se refaz sozinha, e com a plataforma de volta o
-       número congelado virava mentira todo mês. */
     dimensoes: {
       pt: ['72 usuários, 270 vídeos, 1,8 TB hospedados, 9 plugins próprios'],
       en: ['72 users, 270 videos, 1.8 TB hosted, 9 in-house plugins'],
       es: ['72 usuarios, 270 videos, 1,8 TB alojados, 9 complementos propios'],
     },
     papel: {
-      pt: 'Sozinho: desenvolvimento, infraestrutura, produto, jurídico e suporte',
-      en: 'Solo: development, infrastructure, product, legal, and support',
-      es: 'En solitario: desarrollo, infraestructura, producto, legal y soporte',
+      pt: 'Sozinho: Infraestrutura, produto, jurídico e suporte.',
+      en: 'Solo: Infrastructure, product, legal, and support.',
+      es: 'En solitario: Infraestructura, producto, legal y soporte.',
     },
     credito: {
-      pt: 'Projeto pessoal, desde março de 2026. Construída sobre o PeerTube, com plugins próprios, app publicado na Play Store, empresa aberta e marca deferida no INPI.',
-      en: 'Personal project, since March 2026. Built on PeerTube, with in-house plugins, an app published on the Play Store, a registered company, and a trademark granted by the Brazilian patent office.',
-      es: 'Proyecto personal, desde marzo de 2026. Construida sobre PeerTube, con complementos propios, app publicada en la Play Store, empresa abierta y marca concedida en el INPI.',
+      pt: [
+        'Projeto pessoal, no ar desde 7 de agosto de 2026.',
+        'Construída sobre o PeerTube, com app publicado na Play Store',
+        'E marca deferida no INPI.',
+      ],
+      en: [
+        'Personal project, online since 7 August 2026.',
+        'Built on PeerTube, with an app published on the Play Store',
+        'And a trademark granted by the Brazilian patent office.',
+      ],
+      es: [
+        'Proyecto personal, al aire desde el 7 de agosto de 2026.',
+        'Construida sobre PeerTube, con app publicada en la Play Store',
+        'Y marca concedida en el INPI.',
+      ],
     },
   },
   {

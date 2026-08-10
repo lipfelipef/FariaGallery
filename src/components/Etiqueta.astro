@@ -2,7 +2,7 @@
 import type { Locale } from '../consts';
 /* `linhasDe` continua sendo usado pelo resumo, logo abaixo do título: ele não
    faz parte da ficha e não saiu junto com ela para o `lib/ficha.ts`. */
-import { anoExibido, linhasDe, type Obra } from '../data/obras';
+import { linhasDe, type Obra } from '../data/obras';
 import { traduzir } from '../i18n/ui';
 import { fichaDaObra } from '../lib/ficha';
 
@@ -29,7 +29,12 @@ const textoDoLink = obra.link
 <article class="obra hang" id={obra.slug}>
   <div class="obra-margem">
     <span class="dot dot-on" aria-hidden="true"></span>
-    <span class="obra-ano">{anoExibido(obra, t('tempo.atualmente'))}</span>
+    {/* Só o ano, seco. O "2026 - atualmente" saiu do cartaz a pedido dele em
+        10/08/2026: quem diz se a obra ainda corre é o campo ESTADO da ficha,
+        logo abaixo, e a margem volta a ser uma coluna de anos alinhados.
+        No catálogo o rótulo continua sendo `anoExibido`, porque lá o ano é
+        cabeçalho de um grupo inteiro e não a margem de uma etiqueta. */}
+    <span class="obra-ano">{obra.ano}</span>
   </div>
 
   <div class="obra-cabeca">
