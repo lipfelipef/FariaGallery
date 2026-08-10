@@ -466,9 +466,9 @@ body {
 /* ---------------------------------------------------------------
    Passagem de uma sala para outra
 
-   Trocar de pagina no site e andar da colecao para a experiencia, do
-   blog para o contato. Numa galeria de verdade a moldura da sala nao
-   se move quando voce muda de parede: o que troca e a obra.
+   Trocar de pagina no site e andar da colecao para a experiencia, da
+   experiencia para o contato. Numa galeria de verdade a moldura da sala
+   nao se move quando voce muda de parede: o que troca e a obra.
 
    E isso que o desenho abaixo faz. O topo e o rodape ganham nome
    proprio de transicao, entao o navegador os trata como o MESMO

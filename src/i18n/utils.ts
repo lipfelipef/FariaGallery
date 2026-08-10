@@ -2,9 +2,9 @@ import { LOCALES, DEFAULT_LOCALE, SITE, type Locale } from '../consts';
 
 /**
  * Português mora na raiz, os outros em subpasta:
- *   /            /blog            (pt)
- *   /en          /en/blog         (en)
- *   /es          /es/blog         (es)
+ *   /            /obras           (pt)
+ *   /en          /en/obras        (en)
+ *   /es          /es/obras        (es)
  */
 
 /** Descobre o idioma pelo endereço da página que está sendo montada. */
@@ -15,7 +15,7 @@ export function idiomaDaUrl(url: URL): Locale {
     : DEFAULT_LOCALE;
 }
 
-/** Monta um caminho no idioma pedido. `rota('en', '/blog')` vira `/en/blog/`. */
+/** Monta um caminho no idioma pedido. `rota('en', '/obras')` vira `/en/obras/`. */
 export function rota(lang: Locale, caminho = '/'): string {
   const limpo = caminho.replace(/^\/+|\/+$/g, '');
   const prefixo = lang === DEFAULT_LOCALE ? '' : `/${lang}`;

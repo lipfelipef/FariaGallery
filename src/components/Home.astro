@@ -7,7 +7,6 @@ import { OBRAS, doTipo } from '../data/obras';
 import { SITE, SOCIAL, type Locale } from '../consts';
 import { traduzir } from '../i18n/ui';
 import { rota } from '../i18n/utils';
-import { postsPorObra, postsPublicados } from '../lib/blog';
 
 interface Props {
   lang: Locale;
@@ -16,16 +15,12 @@ interface Props {
 const { lang } = Astro.props;
 const t = traduzir(lang);
 
-/** Obra só vira link quando existe post escrito sobre ela naquele idioma. */
-const textoDaObra = await postsPorObra(lang);
-
 /**
  * Ficha sem conteúdo preenchido não entra em contagem nem vai pra parede.
  * Some do site inteiro enquanto estiver marcada como `pendente`.
  */
 const obras = doTipo('obra');
 const experiencias = doTipo('experiencia');
-const totalTextos = (await postsPublicados(lang)).length;
 
 /**
  * A home é a exposição, não o acervo. Só o que está marcado como destaque
@@ -72,7 +67,7 @@ const percurso = [...emCartaz].reverse();
         </div>
 
         <p class="acervo linhas">
-          {t('acervo')(obras.length, experiencias.length, totalTextos).map((linha, i) => (
+          {t('acervo')(obras.length, experiencias.length).map((linha, i) => (
             <>
               {i > 0 && ' '}
               <span>{linha}</span>
@@ -114,7 +109,7 @@ const percurso = [...emCartaz].reverse();
       <div class="sala-corpo">
         {
           emCartaz.map((obra) => (
-            <Etiqueta obra={obra} lang={lang} post={textoDaObra.get(obra.slug)} />
+            <Etiqueta obra={obra} lang={lang} />
           ))
         }
 

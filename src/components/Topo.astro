@@ -22,7 +22,6 @@ const idiomas = await destinosPorIdioma(Astro.url);
     <ul class="menu">
       <li><a class="quiet-link" href={rota(lang, '/obras')}>{t('nav.colecao')}</a></li>
       <li><a class="quiet-link" href={rota(lang, '/experiencia')}>{t('nav.experiencia')}</a></li>
-      <li><a class="quiet-link" href={rota(lang, '/blog')}>{t('nav.blog')}</a></li>
       <li><a class="quiet-link" href={rota(lang, '/contato')}>{t('nav.contato')}</a></li>
     </ul>
 
@@ -117,8 +116,8 @@ const idiomas = await destinosPorIdioma(Astro.url);
   /* Alvo de toque -----------------------------------------------------
 
      A tipografia do topo é miúda de propósito, e por isso as letras davam
-     alvos de 12 pixels de altura: "PT" tinha 17 por 12, "Blog" tinha 38 por
-     12. No dedo isso erra. O mínimo recomendado é 24 por 24.
+     alvos de 12 pixels de altura: "PT" tinha 17 por 12, "Contato" tinha 51
+     por 12. No dedo isso erra. O mínimo recomendado é 24 por 24.
 
      Cresce por dentro, com uma camada invisível que se estica além da letra,
      em vez de espaçamento de verdade. É a diferença entre aumentar o alvo e

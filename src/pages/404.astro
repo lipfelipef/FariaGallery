@@ -35,7 +35,6 @@ const traducoes = Object.fromEntries(
       saidas: [
         { rotulo: UI[lang]['nav.colecao'], href: rota(lang, '/obras') },
         { rotulo: UI[lang]['nav.experiencia'], href: rota(lang, '/experiencia') },
-        { rotulo: UI[lang]['nav.blog'], href: rota(lang, '/blog') },
         { rotulo: UI[lang]['nav.contato'], href: rota(lang, '/contato') },
       ],
     },
@@ -64,7 +63,6 @@ const descricao = t('erro404.texto').join(' ');
         <ul class="saidas" data-saidas>
           <li><a class="quiet-link" href={rota('pt', '/obras')}>{t('nav.colecao')}</a></li>
           <li><a class="quiet-link" href={rota('pt', '/experiencia')}>{t('nav.experiencia')}</a></li>
-          <li><a class="quiet-link" href={rota('pt', '/blog')}>{t('nav.blog')}</a></li>
           <li><a class="quiet-link" href={rota('pt', '/contato')}>{t('nav.contato')}</a></li>
         </ul>
       </div>

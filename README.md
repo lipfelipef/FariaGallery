@@ -1,8 +1,8 @@
 # Faria Gallery
 
 Site pessoal de Felipe Faria, em [fariagallery.com](https://fariagallery.com).
-Funciona como portfólio e registro do que eu produzo: projetos, canal, carreira
-e blog num lugar só, em vez de espalhar LinkedIn, GitHub e canal em links
+Funciona como portfólio e registro do que eu produzo: projetos, canal e
+carreira num lugar só, em vez de espalhar LinkedIn, GitHub e canal em links
 separados.
 
 ## A ideia do design
@@ -72,14 +72,12 @@ Abre em `http://localhost:4321`.
 ```
 src/
 ├─ consts.ts            nome, marca, contato, redes e limites de interface
-├─ content.config.ts    o formato de um post: campos e o que é obrigatório
 ├─ data/obras.ts        a coleção: uma entrada por projeto, com a ficha inteira
-├─ content/blog/        os textos, em markdown, um arquivo por idioma
 ├─ components/          Etiqueta.astro é a ficha de museu; o resto são as salas
 ├─ layouts/Base.astro   <head>, SEO, dados estruturados e a escolha de tema
 ├─ i18n/                ui.ts é todo texto de interface nos três idiomas
-├─ lib/                 as regras: percurso do blog, datas, idiomas, feed
-├─ pages/               as rotas, incluindo /404 e um rss.xml por idioma
+├─ lib/                 as regras: a ficha, as datas e os idiomas
+├─ pages/               as rotas de cada idioma, mais a /404
 └─ styles/global.css    cores, fontes, a grade da parede e a sala escura
 
 public/
@@ -102,29 +100,16 @@ Uma entrada em `src/data/obras.ts`. Os campos que mais decidem coisa:
 | `tags`      | as etiquetas do filtro                                              |
 | `pendente`  | `true` deixa o projeto fora do site até a ficha estar completa       |
 
-O padrão hoje é todo projeto ter um texto no blog junto. A ligação é o campo
-`obra` no post, que aponta para o `slug` do projeto: com ele, a linha da coleção
-passa a levar ao texto, e o texto ganha na ficha o caminho de volta ao código.
-
-### Para acrescentar um texto
-
-Um arquivo markdown em `src/content/blog/`. O nome vira o endereço, e o mesmo
-texto em outro idioma é outro arquivo, com o mesmo `endereco` declarado dentro.
-
-O campo `ordem` é o que decide a posição do texto na lista, e não a data: os
-textos são um percurso escolhido, não uma pilha cronológica. A data continua
-sendo a data real de publicação, e é ela que manda no RSS. Texto com
-`rascunho: true` fica no repositório e fora do site.
-
-Título longo pode declarar um `tituloBusca` curto, que vale só na aba do
-navegador e no resultado de busca, para o buscador não cortar o título no meio.
+O campo `link` é o destino da obra, e é para lá que a linha da coleção e a ficha
+apontam. São quatro tipos, e cada um decide o rótulo do link nos três idiomas:
+`codigo` leva ao repositório, `site` ao endereço no ar, `canal` ao canal de
+vídeo e `projeto` a qualquer outra coisa publicada.
 
 ## Idiomas
 
 Português na raiz, inglês em `/en` e espanhol em `/es`. Interface, projetos e as
-páginas fixas existem nos três. Post de blog pode existir em um idioma só sem
-quebrar o build: o seletor de idioma percebe e leva à lista daquele idioma em
-vez de a um endereço que não existe.
+páginas fixas existem nos três, sem exceção: nenhuma sala fica pela metade num
+idioma, e o seletor nunca leva a um endereço que não existe.
 
 Cada página declara a si mesma e às traduções que realmente existem, e o sitemap
 usa exatamente os mesmos códigos, para o buscador não receber dois sinais

@@ -13,7 +13,7 @@ import type { Locale } from '../consts';
  */
 
 export type Estado = 'publico' | 'noar' | 'encerrado';
-export type TipoLink = 'codigo' | 'projeto' | 'canal';
+export type TipoLink = 'codigo' | 'projeto' | 'canal' | 'site';
 
 type PorIdioma = Record<Locale, string>;
 
@@ -65,7 +65,8 @@ export const tagDe = (tag: string, lang: Locale): string => TAGS_TRADUZIDAS[tag]
 export const numeroColado = (texto: string) => texto.replace(/(\d) (?=[\p{L}])/gu, '$1\u00A0');
 
 export interface Obra {
-  /** Identificador da obra. É por ele que um post do blog se liga a ela. */
+  /** Identificador da obra. Vira o `id` da etiqueta, e é o alvo dos marcos
+      do percurso na home. */
   slug: string;
   titulo: string;
   /** Como o ano aparece escrito. Pode ser faixa: "2020 até hoje". */
@@ -114,9 +115,9 @@ export interface Obra {
    * da data. Menor vem primeiro, e quem não tem cai para o fim, ordenado por
    * ano como sempre.
    *
-   * Existe porque a sala de experiência é curadoria dele: a plataforma
-   * encerrada aparece antes do canal que ainda roda, e nenhuma conta de data
-   * produz isso.
+   * Existe porque a sala de experiência é curadoria dele: a plataforma vem
+   * antes dos canais, mesmo com todos rodando ao mesmo tempo, e nenhuma conta
+   * de data produz isso.
    */
   ordemSala?: number;
   /**
@@ -249,10 +250,14 @@ export const OBRAS: Obra[] = [
     titulo: 'BluckerTV',
     ano: '2026',
     meio: 'PeerTube, TypeScript, PostgreSQL, nginx, FFmpeg',
-    estado: 'encerrado',
+    estado: 'noar',
+    link: { href: 'https://blucker.tv', tipo: 'site' },
     inicio: '2026-03-01',
-    fim: '2026-08-04',
-    // Empresa aberta, operada e fechada. Isso é experiência, não projeto.
+    // Fechou em agosto de 2026 e voltou. Sem `fim` e com `ativa`, a duração
+    // volta a contar até hoje e o ano sai como "2026 - atualmente", em vez de
+    // congelar num período que deixou de ser verdade.
+    ativa: true,
+    // Empresa aberta e operada por ele. Isso é experiência, não projeto.
     tipo: 'experiencia',
     tags: ['Vídeo', 'YouTube', 'TypeScript', 'Infraestrutura'],
     destaque: 2,
@@ -260,24 +265,27 @@ export const OBRAS: Obra[] = [
     resumo: {
       pt: [
         'Plataforma brasileira de vídeo sob demanda,',
-        'construída inteira por uma pessoa e encerrada',
-        'por decisão de negócio, não por falha técnica.',
+        'construída inteira por uma pessoa. Fechou em',
+        'agosto de 2026, e depois voltou ao ar.',
       ],
       en: [
         'A Brazilian video on demand platform,',
-        'built entirely by one person and shut down',
-        'as a business decision, not a technical failure.',
+        'built entirely by one person. It shut down in',
+        'August 2026, and then came back online.',
       ],
       es: [
         'Plataforma brasileña de video bajo demanda,',
-        'construida entera por una persona y cerrada',
-        'por decisión de negocio, no por falla técnica.',
+        'construida entera por una persona. Cerró en',
+        'agosto de 2026, y después volvió al aire.',
       ],
     },
+    /* Uma linha só agora: "5 meses no ar" saiu daqui porque a duração é campo
+       próprio da ficha e se refaz sozinha, e com a plataforma de volta o
+       número congelado virava mentira todo mês. */
     dimensoes: {
-      pt: ['5 meses no ar, 72 usuários, 270 vídeos, 1,8 TB hospedados,', '9 plugins próprios'],
-      en: ['5 months live, 72 users, 270 videos, 1.8 TB hosted,', '9 in-house plugins'],
-      es: ['5 meses al aire, 72 usuarios, 270 videos, 1,8 TB alojados,', '9 complementos propios'],
+      pt: ['72 usuários, 270 vídeos, 1,8 TB hospedados, 9 plugins próprios'],
+      en: ['72 users, 270 videos, 1.8 TB hosted, 9 in-house plugins'],
+      es: ['72 usuarios, 270 videos, 1,8 TB alojados, 9 complementos propios'],
     },
     papel: {
       pt: 'Sozinho: desenvolvimento, infraestrutura, produto, jurídico e suporte',
@@ -285,9 +293,9 @@ export const OBRAS: Obra[] = [
       es: 'En solitario: desarrollo, infraestructura, producto, legal y soporte',
     },
     credito: {
-      pt: 'Projeto pessoal, de março a agosto de 2026. Construída sobre o PeerTube, com plugins próprios, app publicado na Play Store, empresa aberta e marca deferida no INPI.',
-      en: 'Personal project, March to August 2026. Built on PeerTube, with in-house plugins, an app published on the Play Store, a registered company, and a trademark granted by the Brazilian patent office.',
-      es: 'Proyecto personal, de marzo a agosto de 2026. Construida sobre PeerTube, con complementos propios, app publicada en la Play Store, empresa abierta y marca concedida en el INPI.',
+      pt: 'Projeto pessoal, desde março de 2026. Construída sobre o PeerTube, com plugins próprios, app publicado na Play Store, empresa aberta e marca deferida no INPI.',
+      en: 'Personal project, since March 2026. Built on PeerTube, with in-house plugins, an app published on the Play Store, a registered company, and a trademark granted by the Brazilian patent office.',
+      es: 'Proyecto personal, desde marzo de 2026. Construida sobre PeerTube, con complementos propios, app publicada en la Play Store, empresa abierta y marca concedida en el INPI.',
     },
   },
   {

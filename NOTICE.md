@@ -9,8 +9,8 @@ usar, copiar, modificar e até usar comercialmente, sem pedir nada.
 Estes itens são de Felipe Faria, com todos os direitos reservados, e **não**
 podem ser copiados, republicados ou reutilizados sem autorização por escrito:
 
-- **Textos** do blog e das páginas, em qualquer idioma, incluindo
-  `src/content/` e as descrições em `src/data/obras.ts`
+- **Textos** das páginas, em qualquer idioma, incluindo as descrições em
+  `src/data/obras.ts` e os textos de interface em `src/i18n/ui.ts`
 - **Fotografias**, incluindo `src/assets/felipe.jpg`, `public/card.png`,
   `public/favicon-*.png` e `public/apple-touch-icon.png`
 - **Nome, marca e identidade** "Faria Gallery" e "Felipe Faria"

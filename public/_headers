@@ -17,8 +17,8 @@
   X-Frame-Options: DENY
 
   # Sai so a origem quando o link leva para fora, nunca o caminho. O GitHub
-  # sabe que a visita veio de fariagallery.com e nao fica sabendo qual texto
-  # a pessoa estava lendo.
+  # sabe que a visita veio de fariagallery.com e nao fica sabendo em qual
+  # sala a pessoa estava.
   Referrer-Policy: strict-origin-when-cross-origin
 
   # Desliga o que o site nao usa. Sem isto, o navegador so pergunta na hora;

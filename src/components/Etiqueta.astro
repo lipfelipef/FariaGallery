@@ -4,19 +4,15 @@ import type { Locale } from '../consts';
    faz parte da ficha e não saiu junto com ela para o `lib/ficha.ts`. */
 import { anoExibido, linhasDe, type Obra } from '../data/obras';
 import { traduzir } from '../i18n/ui';
-import { rota } from '../i18n/utils';
 import { fichaDaObra } from '../lib/ficha';
 
 interface Props {
   obra: Obra;
   lang: Locale;
-  /** Id do post do blog escrito sobre esta obra, quando existir. */
-  post?: string;
 }
 
-const { obra, lang, post } = Astro.props;
+const { obra, lang } = Astro.props;
 const t = traduzir(lang);
-const urlTexto = post ? rota(lang, `/blog/${post}`) : undefined;
 
 const naoPreenchido = (valor: string) =>
   obra.pendente && /^(a definir|to be defined)$/i.test(valor);
@@ -37,17 +33,10 @@ const textoDoLink = obra.link
   </div>
 
   <div class="obra-cabeca">
-    <h3 class="work-title">
-      {
-        urlTexto ? (
-          <a class="titulo-link" href={urlTexto}>
-            {obra.titulo}
-          </a>
-        ) : (
-          obra.titulo
-        )
-      }
-    </h3>
+    {/* Título sem link: o destino da obra é um só, e ele está na linha de ação
+        no fim da etiqueta, com o nome do lugar para onde leva. Dois links para
+        o mesmo endereço na mesma etiqueta era ruído. */}
+    <h3 class="work-title">{obra.titulo}</h3>
     <p class="obra-resumo linhas">
       {linhasDe(obra.resumo[lang]).map((linha, i) => (<>{i > 0 && ' '}<span>{linha}</span></>))}
     </p>
@@ -83,22 +72,15 @@ const textoDoLink = obra.link
   </dl>
 
   {
-    (urlTexto || obra.link) && (
+    obra.link && (
       <p class="obra-acao">
-        {urlTexto && (
-          <a class="quiet-link" href={urlTexto}>
-            {t('link.texto')} <span aria-hidden="true">&#8594;</span>
-          </a>
-        )}{' '}
-        {obra.link && (
-          <a class="quiet-link" href={obra.link.href} target="_blank" rel="noopener noreferrer">
-            {/* O espaço precisa ser explícito: quebra de linha entre duas
-                tags some na compilação, e o texto extraído sairia com a seta
-                grudada no aviso, "→(abre em nova aba)". */}
-            {textoDoLink} <span aria-hidden="true">&#8594;</span>{' '}
-            <span class="sr-only">{t('link.novaAba')}</span>
-          </a>
-        )}
+        <a class="quiet-link" href={obra.link.href} target="_blank" rel="noopener noreferrer">
+          {/* O espaço precisa ser explícito: quebra de linha entre duas
+              tags some na compilação, e o texto extraído sairia com a seta
+              grudada no aviso, "→(abre em nova aba)". */}
+          {textoDoLink} <span aria-hidden="true">&#8594;</span>{' '}
+          <span class="sr-only">{t('link.novaAba')}</span>
+        </a>
       </p>
     )
   }
@@ -181,17 +163,6 @@ const textoDoLink = obra.link
   .value-pendente {
     color: var(--color-ink-soft);
     font-style: italic;
-  }
-
-  .titulo-link {
-    color: inherit;
-    text-decoration: none;
-  }
-
-  .titulo-link:hover {
-    text-decoration: underline;
-    text-decoration-thickness: 1px;
-    text-underline-offset: 0.12em;
   }
 
   .obra-acao {

@@ -55,9 +55,9 @@ export const PERFIS = [
  * Quantas etiquetas de filtro aparecem antes de precisar pedir o resto.
  *
  * Existe porque a lista de filtros cresce junto com o acervo e nunca para:
- * cada texto novo traz uns tres assuntos, e a maioria aparece uma vez so. Com
- * 8 textos ja eram 22 filtros no blog; com 50 seriam perto de 100, e uma
- * parede de 100 botoes nao ajuda ninguem a achar nada.
+ * cada obra nova traz duas ou tres etiquetas, e boa parte delas aparece uma
+ * vez so. Com 50 obras seriam perto de 100 botoes, e uma parede de 100 botoes
+ * nao ajuda ninguem a achar nada.
  *
  * As mais usadas ficam a vista, na frente, e as demais entram por um botao.
  * Nenhuma some: quem procura assunto raro continua achando em um clique.

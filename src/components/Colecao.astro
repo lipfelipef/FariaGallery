@@ -8,8 +8,6 @@ import { anosAtras, duracao, ROTULOS_DURACAO } from '../lib/tempo';
 import { LOCALE_DATA } from '../i18n/utils';
 import { LIMITE_FILTROS, FOLGA_FILTROS, type Locale } from '../consts';
 import { traduzir } from '../i18n/ui';
-import { rota } from '../i18n/utils';
-import { postsPorObra } from '../lib/blog';
 
 interface Props {
   lang: Locale;
@@ -19,7 +17,6 @@ interface Props {
 
 const { lang, tipo = 'obra' } = Astro.props;
 const t = traduzir(lang);
-const textos = await postsPorObra(lang);
 
 const acervo = doTipo(tipo);
 const titulo = tipo === 'obra' ? t('colecao.titulo') : t('experiencia.titulo');
@@ -123,11 +120,6 @@ const cabemTodas = tags.length <= LIMITE_FILTROS + FOLGA_FILTROS;
 const aVista = cabemTodas ? tags.length : LIMITE_FILTROS;
 const recolhidas = tags.length - aVista;
 
-/** A linha leva ao texto da obra, se houver. Senão, ao repositório dela. */
-const destino = (slug: string, href?: string) => {
-  const post = textos.get(slug);
-  return post ? rota(lang, `/blog/${post}`) : href;
-};
 ---
 
 <Base lang={lang} titulo={titulo} descricao={descricao}>
@@ -192,17 +184,40 @@ const destino = (slug: string, href?: string) => {
               <ul class="linhas">
                 {obras.map((obra) => (
                   <li class="linha" data-tags={obra.tags.join(',')}>
-                    <a class="linha-link" href={destino(obra.slug, obra.link?.href)}>
-                      <span class="dot dot-on" aria-hidden="true" />
-                      {/* Cada célula é um span e o afastamento vem da grade,
-                          então sem um espaço escrito aqui o texto extraído da
-                          página sai "BluckerAngular 19, Node.js, Express". */}
-                      <span class="linha-titulo">{obra.titulo}</span>{' '}
-                      <span class="linha-meio">{meioDe(obra, lang)}</span>{' '}
-                      <span class="linha-seta" aria-hidden="true">
-                        &#8594;
+                    {/*
+                      A linha leva direto ao destino da obra: o repositório, o
+                      canal ou o site. Abre em aba nova porque sai daqui.
+
+                      Sem destino ela não vira link nenhum, e a seta some
+                      junto. `<a>` sem `href` não é link: não recebe foco, não
+                      abre com Enter, e a seta ficaria prometendo uma saída que
+                      não existe. Hoje as nove obras têm destino, mas o campo é
+                      opcional, e a próxima pode não ter.
+                    */}
+                    {obra.link ? (
+                      <a
+                        class="linha-link"
+                        href={obra.link.href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        <span class="dot dot-on" aria-hidden="true" />
+                        {/* Cada célula é um span e o afastamento vem da grade,
+                            então sem um espaço escrito aqui o texto extraído da
+                            página sai "BluckerAngular 19, Node.js, Express". */}
+                        <span class="linha-titulo">{obra.titulo}</span>{' '}
+                        <span class="linha-meio">{meioDe(obra, lang)}</span>{' '}
+                        <span class="linha-seta" aria-hidden="true">
+                          &#8599;
+                        </span>
+                      </a>
+                    ) : (
+                      <span class="linha-link">
+                        <span class="dot dot-on" aria-hidden="true" />
+                        <span class="linha-titulo">{obra.titulo}</span>{' '}
+                        <span class="linha-meio">{meioDe(obra, lang)}</span>
                       </span>
-                    </a>
+                    )}
 
                     {/*
                       A ficha inteira, recolhida.
@@ -651,11 +666,14 @@ const destino = (slug: string, href?: string) => {
     }
   }
 
-  .linha-link:hover {
+  /* Só a linha que é link acende no passar do mouse. A que não tem destino
+     usa a mesma grade para ficar alinhada com as outras, mas não pode fingir
+     que é clicável. */
+  a.linha-link:hover {
     background-color: var(--color-paper);
   }
 
-  .linha-link:hover .linha-seta {
+  a.linha-link:hover .linha-seta {
     opacity: 1;
     transform: translateX(2px);
   }
