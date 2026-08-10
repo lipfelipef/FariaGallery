@@ -120,6 +120,27 @@ const cabemTodas = tags.length <= LIMITE_FILTROS + FOLGA_FILTROS;
 const aVista = cabemTodas ? tags.length : LIMITE_FILTROS;
 const recolhidas = tags.length - aVista;
 
+/**
+ * O texto da contagem com filtro ligado, pronto para o navegador preencher.
+ *
+ * O servidor escreve "7 obras", que é o caso sem filtro. Quando alguém clica
+ * numa etiqueta, quem reescreve a frase é o script, e ele não tem o dicionário:
+ * scripts `is:inline` recebem só o que passa por `define:vars`.
+ *
+ * Então a frase sai daqui pronta, chamando a mesma função de tradução com dois
+ * números impossíveis e trocando cada um por uma marca. Assim o "de", o "of" e
+ * o "de" do espanhol continuam vindo do dicionário, e o script só encaixa os
+ * dois números.
+ *
+ * Os números precisam ser diferentes entre si (senão a função cai no ramo sem
+ * filtro) e não podem aparecer no resto da frase, que é por que são grandes.
+ */
+const N = 987654321;
+const T = 123456789;
+const moldeFiltrado = t('colecao.contagem')(N, T)
+  .replace(String(N), '{n}')
+  .replace(String(T), '{t}');
+
 ---
 
 <Base lang={lang} titulo={titulo} descricao={descricao}>
@@ -345,7 +366,7 @@ const recolhidas = tags.length - aVista;
 <script
   is:inline
   define:vars={{
-    textoContagem: { um: t('colecao.contagem')(1, 2).replace(/\d+/g, '#') },
+    moldeFiltrado,
     rotuloMais: recolhidas > 0 ? t('filtro.mais')(recolhidas) : '',
     rotuloMenos: t('filtro.menos'),
   }}
@@ -381,7 +402,9 @@ const recolhidas = tags.length - aVista;
 
       if (contagem) {
         contagem.textContent =
-          visiveis === total ? molde : molde.replace(String(total), visiveis + ' / ' + total);
+          visiveis === total
+            ? molde
+            : moldeFiltrado.replace('{n}', visiveis).replace('{t}', total);
       }
       if (vazio) vazio.hidden = visiveis > 0;
 
