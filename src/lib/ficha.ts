@@ -26,8 +26,8 @@ export interface CampoDaFicha {
    * está correndo. Vira `data-vivo` na marcação, e é por ele que o navegador
    * refaz o número no relógio de São Paulo.
    *
-   * Só existe no que não terminou. Período fechado não recalcula: os 3 anos e
-   * 3 meses do Blucker12 serão 3 anos e 3 meses para sempre.
+   * Só existe no que não terminou. Período fechado não recalcula: uma obra
+   * com `fim` durou o que durou, e esse número não muda mais.
    */
   vivo?: string;
 }

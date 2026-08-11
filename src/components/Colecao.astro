@@ -3,87 +3,68 @@ import Base from '../layouts/Base.astro';
 import Topo from './Topo.astro';
 import Rodape from './Rodape.astro';
 import TempoVivo from './TempoVivo.astro';
-import { doTipo, ordemDoAno, anoExibido, inicioDaObra, fimDaObra, meioDe, tagDe } from '../data/obras';
+import { doTipo, ordemDoAno, anoExibido, meioDe, tagDe } from '../data/obras';
 import { fichaDaObra } from '../lib/ficha';
-import { anosAtras, duracao } from '../lib/tempo';
+import { anosAtras } from '../lib/tempo';
 import { LIMITE_FILTROS, FOLGA_FILTROS, type Locale } from '../consts';
 import { traduzir } from '../i18n/ui';
 
 interface Props {
   lang: Locale;
-  /** `obra` monta a coleção, `experiencia` monta a outra sala. */
-  tipo?: 'obra' | 'experiencia';
 }
 
-const { lang, tipo = 'obra' } = Astro.props;
+const { lang } = Astro.props;
 const t = traduzir(lang);
 
-const acervo = doTipo(tipo);
-const titulo = tipo === 'obra' ? t('colecao.titulo') : t('experiencia.titulo');
+/**
+ * Só a coleção.
+ *
+ * Este componente também montava a sala de experiência, com o mesmo filtro e a
+ * mesma ficha recolhida, e ela ganhou componente próprio em 11/08/2026: tem
+ * uma entrada só, e catálogo de um item é uma lista com filtro que não filtra
+ * nada. Ver `Experiencia.astro`.
+ */
+const acervo = doTipo('obra');
+const titulo = t('colecao.titulo');
 /** Aparece na página. Curta e direta. */
-const chamada = tipo === 'obra' ? t('colecao.chamada') : t('experiencia.chamada');
+const chamada = t('colecao.chamada');
 /** Aparece no resultado de busca. Mais longa e com as palavras que se procura. */
-const descricao = tipo === 'obra' ? t('meta.colecao') : t('meta.experiencia');
+const descricao = t('meta.colecao');
 
 /**
  * O catálogo de museu agrupa por ano e vai do mais novo para o mais antigo.
  * O ano na margem vira a espinha cronológica: dá para ler a trajetória
  * descendo a página, sem abrir nada.
+ *
+ * A chave é o próprio ano, com o meio ponto que `ordemDoAno` acrescenta a obra
+ * em andamento para ela ficar acima das que fecharam no mesmo ano.
  */
-/**
- * Chave de ordenação do grupo: `ordemSala` manda quando existe, senão vale o
- * ano. Como o valor de `ordemSala` é pequeno (1, 2, 3) e o do ano é grande
- * (2026), o sinal negativo é o que faz os dois conviverem na mesma ordenação
- * decrescente sem um atropelar o outro.
- */
-const chaveDoGrupo = (ano: string) => {
-  const obra = acervo.find((o) => o.ano === ano)!;
-  return obra.ordemSala !== undefined ? -obra.ordemSala : ordemDoAno(obra) - 100000;
-};
+const chaveDoGrupo = (ano: string) => ordemDoAno(acervo.find((o) => o.ano === ano)!);
 
 const anos = [...new Set(acervo.map((o) => o.ano))].sort((a, b) => chaveDoGrupo(b) - chaveDoGrupo(a));
 
-/**
- * Cada grupo mostra o ano e, embaixo, há quanto tempo foi. O ano diz quando,
- * o relativo diz o quão longe: "2024" não conta nada sozinho para quem lê
- * daqui a cinco anos, "há 2 anos" conta.
- */
-/**
- * A linha embaixo do ano.
- *
- * Na coleção ela responde "há quanto tempo foi": este ano, ano passado, há 2
- * anos. Na experiência responde "quanto tempo durou": 3 anos e 3 meses. Mesmo
- * lugar e mesma tipografia, porque nos dois casos é a mesma pergunta do
- * visitante, a distância no tempo.
- *
- * Na experiência cada grupo é um período próprio, então a duração é a da
- * primeira obra dele.
- */
 const porAno = anos.map((ano) => {
   const obras = acervo.filter((o) => o.ano === ano);
   const primeira = obras[0];
-  const inicio = inicioDaObra(primeira);
-  const fim = fimDaObra(primeira);
-
-  const abaixoDoAno =
-    tipo === 'experiencia'
-      ? inicio && duracao(inicio, fim, lang)
-      : primeira.ativa
-        ? undefined
-        : anosAtras(Number.parseInt(ano, 10), lang);
 
   return {
     ano,
     rotulo: anoExibido(primeira, t('tempo.atualmente')),
-    relativo: abaixoDoAno,
     /**
-     * O que o navegador precisa para refazer a conta sozinho. Sem isto o texto
-     * envelhece: o site é estático, então o número é o do último build, e um
-     * canal que continua rodando ficaria parado no tempo até o próximo deploy.
-     * Só entra em quem ainda corre; período fechado não muda mais.
+     * A linha embaixo do ano, respondendo "há quanto tempo foi": este ano, ano
+     * passado, há 2 anos. O ano diz quando, o relativo diz o quão longe:
+     * "2024" não conta nada sozinho para quem lê daqui a cinco anos.
+     *
+     * Obra em andamento fica sem ela, porque o rótulo dela já termina em
+     * "atualmente" e as duas diriam a mesma coisa em sequência.
      */
-    vivo: tipo === 'experiencia' && !fim && inicio ? inicio.toISOString() : undefined,
-    anoNumero: tipo === 'experiencia' || primeira.ativa ? undefined : Number.parseInt(ano, 10),
+    relativo: primeira.ativa ? undefined : anosAtras(Number.parseInt(ano, 10), lang),
+    /**
+     * O ano em número, para o navegador refazer o relativo sozinho. Sem isto o
+     * texto envelhece: o site é estático, então em 1º de janeiro a página
+     * continuaria dizendo que o ano anterior é "este ano".
+     */
+    anoNumero: primeira.ativa ? undefined : Number.parseInt(ano, 10),
     obras,
   };
 });
@@ -192,12 +173,12 @@ const moldeFiltrado = t('colecao.contagem')(N, T)
 
       <div class="catalogo">
         {
-          porAno.map(({ rotulo, relativo, obras, vivo, anoNumero }) => (
+          porAno.map(({ rotulo, relativo, obras, anoNumero }) => (
             <section class="grupo hang" data-grupo>
               <p class="ano">
                 {rotulo}
                 {relativo && (
-                  <span class="ano-relativo" data-vivo={vivo} data-ano={anoNumero}>
+                  <span class="ano-relativo" data-ano={anoNumero}>
                     {relativo}
                   </span>
                 )}
@@ -247,8 +228,8 @@ const moldeFiltrado = t('colecao.contagem')(N, T)
                       home, e a home mostra três obras. Quem é dessas três
                       tinha ficha; o resto tinha o nome e a stack, e o que
                       estava escrito sobre elas não aparecia em lugar nenhum
-                      do site. O Blucker12 chegava a ter três milhões de
-                      visualizações num campo que ninguém lia.
+                      do site: havia obra com milhões de visualizações escritas
+                      num campo que ninguém lia.
 
                       É `details` do próprio HTML, e não um botão com script:
                       abre sem JavaScript, já vem com o estado certo para o

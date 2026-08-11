@@ -111,15 +111,6 @@ export interface Obra {
    */
   destaque?: number;
   /**
-   * Ordem dentro da sala (coleção ou experiência), quando ela não pode sair
-   * da data. Menor vem primeiro, e quem não tem cai para o fim, ordenado por
-   * ano como sempre.
-   *
-   * Existe porque a sala de experiência é curadoria dele: o canal que ainda
-   * corre vem antes do que encerrou, e ordem por data faria o contrário.
-   */
-  ordemSala?: number;
-  /**
    * Onde a ficha mora. `obra` é projeto fechado, com começo e fim, e vai
    * para a coleção. `experiencia` é o que continua rodando (canal, emprego,
    * estágio) e vai para a página de experiência. Padrão: obra.
@@ -252,8 +243,7 @@ export const OBRAS: Obra[] = [
     estado: 'noar',
     link: { href: 'https://blucker.tv', tipo: 'site' },
     /* Sem `tipo`, ou seja: obra de coleção, e não experiência. Ele mudou de
-       sala em 10/08/2026. Por isso saíram junto o `ordemSala`, que só ordenava
-       dentro da sala de experiência, e o `inicio`, que fazia aparecer um campo
+       sala em 10/08/2026, e saiu junto o `inicio`, que fazia aparecer um campo
        DURAÇÃO que nenhuma outra obra da coleção tem. A data de estreia agora
        está escrita no crédito, e data escrita não envelhece: o que envelhece é
        duração. */
@@ -296,70 +286,33 @@ export const OBRAS: Obra[] = [
     },
   },
   {
-    // O canal que veio antes do Até Zerar, e a razão de ele existir: foi aqui
-    // que a produção de vídeo virou rotina, e foi daqui que saiu a decisão de
-    // cortar o formato comentado e ficar só com o jogo inteiro.
-    slug: 'blucker12',
-    titulo: 'Blucker12',
-    // Período por extenso: numa experiência o que importa é de quando até
-    // quando, não o ano solto. As datas batem com o LinkedIn dele.
-    ano: '2018 - 2021',
-    inicio: '2018-10-01',
-    // Primeiro dia depois do fim, e não o último dia dele: assim dezembro de
-    // 2021 conta inteiro e a duração fecha nos mesmos 3 anos e 3 meses que o
-    // LinkedIn mostra.
-    fim: '2022-01-01',
-    tipo: 'experiencia',
-    meio: {
-      pt: 'Vídeo, gameplay comentado e competições',
-      en: 'Video, commentated gameplay and competition',
-      es: 'Video, gameplay comentado y competiciones',
-    },
-    estado: 'noar',
-    link: { href: 'https://www.youtube.com/@blucker12', tipo: 'canal' },
-    tags: ['Vídeo', 'YouTube', 'Games'],
-    ordemSala: 3,
-    resumo: {
-      pt: 'O primeiro canal: gameplay comentado, guia, notícia e speedrun, com recordes mundiais em Resident Evil 4.',
-      en: 'The first channel: commentated gameplay, guides, news, and speedruns, with world records in Resident Evil 4.',
-      es: 'El primer canal: gameplay comentado, guías, noticias y speedruns, con récords mundiales en Resident Evil 4.',
-    },
-    dimensoes: {
-      pt: '921 vídeos, 3,2 milhões de visualizações, 11,4 mil inscritos',
-      en: '921 videos, 3.2 million views, 11.4 thousand subscribers',
-      es: '921 videos, 3,2 millones de visualizaciones, 11,4 mil suscriptores',
-    },
-    papel: {
-      pt: 'Sozinho: gravação, edição, roteiro e publicação',
-      en: 'Solo: recording, editing, scripting, and publishing',
-      es: 'En solitario: grabación, edición, guion y publicación',
-    },
-    credito: {
-      pt: 'Projeto pessoal, de outubro de 2018 a dezembro de 2021. O canal segue no ar como acervo, e a produção nova passou a sair no Até Zerar.',
-      en: 'Personal project, from October 2018 to December 2021. The channel remains online as an archive, and new production moved to Até Zerar.',
-      es: 'Proyecto personal, de octubre de 2018 a diciembre de 2021. El canal sigue al aire como acervo, y la producción nueva pasó a salir en Até Zerar.',
-    },
-  },
-  {
-    // Não é software, e continua sendo obra: o meio é vídeo em vez de código.
-    // Em número, é a obra de maior alcance da coleção.
+    // A única experiência do acervo desde 11/08/2026: o outro canal, que
+    // dividia a sala com este, saiu do site por decisão dele. Não é software,
+    // e continua sendo obra: o meio é vídeo em vez de código, e em número é a
+    // de maior alcance de tudo que está aqui.
+    //
+    // Sem `anoOrdem` nem `ativa`: os dois só valiam para ordenar e rotular
+    // grupo de ano dentro do catálogo, e a sala de experiência deixou de ser
+    // catálogo. Quem diz que o canal ainda corre é o campo ESTADO da ficha, e
+    // a DURAÇÃO logo acima dele se refaz sozinha a partir do `inicio`.
+    //
+    // O meio abre em "Canal no YouTube" de propósito: é a primeira coisa que
+    // alguém lê ao entrar na sala, e "Até Zerar" sozinho não diz do que se
+    // trata para quem nunca viu o canal.
     slug: 'ate-zerar',
     titulo: 'Até Zerar',
     ano: '2021',
-    anoOrdem: 2026,
-    ativa: true,
     inicio: '2021-12-01',
     tipo: 'experiencia',
     meio: {
-      pt: 'Vídeo, gameplay sem comentários em 4K60fps',
-      en: 'Video, gameplay with no commentary in 4K60fps',
-      es: 'Video, gameplay sin comentarios en 4K60fps',
+      pt: 'Canal no YouTube, gameplay sem comentários em 4K60fps',
+      en: 'YouTube channel, gameplay with no commentary in 4K60fps',
+      es: 'Canal de YouTube, gameplay sin comentarios en 4K60fps',
     },
     estado: 'noar',
     link: { href: 'https://www.youtube.com/@atezerar', tipo: 'canal' },
     tags: ['Vídeo', 'YouTube', 'Games'],
     destaque: 3,
-    ordemSala: 2,
     resumo: {
       pt: [
         'Jogo inteiro, do início ao fim, sem comentário e em 4K60fps.',
@@ -381,15 +334,15 @@ export const OBRAS: Obra[] = [
     },
     credito: {
       pt: [
-        'Projeto pessoal, no ar desde dezembro de 2021, sucedendo o canal Blucker12.',
+        'Projeto pessoal, no ar desde dezembro de 2021.',
         'Organizado em coleções por franquia.',
       ],
       en: [
-        'Personal project, running since December 2021, succeeding the Blucker12 channel.',
+        'Personal project, running since December 2021.',
         'Organised into playlists by franchise.',
       ],
       es: [
-        'Proyecto personal, al aire desde diciembre de 2021, sucediendo al canal Blucker12.',
+        'Proyecto personal, al aire desde diciembre de 2021.',
         'Organizado en listas por franquicia.',
       ],
     },

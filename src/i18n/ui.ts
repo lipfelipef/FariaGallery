@@ -1,6 +1,17 @@
 import type { Locale } from '../consts';
 
 /**
+ * "1 obra" e não "1 obras".
+ *
+ * A contagem da entrada era escrita com o plural fixo, e passou despercebido
+ * enquanto os dois números eram maiores que um. Quando a sala de experiência
+ * ficou com uma entrada só, a home passaria a dizer "1 experiências" nos três
+ * idiomas. Contagem que vem de dado varia, então a palavra ao lado dela
+ * precisa variar junto.
+ */
+const plural = (n: number, um: string, muitos: string) => `${n} ${n === 1 ? um : muitos}`;
+
+/**
  * Todo texto de interface do site, nos três idiomas.
  *
  * Regra que evita o abandono: tudo que existe existe nos três. Nenhuma sala
@@ -47,7 +58,7 @@ export const UI = {
     'parede.2':
       'O que não deu certo entra com a mesma ficha, porque projeto que parou também tem o que ensinar.',
     'acervo': (obras: number, experiencias: number) => [
-      `${obras} obras de coleção, ${experiencias} experiências.`,
+      `${plural(obras, 'obra', 'obras')} de coleção, ${plural(experiencias, 'experiência', 'experiências')}.`,
     ],
     'disponivel': 'Disponível para novas oportunidades',
 
@@ -124,9 +135,19 @@ export const UI = {
     ],
     'nav.experiencia': 'Experiência',
     'experiencia.titulo': 'Experiência',
+    /**
+     * A segunda linha diz "YouTube" de propósito, e é a razão de ela existir.
+     *
+     * A sala tem uma entrada só, e o nome dela é nome próprio: quem nunca viu
+     * o canal lia "Até Zerar" e não fazia ideia do que era. O nome do lugar
+     * onde a coisa acontece precisa estar na abertura, antes de qualquer ficha.
+     *
+     * "desde 2021" é data escrita, e data escrita não envelhece. Quem conta o
+     * tempo corrido é o campo DURAÇÃO da ficha, que se refaz sozinho.
+     */
     'experiencia.chamada': [
       'O que roda fora de projeto fechado.',
-      'Plataforma, trabalho e o que vier.',
+      'Hoje, um canal no YouTube em produção desde 2021.',
     ],
     'experiencia.vazio': 'Nada aqui ainda.',
 
@@ -147,7 +168,7 @@ export const UI = {
     'meta.colecao':
       'Todos os projetos de Felipe Faria, do mais novo ao mais antigo: a BluckerTV, web, Java, Python e lógica digital, com a stack, o papel dele e o estado de cada um.',
     'meta.experiencia':
-      'A experiência de Felipe Faria: os canais Até Zerar, com 5,7 milhões de visualizações, e Blucker12, com 3,2 milhões, sete anos produzindo vídeo.',
+      'A experiência de Felipe Faria: o canal Até Zerar no YouTube, com 165 vídeos e 5,7 milhões de visualizações, em produção desde dezembro de 2021.',
     'meta.contato':
       'Fale com Felipe Faria, desenvolvedor e estudante de Análise e Desenvolvimento de Sistemas em São Paulo. Contato direto por e-mail, sem formulário.',
   },
@@ -179,7 +200,7 @@ export const UI = {
     'parede.2':
       'What did not work out gets the same label, because a project that stopped still has something to teach.',
     'acervo': (obras: number, experiencias: number) => [
-      `${obras} works in the collection, ${experiencias} experiences.`,
+      `${plural(obras, 'work', 'works')} in the collection, ${plural(experiencias, 'experience', 'experiences')}.`,
     ],
     'disponivel': 'Available for new opportunities',
 
@@ -249,7 +270,7 @@ export const UI = {
     'experiencia.titulo': 'Experience',
     'experiencia.chamada': [
       'What runs outside of a finished project.',
-      'A platform, work, and whatever comes next.',
+      'Right now, a YouTube channel running since 2021.',
     ],
     'experiencia.vazio': 'Nothing here yet.',
 
@@ -270,7 +291,7 @@ export const UI = {
     'meta.colecao':
       'Every project by Felipe Faria, newest first: BluckerTV, web, Java, Python, and digital logic, with the stack, his role, and the current state of each one.',
     'meta.experiencia':
-      'Felipe Faria experience: the Até Zerar channel, with 5.7 million views, and Blucker12, with 3.2 million, seven years making video.',
+      'Felipe Faria experience: the Até Zerar channel on YouTube, with 165 videos and 5.7 million views, running since December 2021.',
     'meta.contato':
       'Get in touch with Felipe Faria, developer and Systems Analysis and Development student in São Paulo. Direct contact by email, with no form to fill in.',
   },
@@ -302,7 +323,7 @@ export const UI = {
     'parede.2':
       'Lo que no salió bien entra con la misma ficha, porque un proyecto que se detuvo también tiene algo que enseñar.',
     'acervo': (obras: number, experiencias: number) => [
-      `${obras} obras de colección, ${experiencias} experiencias.`,
+      `${plural(obras, 'obra', 'obras')} de colección, ${plural(experiencias, 'experiencia', 'experiencias')}.`,
     ],
     'disponivel': 'Disponible para nuevas oportunidades',
 
@@ -372,7 +393,7 @@ export const UI = {
     'experiencia.titulo': 'Experiencia',
     'experiencia.chamada': [
       'Lo que corre fuera de un proyecto cerrado.',
-      'Plataforma, trabajo y lo que venga.',
+      'Hoy, un canal de YouTube en producción desde 2021.',
     ],
     'experiencia.vazio': 'Nada aquí todavía.',
 
@@ -393,7 +414,7 @@ export const UI = {
     'meta.colecao':
       'Todos los proyectos de Felipe Faria, del más nuevo al más antiguo: BluckerTV, web, Java, Python y lógica digital, con la stack, su papel y el estado de cada uno.',
     'meta.experiencia':
-      'La experiencia de Felipe Faria: los canales Até Zerar, con 5,7 millones de visualizaciones, y Blucker12, con 3,2 millones, siete años produciendo video.',
+      'La experiencia de Felipe Faria: el canal Até Zerar en YouTube, con 165 videos y 5,7 millones de visualizaciones, en producción desde 2021.',
     'meta.contato':
       'Habla con Felipe Faria, desarrollador y estudiante de Análisis y Desarrollo de Sistemas en São Paulo. Contacto directo por correo, sin formulario.',
   },

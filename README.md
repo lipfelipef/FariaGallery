@@ -83,7 +83,7 @@ Quatro páginas por idioma, mais a de erro, que é uma só:
 | -------------- | ------------------------------------------------------------- |
 | `/`            | a entrada, o percurso, as obras em cartaz e as redes           |
 | `/obras`       | a Coleção: catálogo por ano, com filtro por etiqueta           |
-| `/experiencia` | a mesma página montada com o outro tipo de ficha               |
+| `/experiencia` | o que roda fora de projeto fechado, com a ficha já aberta      |
 | `/contato`     | só o e-mail, sem formulário                                    |
 | `/404`         | um arquivo só, servido pela Cloudflare para todo endereço morto|
 
@@ -124,8 +124,7 @@ mais decidem coisa:
 | --------------- | ---------------------------------------------------------------- |
 | `tipo`          | ausente vai para a coleção; `'experiencia'` vai para a outra sala |
 | `destaque`      | número: a ordem em cartaz na home. Sem ele, não vai à home        |
-| `ordemSala`     | ordem dentro da sala quando ela não pode sair da data             |
-| `tags`          | as etiquetas do filtro                                            |
+| `tags`          | as etiquetas do filtro da coleção                                 |
 | `inicio` e `fim`| em ISO. Deles sai a duração, calculada e nunca escrita à mão      |
 | `ativa`         | ainda em andamento: empata com o ano corrente e fica acima dele   |
 | `dimensoes`     | a medida da obra: alcance, volume, tempo de estrada               |

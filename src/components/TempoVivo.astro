@@ -26,8 +26,8 @@ const { lang } = Astro.props;
   criada dentro de um componente deixa de casar com o estilo escrito em quem o
   usa. Sem marcação, não há o que descasar.
 
-  Dois lugares o usam, a home e o catálogo, e antes o script morava só no
-  catálogo. A ficha da home ficava de fora, e ali também tem conta de tempo.
+  Três lugares o usam: a home, o catálogo e a experiência. Antes ele morava só
+  no catálogo, e a ficha da home ficava de fora, onde também há conta de tempo.
 */}
 <script
   is:inline
@@ -70,11 +70,11 @@ const { lang } = Astro.props;
     var agora = Date.now();
 
     /*
-      Qualquer elemento com `data-vivo`, e não só o rótulo do ano: o campo
-      DURAÇÃO da ficha também carrega uma conta que continua correndo, na home
-      e no catálogo. Enquanto isto olhava só `.ano-relativo`, o rótulo do grupo
-      se refazia e a duração da ficha logo abaixo dele não, e as duas se
-      contradiziam na mesma tela.
+      Qualquer elemento com `data-vivo`, e não um seletor de classe. Hoje quem
+      carrega a marca é o campo DURAÇÃO da ficha, na home e na experiência.
+      Enquanto isto olhava só `.ano-relativo`, o rótulo do grupo se refazia e a
+      duração da ficha logo abaixo dele não, e as duas se contradiziam na mesma
+      tela.
 
       Escreve no `span` de dentro quando existe um, porque na ficha é ele que
       tem o `display: block` da classe `.linhas`; trocar o texto do `dd` inteiro

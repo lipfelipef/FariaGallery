@@ -9,10 +9,24 @@ import { fichaDaObra } from '../lib/ficha';
 interface Props {
   obra: Obra;
   lang: Locale;
+  /**
+   * O nível do título da obra.
+   *
+   * Na home a etiqueta mora dentro de uma sala que já tem `h2` ("Em cartaz"),
+   * então o título dela é `h3`. Na experiência ela vem logo abaixo do `h1` da
+   * página, sem sala intermediária, e um `h3` ali pularia o `h2`: quem navega
+   * por cabeçalho no leitor de tela lê a página como se tivesse perdido um
+   * nível pelo caminho.
+   */
+  nivel?: 2 | 3;
 }
 
-const { obra, lang } = Astro.props;
+const { obra, lang, nivel = 3 } = Astro.props;
 const t = traduzir(lang);
+
+/* Tag dinâmica, não classe: o estilo do título é o `.work-title` do
+   global.css, e ele não olha para a tag. */
+const Titulo = nivel === 2 ? 'h2' : 'h3';
 
 const naoPreenchido = (valor: string) =>
   obra.pendente && /^(a definir|to be defined)$/i.test(valor);
@@ -41,7 +55,7 @@ const textoDoLink = obra.link
     {/* Título sem link: o destino da obra é um só, e ele está na linha de ação
         no fim da etiqueta, com o nome do lugar para onde leva. Dois links para
         o mesmo endereço na mesma etiqueta era ruído. */}
-    <h3 class="work-title">{obra.titulo}</h3>
+    <Titulo class="work-title">{obra.titulo}</Titulo>
     <p class="obra-resumo linhas">
       {linhasDe(obra.resumo[lang]).map((linha, i) => (<>{i > 0 && ' '}<span>{linha}</span></>))}
     </p>
