@@ -87,6 +87,12 @@ Quatro páginas por idioma, mais a de erro, que é uma só:
 | `/contato`     | só o e-mail, sem formulário                                    |
 | `/404`         | um arquivo só, servido pela Cloudflare para todo endereço morto|
 
+As duas salas de obra mostram a mesma ficha de jeitos diferentes. A Coleção é um
+catálogo por ano, e ali a ficha abre num `<details>` recolhido, porque são muitas
+linhas numa página só. A Experiência traz a etiqueta inteira já aberta, como a
+home faz com o que está em cartaz: recolher o que cabe na tela seria esconder por
+esconder.
+
 A página de erro sai em português, porque não dá para saber o idioma de um
 endereço que não existe. O que ela faz é olhar no navegador o caminho que a
 pessoa tentou abrir: quem errou dentro de `/en/` ou `/es/` recebe o texto
@@ -126,7 +132,7 @@ mais decidem coisa:
 | `destaque`      | número: a ordem em cartaz na home. Sem ele, não vai à home        |
 | `tags`          | as etiquetas do filtro da coleção                                 |
 | `inicio` e `fim`| em ISO. Deles sai a duração, calculada e nunca escrita à mão      |
-| `ativa`         | ainda em andamento: empata com o ano corrente e fica acima dele   |
+| `ativa`         | em andamento: sai como "2021 - atualmente" e sobe no catálogo     |
 | `dimensoes`     | a medida da obra: alcance, volume, tempo de estrada               |
 | `pendente`      | `true` deixa o projeto fora do site até a ficha estar completa    |
 
