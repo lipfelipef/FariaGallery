@@ -291,10 +291,10 @@ export const OBRAS: Obra[] = [
     // e continua sendo obra: o meio é vídeo em vez de código, e em número é a
     // de maior alcance de tudo que está aqui.
     //
-    // Sem `anoOrdem` nem `ativa`: os dois só valiam para ordenar e rotular
-    // grupo de ano dentro do catálogo, e a sala de experiência deixou de ser
-    // catálogo. Quem diz que o canal ainda corre é o campo ESTADO da ficha, e
-    // a DURAÇÃO logo acima dele se refaz sozinha a partir do `inicio`.
+    // Sem `anoOrdem`, que só ordenava grupo de ano dentro do catálogo. O
+    // `ativa` fica: é dele que sai o "2021 - atualmente" da margem, e a
+    // etiqueta só monta o período onde recebe a propriedade `periodo`, hoje
+    // apenas na sala de experiência. No cartaz da home o ano continua seco.
     //
     // O meio abre em "Canal no YouTube" de propósito: é a primeira coisa que
     // alguém lê ao entrar na sala, e "Até Zerar" sozinho não diz do que se
@@ -302,6 +302,7 @@ export const OBRAS: Obra[] = [
     slug: 'ate-zerar',
     titulo: 'Até Zerar',
     ano: '2021',
+    ativa: true,
     inicio: '2021-12-01',
     tipo: 'experiencia',
     meio: {

@@ -51,8 +51,12 @@ const experiencias = doTipo('experiencia');
         {
           experiencias.length > 0 ? (
             /* `nivel={2}` porque o título da página é o `h1` logo acima e aqui
-               não há sala intermediária, ao contrário da home. */
-            experiencias.map((obra) => <Etiqueta obra={obra} lang={lang} nivel={2} />)
+               não há sala intermediária, ao contrário da home.
+
+               `periodo` devolve o "2021 - atualmente" que o rótulo do grupo
+               mostrava no catálogo antigo: ele sentiu falta assim que a sala
+               deixou de ser catálogo. No cartaz da home o ano segue seco. */
+            experiencias.map((obra) => <Etiqueta obra={obra} lang={lang} nivel={2} periodo />)
           ) : (
             <p class="vazio">{t('experiencia.vazio')}</p>
           )

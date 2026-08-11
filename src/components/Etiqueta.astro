@@ -2,7 +2,7 @@
 import type { Locale } from '../consts';
 /* `linhasDe` continua sendo usado pelo resumo, logo abaixo do título: ele não
    faz parte da ficha e não saiu junto com ela para o `lib/ficha.ts`. */
-import { linhasDe, type Obra } from '../data/obras';
+import { anoExibido, linhasDe, type Obra } from '../data/obras';
 import { traduzir } from '../i18n/ui';
 import { fichaDaObra } from '../lib/ficha';
 
@@ -19,9 +19,23 @@ interface Props {
    * nível pelo caminho.
    */
   nivel?: 2 | 3;
+  /**
+   * Mostra o ano como período aberto, "2021 - atualmente", em vez do ano seco.
+   *
+   * No cartaz da home o ano é seco por decisão dele em 10/08/2026: lá as três
+   * etiquetas formam uma coluna de anos alinhados na margem, e quem diz se a
+   * obra ainda corre é o campo ESTADO da ficha. Na experiência não existe
+   * coluna para alinhar, a etiqueta está sozinha na página, e o período é o
+   * que ele quer ler ali: sentiu falta assim que o catálogo saiu, porque o
+   * rótulo do grupo mostrava isso antes.
+   *
+   * Só tem efeito em obra com `ativa`, que é onde `anoExibido` acrescenta o
+   * sufixo. Sem ela, o ano sai seco de qualquer jeito.
+   */
+  periodo?: boolean;
 }
 
-const { obra, lang, nivel = 3 } = Astro.props;
+const { obra, lang, nivel = 3, periodo = false } = Astro.props;
 const t = traduzir(lang);
 
 /* Tag dinâmica, não classe: o estilo do título é o `.work-title` do
@@ -43,12 +57,9 @@ const textoDoLink = obra.link
 <article class="obra hang" id={obra.slug}>
   <div class="obra-margem">
     <span class="dot dot-on" aria-hidden="true"></span>
-    {/* Só o ano, seco. O "2026 - atualmente" saiu do cartaz a pedido dele em
-        10/08/2026: quem diz se a obra ainda corre é o campo ESTADO da ficha,
-        logo abaixo, e a margem volta a ser uma coluna de anos alinhados.
-        No catálogo o rótulo continua sendo `anoExibido`, porque lá o ano é
-        cabeçalho de um grupo inteiro e não a margem de uma etiqueta. */}
-    <span class="obra-ano">{obra.ano}</span>
+    {/* Ano seco no cartaz, período aberto na experiência: quem escolhe é o
+        `periodo`, e o porquê de cada sala está na definição dele. */}
+    <span class="obra-ano">{periodo ? anoExibido(obra, t('tempo.atualmente')) : obra.ano}</span>
   </div>
 
   <div class="obra-cabeca">
