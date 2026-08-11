@@ -135,19 +135,9 @@ export const UI = {
     ],
     'nav.experiencia': 'Experiência',
     'experiencia.titulo': 'Experiência',
-    /**
-     * A segunda linha diz "YouTube" de propósito, e é a razão de ela existir.
-     *
-     * A sala tem uma entrada só, e o nome dela é nome próprio: quem nunca viu
-     * o canal lia "Até Zerar" e não fazia ideia do que era. O nome do lugar
-     * onde a coisa acontece precisa estar na abertura, antes de qualquer ficha.
-     *
-     * "desde 2021" é data escrita, e data escrita não envelhece. Quem conta o
-     * tempo corrido é o campo DURAÇÃO da ficha, que se refaz sozinho.
-     */
     'experiencia.chamada': [
       'O que roda fora de projeto fechado.',
-      'Hoje, um canal no YouTube em produção desde 2021.',
+      'Plataforma, trabalho e o que vier.',
     ],
     'experiencia.vazio': 'Nada aqui ainda.',
 
@@ -270,7 +260,7 @@ export const UI = {
     'experiencia.titulo': 'Experience',
     'experiencia.chamada': [
       'What runs outside of a finished project.',
-      'Right now, a YouTube channel running since 2021.',
+      'A platform, work, and whatever comes next.',
     ],
     'experiencia.vazio': 'Nothing here yet.',
 
@@ -393,7 +383,7 @@ export const UI = {
     'experiencia.titulo': 'Experiencia',
     'experiencia.chamada': [
       'Lo que corre fuera de un proyecto cerrado.',
-      'Hoy, un canal de YouTube en producción desde 2021.',
+      'Plataforma, trabajo y lo que venga.',
     ],
     'experiencia.vazio': 'Nada aquí todavía.',
 
