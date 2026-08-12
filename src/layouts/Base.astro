@@ -40,7 +40,7 @@ const idiomas = semIndexar ? [] : (await destinosPorIdioma(Astro.url)).filter((a
 /**
  * Serializa o Schema.org de um jeito que não pode fechar a própria tag.
  *
- * `JSON.stringify` não escapa `<`, então um título de post que contivesse
+ * `JSON.stringify` não escapa `<`, então um título de obra que contivesse
  * `</script>` sairia literal no meio do bloco, fechava a tag ali e o resto
  * virava HTML executável. Hoje todo o conteúdo do site é escrito por ele, em
  * arquivo, e ninguém de fora escreve nada aqui, então isso não é uma porta

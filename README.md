@@ -104,7 +104,7 @@ naquele idioma. Endereço solto, como `/4324`, fica em português.
 src/
 ├─ consts.ts            nome, marca, contato, redes e limites de interface
 ├─ data/obras.ts        a coleção: uma entrada por projeto, com a ficha inteira
-├─ components/          Etiqueta.astro é a ficha de museu; o resto são as salas
+├─ components/          a ficha (Etiqueta.astro), as salas, a moldura e o tempo
 ├─ layouts/Base.astro   <head>, SEO, dados estruturados e a escolha de tema
 ├─ i18n/                ui.ts é todo texto de interface nos três idiomas
 ├─ lib/                 as regras: a ficha, as datas e os idiomas
@@ -117,7 +117,7 @@ public/
 ├─ robots.txt                libera tudo e aponta o sitemap
 ├─ site.webmanifest          nome e ícones para quem instala o site
 ├─ .well-known/security.txt  como reportar um problema de segurança
-└─ favicon*, card.png        ícones e a imagem que aparece ao compartilhar
+└─ *.png, *.ico              os ícones, o do iOS e a imagem de compartilhar
 ```
 
 ### Para acrescentar um projeto
@@ -128,7 +128,7 @@ mais decidem coisa:
 
 | Campo           | Para que serve                                                   |
 | --------------- | ---------------------------------------------------------------- |
-| `tipo`          | ausente vai para a coleção; `'experiencia'` vai para a outra sala |
+| `tipo`          | ausente ou `'obra'`, coleção; `'experiencia'`, a outra sala       |
 | `destaque`      | número: a ordem em cartaz na home. Sem ele, não vai à home        |
 | `tags`          | as etiquetas do filtro da coleção                                 |
 | `inicio` e `fim`| em ISO. Deles sai a duração, calculada e nunca escrita à mão      |

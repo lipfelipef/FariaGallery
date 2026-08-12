@@ -4,9 +4,9 @@ import { LOCALE_DATA } from '../i18n/utils';
 /**
  * Tudo que envolve tempo no site.
  *
- * O fuso é fixo em São Paulo de propósito. Data de publicação é fato do
- * autor, não do visitante: um post publicado às 22h aqui não vira 03h da
- * manhã porque alguém abriu de Lisboa.
+ * O fuso é fixo em São Paulo de propósito. A data de uma obra é fato do
+ * autor, não do visitante: o que ele registrou às 22h aqui não vira 03h
+ * da manhã porque alguém abriu de Lisboa.
  */
 const FUSO = 'America/Sao_Paulo';
 
