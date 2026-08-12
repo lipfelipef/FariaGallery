@@ -63,15 +63,9 @@
   /* O tema e escolha explicita, guardada no navegador de quem visita.
      Sem isso, o navegador tenta escurecer por conta e estraga o contraste. */
   color-scheme: light;
-
-  /* Fundo de codigo no post. Precisa de token proprio porque muda de
-     lado junto com o tema. */
-  --color-code: #f2f2ef;
 }
 
 :root[data-tema='escuro'] {
-  --color-code: #232327;
-
   /* Precisa morar aqui fora, e nao junto das cores dentro de `@layer theme`.
      Regra escrita fora de layer sempre ganha de regra escrita dentro de um,
      por mais especifico que o seletor de dentro seja. Estava dentro, entao o
@@ -262,136 +256,6 @@ body {
 
   .dot-off {
     border: 1px solid var(--color-rule);
-  }
-
-  /* Texto de post. Medida curta e entrelinha larga, porque aqui a
-     pessoa lê de verdade, não bate o olho como faz na etiqueta. */
-  .prosa {
-    max-width: 66ch;
-    font-size: 1.0625rem;
-    line-height: 1.7;
-  }
-
-  .prosa > * + * {
-    margin-top: 1.35em;
-  }
-
-  .prosa h2,
-  .prosa h3 {
-    font-weight: 600;
-    letter-spacing: -0.015em;
-    line-height: 1.25;
-    margin-top: 2.5em;
-  }
-
-  .prosa h2 {
-    font-size: 1.375rem;
-  }
-
-  .prosa h3 {
-    font-size: 1.125rem;
-  }
-
-  .prosa a {
-    text-decoration: underline;
-    text-decoration-color: var(--color-rule);
-    text-underline-offset: 0.2em;
-  }
-
-  .prosa a:hover {
-    text-decoration-color: var(--color-ink);
-  }
-
-  .prosa ul,
-  .prosa ol {
-    padding-left: 1.25rem;
-  }
-
-  .prosa li + li {
-    margin-top: 0.4em;
-  }
-
-  .prosa ul {
-    list-style: disc;
-  }
-
-  .prosa ol {
-    list-style: decimal;
-  }
-
-  .prosa blockquote {
-    border-left: 2px solid var(--color-rule);
-    padding-left: 1.25rem;
-    color: var(--color-ink-soft);
-  }
-
-  .prosa code {
-    font-size: 0.9em;
-    background-color: var(--color-code);
-    padding: 0.1em 0.35em;
-    border-radius: 2px;
-  }
-
-  .prosa pre {
-    background-color: var(--color-code);
-    border: 1px solid var(--color-rule);
-    padding: 1rem 1.15rem;
-    overflow-x: auto;
-    font-size: 0.875rem;
-    line-height: 1.6;
-  }
-
-  .prosa pre code {
-    background: none;
-    padding: 0;
-    font-size: inherit;
-  }
-
-  .prosa hr {
-    border: 0;
-    border-top: 1px solid var(--color-rule);
-    margin-block: 2.5em;
-  }
-
-  /* Tabela dentro de post. O navegador nao da espacamento nenhum por
-     padrao, entao sem isto as celulas colam umas nas outras. O cabecalho
-     usa a mesma tipografia dos campos da etiqueta, porque cumpre a mesma
-     funcao: nomear a coluna sem competir com o dado. */
-  .prosa table {
-    width: 100%;
-    border-collapse: collapse;
-    font-size: 0.9375rem;
-    font-variant-numeric: tabular-nums;
-  }
-
-  .prosa thead th {
-    font-size: 0.6875rem;
-    font-weight: 600;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    color: var(--color-ink-soft);
-    text-align: left;
-    padding-block: 0 0.75rem;
-    border-bottom: 1px solid var(--color-rule);
-  }
-
-  .prosa tbody td {
-    padding-block: 0.7rem;
-    border-bottom: 1px solid var(--color-rule);
-    vertical-align: top;
-  }
-
-  .prosa thead th + th,
-  .prosa tbody td + td {
-    text-align: right;
-    padding-left: 1.5rem;
-  }
-
-  @media (max-width: 34rem) {
-    .prosa table {
-      display: block;
-      overflow-x: auto;
-    }
   }
 
   /* Link de texto: sublinhado fino que engrossa no hover. */
