@@ -72,7 +72,7 @@ export function fichaDaObra(obra: Obra, lang: Locale): CampoDaFicha[] {
           },
         ]
       : []),
-    { campo: t('campo.papel'), linhas: [obra.papel[lang]], medida: true },
+    { campo: t('campo.papel'), linhas: linhasDe(obra.papel[lang]), medida: true },
     { campo: t('campo.credito'), linhas: linhasDe(obra.credito[lang]) },
     { campo: t('campo.estado'), linhas: [t(`estado.${obra.estado}` as 'estado.publico')] },
   ];

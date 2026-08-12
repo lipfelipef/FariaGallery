@@ -158,7 +158,7 @@ export const UI = {
     'meta.colecao':
       'Todos os projetos de Felipe Faria, do mais novo ao mais antigo: a BluckerTV, web, Java, Python e lógica digital, com a stack, o papel dele e o estado de cada um.',
     'meta.experiencia':
-      'A experiência de Felipe Faria: o canal Até Zerar no YouTube, com 165 vídeos e 5,7 milhões de visualizações, em produção desde dezembro de 2021.',
+      'A experiência de Felipe Faria: o projeto Até Zerar no YouTube, com 165 vídeos e 5,8 milhões de visualizações, em produção desde dezembro de 2021.',
     'meta.contato':
       'Fale com Felipe Faria, desenvolvedor e estudante de Análise e Desenvolvimento de Sistemas em São Paulo. Contato direto por e-mail, sem formulário.',
   },
@@ -281,7 +281,7 @@ export const UI = {
     'meta.colecao':
       'Every project by Felipe Faria, newest first: BluckerTV, web, Java, Python, and digital logic, with the stack, his role, and the current state of each one.',
     'meta.experiencia':
-      'Felipe Faria experience: the Até Zerar channel on YouTube, with 165 videos and 5.7 million views, running since December 2021.',
+      'Felipe Faria experience: the Até Zerar project on YouTube, with 165 videos and 5.8 million views, running since December 2021.',
     'meta.contato':
       'Get in touch with Felipe Faria, developer and Systems Analysis and Development student in São Paulo. Direct contact by email, with no form to fill in.',
   },
@@ -404,7 +404,7 @@ export const UI = {
     'meta.colecao':
       'Todos los proyectos de Felipe Faria, del más nuevo al más antiguo: BluckerTV, web, Java, Python y lógica digital, con la stack, su papel y el estado de cada uno.',
     'meta.experiencia':
-      'La experiencia de Felipe Faria: el canal Até Zerar en YouTube, con 165 videos y 5,7 millones de visualizaciones, en producción desde 2021.',
+      'La experiencia de Felipe Faria: el proyecto Até Zerar en YouTube, con 165 videos y 5,8 millones de visualizaciones, en producción desde 2021.',
     'meta.contato':
       'Habla con Felipe Faria, desarrollador y estudiante de Análisis y Desarrollo de Sistemas en São Paulo. Contacto directo por correo, sin formulario.',
   },

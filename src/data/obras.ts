@@ -117,7 +117,7 @@ export interface Obra {
    */
   tipo?: 'obra' | 'experiencia';
   resumo: PorIdiomaLinhas;
-  papel: PorIdioma;
+  papel: PorIdiomaLinhas;
   credito: PorIdiomaLinhas;
   /**
    * A medida da obra. Etiqueta de museu tem dimensão em centímetros; em
@@ -306,32 +306,41 @@ export const OBRAS: Obra[] = [
     inicio: '2021-12-01',
     tipo: 'experiencia',
     meio: {
-      pt: 'Canal no YouTube, gameplay sem comentários em 4K60fps',
-      en: 'YouTube channel, gameplay with no commentary in 4K60fps',
-      es: 'Canal de YouTube, gameplay sin comentarios en 4K60fps',
+      pt: 'Projeto no YouTube, produção de conteúdo em 4K60fps',
+      en: 'YouTube project, content production in 4K60fps',
+      es: 'Proyecto de YouTube, producción de contenido en 4K60fps',
     },
     estado: 'noar',
-    link: { href: 'https://www.youtube.com/@atezerar', tipo: 'canal' },
+    link: { href: 'https://www.youtube.com/@atezerar', tipo: 'projeto' },
     tags: ['Vídeo', 'YouTube', 'Games'],
     destaque: 3,
     resumo: {
       pt: [
-        'Jogo inteiro, do início ao fim, sem comentário e em 4K60fps.',
+        'Jogos inteiros, do início ao fim, em 4K60fps.',
         'A ideia é assistir como se fosse filme.',
       ],
       en: [
-        'Whole games, start to finish, with no commentary, in 4K60fps.',
+        'Whole games, start to finish, in 4K60fps.',
         'Made to be watched like a film.',
       ],
       es: [
-        'El juego entero, de principio a fin, sin comentarios y en 4K60fps.',
+        'Juegos enteros, de principio a fin, en 4K60fps.',
         'Pensado para verse como una película.',
       ],
     },
     papel: {
-      pt: 'Sozinho: gravação, edição e publicação',
-      en: 'Solo: recording, editing, and publishing',
-      es: 'En solitario: grabación, edición y publicación',
+      pt: [
+        'Sozinho: gravação, edição, branding, otimização de SEO,',
+        'marketing e publicação.',
+      ],
+      en: [
+        'Solo: recording, editing, branding, SEO optimisation,',
+        'marketing, and publishing.',
+      ],
+      es: [
+        'En solitario: grabación, edición, branding, optimización de SEO,',
+        'marketing y publicación.',
+      ],
     },
     credito: {
       pt: [
@@ -348,9 +357,18 @@ export const OBRAS: Obra[] = [
       ],
     },
     dimensoes: {
-      pt: '165 vídeos, 5,7 milhões de visualizações, 26,3 mil inscritos',
-      en: '165 videos, 5.7 million views, 26.3 thousand subscribers',
-      es: '165 videos, 5,7 millones de visualizaciones, 26,3 mil suscriptores',
+      pt: [
+        '165 vídeos, 5,8 milhões de visualizações, 26,3 mil inscritos.',
+        '200 mil visitas mensais, 500 mil novas horas de exibição anuais.',
+      ],
+      en: [
+        '165 videos, 5.8 million views, 26.3 thousand subscribers.',
+        '200 thousand monthly visits, 500 thousand new watch hours per year.',
+      ],
+      es: [
+        '165 videos, 5,8 millones de visualizaciones, 26,3 mil suscriptores.',
+        '200 mil visitas mensuales, 500 mil nuevas horas de visualización anuales.',
+      ],
     },
   },
   {
