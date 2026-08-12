@@ -58,7 +58,7 @@ export const tagDe = (tag: string, lang: Locale): string => TAGS_TRADUZIDAS[tag]
 /**
  * Cola o número à palavra que ele mede, com espaço que não quebra.
  *
- * Sem isto a linha racha no pior lugar possível e sobra "26,3" no fim de uma
+ * Sem isto a linha racha no pior lugar possível e sobra "26,5" no fim de uma
  * linha com "mil inscritos" na seguinte. Número e unidade são uma informação
  * só e devem viajar juntos.
  */
@@ -358,15 +358,15 @@ export const OBRAS: Obra[] = [
     },
     dimensoes: {
       pt: [
-        '165 vídeos, 5,8 milhões de visualizações, 26,3 mil inscritos.',
+        '165 vídeos, 5,8 milhões de visualizações, 26,5 mil inscritos.',
         '200 mil visitas mensais, 500 mil novas horas de exibição anuais.',
       ],
       en: [
-        '165 videos, 5.8 million views, 26.3 thousand subscribers.',
+        '165 videos, 5.8 million views, 26.5 thousand subscribers.',
         '200 thousand monthly visits, 500 thousand new watch hours per year.',
       ],
       es: [
-        '165 videos, 5,8 millones de visualizaciones, 26,3 mil suscriptores.',
+        '165 videos, 5,8 millones de visualizaciones, 26,5 mil suscriptores.',
         '200 mil visitas mensuales, 500 mil nuevas horas de visualización anuales.',
       ],
     },
